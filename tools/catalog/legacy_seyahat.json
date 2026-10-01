@@ -1,0 +1,2386 @@
+{
+ "items": [
+  {
+   "id": "underwear",
+   "name": "İç çamaşırı",
+   "category": "clothingBasic",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "socks",
+   "name": "Çorap",
+   "category": "clothingBasic",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "pajamas",
+   "name": "Pijama takımı",
+   "category": "clothingBasic",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "slippers",
+   "name": "Terlik",
+   "category": "clothingBasic",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "daily_shoes",
+   "name": "Günlük ayakkabı",
+   "category": "clothingBasic",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "sport_shoes",
+   "name": "Spor ayakkabı",
+   "category": "clothingBasic",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "tshirt_m",
+   "name": "Tişört",
+   "category": "clothingMale",
+   "gender": "maleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "pants_m",
+   "name": "Pantolon",
+   "category": "clothingMale",
+   "gender": "maleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "jeans_m",
+   "name": "Kot pantolon",
+   "category": "clothingMale",
+   "gender": "maleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "shorts_m",
+   "name": "Şort",
+   "category": "clothingMale",
+   "gender": "maleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "shirt_m",
+   "name": "Gömlek",
+   "category": "clothingMale",
+   "gender": "maleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "boxer",
+   "name": "Boxer",
+   "category": "clothingMale",
+   "gender": "maleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "undershirt",
+   "name": "Atlet",
+   "category": "clothingMale",
+   "gender": "maleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "belt",
+   "name": "Kemer",
+   "category": "clothingMale",
+   "gender": "maleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "suit",
+   "name": "Takım elbise",
+   "category": "clothingMale",
+   "gender": "maleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "tie",
+   "name": "Kravat",
+   "category": "clothingMale",
+   "gender": "maleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "jacket_m",
+   "name": "Ceket",
+   "category": "clothingMale",
+   "gender": "maleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "tracksuit_m",
+   "name": "Eşofman",
+   "category": "clothingMale",
+   "gender": "maleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "blouse",
+   "name": "Bluz",
+   "category": "clothingFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "skirt",
+   "name": "Etek",
+   "category": "clothingFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "dress",
+   "name": "Elbise",
+   "category": "clothingFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "leggings",
+   "name": "Tayt",
+   "category": "clothingFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "bra",
+   "name": "Sütyen",
+   "category": "clothingFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "panties",
+   "name": "Külot",
+   "category": "clothingFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "shawl",
+   "name": "Şal / eşarp",
+   "category": "clothingFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "cardigan",
+   "name": "Hırka",
+   "category": "clothingFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "jeans_f",
+   "name": "Kot pantolon",
+   "category": "clothingFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "tracksuit_f",
+   "name": "Eşofman",
+   "category": "clothingFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "coat",
+   "name": "Mont / kaban",
+   "category": "clothingWinter",
+   "gender": "all",
+   "seasons": [
+    "winter",
+    "autumn"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "sweater",
+   "name": "Kazak",
+   "category": "clothingWinter",
+   "gender": "all",
+   "seasons": [
+    "winter",
+    "autumn"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "polar",
+   "name": "Polar",
+   "category": "clothingWinter",
+   "gender": "all",
+   "seasons": [
+    "winter"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "scarf",
+   "name": "Atkı",
+   "category": "clothingWinter",
+   "gender": "all",
+   "seasons": [
+    "winter"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "beanie",
+   "name": "Bere",
+   "category": "clothingWinter",
+   "gender": "all",
+   "seasons": [
+    "winter"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "gloves",
+   "name": "Eldiven",
+   "category": "clothingWinter",
+   "gender": "all",
+   "seasons": [
+    "winter"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "boots",
+   "name": "Bot",
+   "category": "clothingWinter",
+   "gender": "all",
+   "seasons": [
+    "winter",
+    "autumn"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "thermal_top",
+   "name": "Termal içlik üst",
+   "category": "clothingWinter",
+   "gender": "all",
+   "seasons": [
+    "winter"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "thermal_bottom",
+   "name": "Termal içlik alt",
+   "category": "clothingWinter",
+   "gender": "all",
+   "seasons": [
+    "winter"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "wool_socks",
+   "name": "Yün çorap",
+   "category": "clothingWinter",
+   "gender": "all",
+   "seasons": [
+    "winter"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "snow_boots",
+   "name": "Kar botu",
+   "category": "clothingWinter",
+   "gender": "all",
+   "seasons": [
+    "winter"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "sunhat",
+   "name": "Güneş şapkası",
+   "category": "clothingSummer",
+   "gender": "all",
+   "seasons": [
+    "summer"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "swimsuit_m",
+   "name": "Mayo (erkek)",
+   "category": "clothingSummer",
+   "gender": "maleAndCouple",
+   "seasons": [
+    "summer"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "bikini",
+   "name": "Bikini / mayo",
+   "category": "clothingSummer",
+   "gender": "femaleAndCouple",
+   "seasons": [
+    "summer"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "beach_dress",
+   "name": "Plaj elbisesi",
+   "category": "clothingSummer",
+   "gender": "femaleAndCouple",
+   "seasons": [
+    "summer"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "shorts_summer",
+   "name": "Şort",
+   "category": "clothingSummer",
+   "gender": "all",
+   "seasons": [
+    "summer"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "sandals",
+   "name": "Sandalet",
+   "category": "clothingSummer",
+   "gender": "all",
+   "seasons": [
+    "summer"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "water_shoes",
+   "name": "Deniz ayakkabısı",
+   "category": "clothingSummer",
+   "gender": "all",
+   "seasons": [
+    "summer"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "toothbrush",
+   "name": "Diş fırçası",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "toothpaste",
+   "name": "Diş macunu",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "dental_floss",
+   "name": "Diş ipi",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "mouthwash",
+   "name": "Ağız gargarası",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "shampoo",
+   "name": "Şampuan",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "conditioner",
+   "name": "Saç kremi",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "showergel",
+   "name": "Duş jeli",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "soap",
+   "name": "Sabun",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "deodorant",
+   "name": "Deodorant",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "perfume",
+   "name": "Parfüm",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "comb",
+   "name": "Tarak / fırça",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "nailclipper",
+   "name": "Tırnak makası",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "nailfile",
+   "name": "Tırnak törpüsü",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "cottonswab",
+   "name": "Kulak çubuğu",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "moisturizer",
+   "name": "Nemlendirici",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "lipbalm",
+   "name": "Dudak nemlendiricisi",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "handcream",
+   "name": "El kremi",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "tweezers",
+   "name": "Cımbız",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "mirror",
+   "name": "Küçük ayna",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "towel",
+   "name": "Havlu",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "shower_cap",
+   "name": "Bone",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "razor",
+   "name": "Tıraş makinesi / jilet",
+   "category": "personalCareMale",
+   "gender": "maleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "shavingfoam",
+   "name": "Tıraş köpüğü / jeli",
+   "category": "personalCareMale",
+   "gender": "maleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "aftershave",
+   "name": "After shave",
+   "category": "personalCareMale",
+   "gender": "maleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "nosehair",
+   "name": "Burun kıl makası",
+   "category": "personalCareMale",
+   "gender": "maleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "makeupbag",
+   "name": "Makyaj çantası",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "foundation",
+   "name": "Fondöten",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "powder",
+   "name": "Pudra",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "blush",
+   "name": "Allık",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "eyeshadow",
+   "name": "Far paleti",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "eyeliner",
+   "name": "Eyeliner",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "mascara",
+   "name": "Maskara",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "browpencil",
+   "name": "Kaş kalemi",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "lipstick",
+   "name": "Ruj",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "lipliner",
+   "name": "Dudak kalemi",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "highlighter",
+   "name": "Aydınlatıcı",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "contour",
+   "name": "Kontur kiti",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "makeupsponge",
+   "name": "Makyaj süngeri",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "brushset",
+   "name": "Fırça seti",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "makeupremover",
+   "name": "Makyaj temizleyici",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "micellar",
+   "name": "Misel su",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "pads",
+   "name": "Ped / tampon",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "dailypads",
+   "name": "Günlük ped",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "waxstrips",
+   "name": "Ağda bandı / tüy dökücü",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "hairstraightener",
+   "name": "Saç düzleştirici",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "curlingiron",
+   "name": "Saç maşası",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "hairdryer",
+   "name": "Saç kurutma makinesi",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "hairties",
+   "name": "Saç tokası / lastik",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "headband",
+   "name": "Saç bandı",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "nailpolish",
+   "name": "Oje",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "acetone",
+   "name": "Aseton",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "hairspray",
+   "name": "Saç spreyi",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "hairmousse",
+   "name": "Saç köpüğü",
+   "category": "personalCareFemale",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "painkiller",
+   "name": "Ağrı kesici",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "antipyretic",
+   "name": "Ateş düşürücü",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "bandaid",
+   "name": "Yara bandı",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "antiseptic",
+   "name": "Antiseptik / tentürdiyot",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "woundcream",
+   "name": "Yara merhemi",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "bandage",
+   "name": "Sargı bezi",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "stomachmeds",
+   "name": "Mide ilacı",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "diarrhea",
+   "name": "İshal ilacı",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "laxative",
+   "name": "Kabızlık ilacı",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "allergymeds",
+   "name": "Alerji ilacı",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "coldmeds",
+   "name": "Soğuk algınlığı ilacı",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "coughsyrup",
+   "name": "Öksürük şurubu",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "nasalspray",
+   "name": "Burun spreyi",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "throatlozenges",
+   "name": "Boğaz pastili",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "prescriptionmeds",
+   "name": "Reçeteli ilaçlar",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "vitamins",
+   "name": "Vitamin",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "sunscreen",
+   "name": "Güneş kremi",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "bugspray",
+   "name": "Böcek kovucu",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "bitecream",
+   "name": "Böcek ısırığı kremi",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "motionsickness",
+   "name": "Seyahat tutması ilacı",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "eyedrops",
+   "name": "Göz damlası",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "lenssolution",
+   "name": "Lens solüsyonu",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "spareglasses",
+   "name": "Yedek gözlük / lens",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "handsanitizer",
+   "name": "El dezenfektanı",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "facemask",
+   "name": "Maske",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "thermometer",
+   "name": "Termometre",
+   "category": "health",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "phone",
+   "name": "Telefon",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "phonecharger",
+   "name": "Telefon şarj aleti",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "powerbank",
+   "name": "Powerbank",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "headphones",
+   "name": "Kulaklık",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "tablet",
+   "name": "Tablet",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "tabletcharger",
+   "name": "Tablet şarj aleti",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "laptop",
+   "name": "Laptop",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "laptopcharger",
+   "name": "Laptop şarj aleti",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "camera",
+   "name": "Fotoğraf makinesi",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "camerabattery",
+   "name": "Kamera pili / şarjı",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "memorycard",
+   "name": "Hafıza kartı",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "usbdrive",
+   "name": "USB bellek",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "usbcable",
+   "name": "USB kablo",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "adapter",
+   "name": "Priz adaptörü / çevirici",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "ereader",
+   "name": "E-kitap okuyucu",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "smartwatchcharger",
+   "name": "Akıllı saat şarjı",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "speaker",
+   "name": "Taşınabilir hoparlör",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "selfiestick",
+   "name": "Selfie çubuğu",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "tripod",
+   "name": "Tripod",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "idcard",
+   "name": "Kimlik kartı",
+   "category": "documents",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "driverlicense",
+   "name": "Ehliyet",
+   "category": "documents",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "tickets",
+   "name": "Biletler",
+   "category": "documents",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "hotelreservation",
+   "name": "Otel rezervasyonu",
+   "category": "documents",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "carrental",
+   "name": "Araç kiralama belgesi",
+   "category": "documents",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "insurance",
+   "name": "Sigorta poliçesi",
+   "category": "documents",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "creditcard",
+   "name": "Kredi kartı",
+   "category": "documents",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "debitcard",
+   "name": "Banka kartı",
+   "category": "documents",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "cash_tl",
+   "name": "Nakit para (TL)",
+   "category": "documents",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "passport",
+   "name": "Pasaport",
+   "category": "documentsIntl",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": true
+  },
+  {
+   "id": "visa",
+   "name": "Vize belgeleri",
+   "category": "documentsIntl",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": true
+  },
+  {
+   "id": "intldriverlicense",
+   "name": "Uluslararası ehliyet",
+   "category": "documentsIntl",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": true
+  },
+  {
+   "id": "travelinsurance",
+   "name": "Seyahat sigortası",
+   "category": "documentsIntl",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": true
+  },
+  {
+   "id": "foreigncurrency",
+   "name": "Döviz",
+   "category": "documentsIntl",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": true
+  },
+  {
+   "id": "intlcreditcard",
+   "name": "Yurt dışı onaylı kredi kartı",
+   "category": "documentsIntl",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": true
+  },
+  {
+   "id": "plugadapter",
+   "name": "Priz adaptörü",
+   "category": "documentsIntl",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": true
+  },
+  {
+   "id": "roaminginfo",
+   "name": "Roaming paketi bilgisi",
+   "category": "documentsIntl",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": true
+  },
+  {
+   "id": "embassycontact",
+   "name": "Büyükelçilik iletişim",
+   "category": "documentsIntl",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": true
+  },
+  {
+   "id": "vaccinecard",
+   "name": "Aşı kartı / sertifikası",
+   "category": "documentsIntl",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": true
+  },
+  {
+   "id": "photoid",
+   "name": "Vesikalık fotoğraf",
+   "category": "documentsIntl",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": true
+  },
+  {
+   "id": "condom",
+   "name": "Prezervatif",
+   "category": "intimate",
+   "gender": "maleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "lubricant",
+   "name": "Kayganlaştırıcı",
+   "category": "intimate",
+   "gender": "coupleOnly",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "birthcontrol",
+   "name": "Doğum kontrol hapı",
+   "category": "intimate",
+   "gender": "femaleAndCouple",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "neckpillow",
+   "name": "Boyun yastığı",
+   "category": "transport",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "sleepmask",
+   "name": "Uyku maskesi",
+   "category": "transport",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "earplugs",
+   "name": "Kulak tıkacı",
+   "category": "transport",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "travelblanket",
+   "name": "Seyahat battaniyesi",
+   "category": "transport",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "inflatablepillow",
+   "name": "Şişirilebilir yastık",
+   "category": "transport",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "book",
+   "name": "Kitap / dergi",
+   "category": "transport",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "puzzle",
+   "name": "Bulmaca / sudoku",
+   "category": "transport",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "playingcards",
+   "name": "Oyun kartları",
+   "category": "transport",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "phoneholder",
+   "name": "Tablet / telefon tutucu",
+   "category": "transport",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "carcharger",
+   "name": "Araç şarj cihazı",
+   "category": "transport",
+   "gender": "all",
+   "seasons": [],
+   "transports": [
+    "car"
+   ],
+   "intl": false
+  },
+  {
+   "id": "carphoneholder",
+   "name": "Araç telefon tutacağı",
+   "category": "transport",
+   "gender": "all",
+   "seasons": [],
+   "transports": [
+    "car"
+   ],
+   "intl": false
+  },
+  {
+   "id": "navigation",
+   "name": "Navigasyon",
+   "category": "transport",
+   "gender": "all",
+   "seasons": [],
+   "transports": [
+    "car"
+   ],
+   "intl": false
+  },
+  {
+   "id": "snacks",
+   "name": "Atıştırmalık",
+   "category": "transport",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "waterbottle",
+   "name": "Su şişesi",
+   "category": "transport",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "thermos",
+   "name": "Termos",
+   "category": "transport",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "baglock",
+   "name": "Çanta kilidi",
+   "category": "transport",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "luggagetag",
+   "name": "Valiz etiketi",
+   "category": "transport",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "sewingkit",
+   "name": "İğne / iplik seti",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "safetypin",
+   "name": "Çengelli iğne",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "scissors",
+   "name": "Küçük makas",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "tape",
+   "name": "Bant",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "plasticbag",
+   "name": "Plastik poşet",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "zipbag",
+   "name": "Kilitli poşet",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "clothespin",
+   "name": "Çamaşır mandası",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "clothesline",
+   "name": "Çamaşır ipi",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "stainremover",
+   "name": "Leke çıkarıcı",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "shoecare",
+   "name": "Ayakkabı bakımı / boyası",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "umbrella",
+   "name": "Şemsiye",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "raincoat",
+   "name": "Yağmurluk",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "sunglasses",
+   "name": "Güneş gözlüğü",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "glassescase",
+   "name": "Gözlük kılıfı",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "flashlight",
+   "name": "El feneri",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "multitool",
+   "name": "Çakı / çok amaçlı alet",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "lighter",
+   "name": "Çakmak / kibrit",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "pen",
+   "name": "Kalem",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "notebook",
+   "name": "Not defteri",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "map",
+   "name": "Harita",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "guidebook",
+   "name": "Rehber kitap",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "wallet",
+   "name": "Cüzdan",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "beltbag",
+   "name": "Bel çantası",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "daypack",
+   "name": "Günlük sırt çantası",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "beachbag",
+   "name": "Plaj çantası",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [
+    "summer"
+   ],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "laundrybag",
+   "name": "Kirli çamaşır torbası",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "shoebag",
+   "name": "Ayakkabı torbası",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "toiletrybag",
+   "name": "Tuvalet çantası",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "whistle",
+   "name": "Düdük (acil durum)",
+   "category": "practical",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  }
+ ],
+ "checks": [
+  {
+   "id": "lights",
+   "name": "Tüm ışıkları kapat",
+   "category": "electric",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "tv",
+   "name": "TV fişini çek",
+   "category": "electric",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "ac",
+   "name": "Klima / ısıtıcı kapat",
+   "category": "electric",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "plugs",
+   "name": "Gereksiz prizleri çek",
+   "category": "electric",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "computer",
+   "name": "Bilgisayarı kapat",
+   "category": "electric",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "chargers",
+   "name": "Şarj aletlerini çek",
+   "category": "electric",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "washingmachine",
+   "name": "Çamaşır / bulaşık makinesi kapalı mı",
+   "category": "electric",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "iron",
+   "name": "Ütü kapalı mı",
+   "category": "electric",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "mainwater",
+   "name": "Ana su vanasını kapat",
+   "category": "waterGas",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "faucets",
+   "name": "Muslukları kontrol et",
+   "category": "waterGas",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "gasvalve",
+   "name": "Doğalgaz vanasını kapat",
+   "category": "waterGas",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "gastube",
+   "name": "Tüp varsa kontrol et",
+   "category": "waterGas",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "toilet",
+   "name": "Klozet sifonu kontrol",
+   "category": "waterGas",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "fridge",
+   "name": "Buzdolabı kontrol (bozulacaklar)",
+   "category": "kitchen",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "trash",
+   "name": "Çöpü at",
+   "category": "kitchen",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "recycle",
+   "name": "Geri dönüşümü at",
+   "category": "kitchen",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "dishwasher",
+   "name": "Bulaşık makinesini boşalt",
+   "category": "kitchen",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "oven",
+   "name": "Fırın / ocak kapalı mı",
+   "category": "kitchen",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "foodarrange",
+   "name": "Yiyecekleri düzenle",
+   "category": "kitchen",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "windows",
+   "name": "Tüm pencereleri kapat",
+   "category": "security",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "balcony",
+   "name": "Balkon kapısını kilitle",
+   "category": "security",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "door",
+   "name": "Kapıyı kilitle",
+   "category": "security",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "alarm",
+   "name": "Alarm sistemini aktif et",
+   "category": "security",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "camera",
+   "name": "Kamera sistemini kontrol et",
+   "category": "security",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "sparekey",
+   "name": "Yedek anahtarı birine ver",
+   "category": "security",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "valuables",
+   "name": "Değerli eşyaları sakla",
+   "category": "security",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "mailbox",
+   "name": "Posta kutusunu boşalt",
+   "category": "security",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "plants",
+   "name": "Bitkileri sula",
+   "category": "other",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "plantcare",
+   "name": "Bitkiler için düzenleme yap",
+   "category": "other",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "pets",
+   "name": "Evcil hayvan düzenlemesi",
+   "category": "other",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "mail",
+   "name": "Posta / kargo düzenlemesi",
+   "category": "other",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "thermostat",
+   "name": "Termostatı ayarla",
+   "category": "other",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "blinds",
+   "name": "Panjur / perde kapat",
+   "category": "other",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "timerlamp",
+   "name": "Zamanlayıcı lamba kur",
+   "category": "other",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "neighbor",
+   "name": "Komşuyu bilgilendir",
+   "category": "other",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  }
+ ],
+ "preps": [
+  {
+   "id": "haircut",
+   "name": "Saç / sakal tıraşı",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "nail_cut",
+   "name": "Tırnak kesmek",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "skin_care",
+   "name": "Cilt bakımı / ağda",
+   "category": "personalCare",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "withdraw_money",
+   "name": "Para çekmek",
+   "category": "finance",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "currency_exchange",
+   "name": "Döviz dönüşümü (TL → dolar / euro)",
+   "category": "finance",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": true
+  },
+  {
+   "id": "charge_phone",
+   "name": "Telefonu şarj etmek",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "charge_headphones",
+   "name": "Bluetooth kulaklığı şarj etmek",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "charge_powerbank",
+   "name": "Powerbank'ı şarj etmek",
+   "category": "electronics",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "grocery_shopping",
+   "name": "Market alışverişi",
+   "category": "shopping",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  },
+  {
+   "id": "download_offline_map",
+   "name": "Offline harita indirmek",
+   "category": "travelPrep",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": true
+  },
+  {
+   "id": "download_videos",
+   "name": "Yolda izlemek için video indirmek",
+   "category": "travelPrep",
+   "gender": "all",
+   "seasons": [],
+   "transports": [],
+   "intl": false
+  }
+ ]
+}

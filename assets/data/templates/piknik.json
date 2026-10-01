@@ -1,0 +1,997 @@
+{
+ "id": "piknik",
+ "name": "Piknik",
+ "description": "Mangaldan oyuncağa: kişi sayısı, mangal ve konuma göre piknik hazırlığı.",
+ "icon": "outdoor_grill",
+ "color": "#F57C00",
+ "kind": "inventory",
+ "dateMode": "single",
+ "dateLabel": "Piknik günü",
+ "endDateLabel": null,
+ "textFields": [
+  {
+   "id": "place",
+   "label": "Yer",
+   "hint": "Belgrad Ormanı"
+  }
+ ],
+ "filters": [
+  {
+   "id": "group",
+   "label": "Grup",
+   "question": "Kaç kişi olacaksınız?",
+   "options": [
+    {
+     "id": "small",
+     "label": "2-4 kişi",
+     "icon": "people"
+    },
+    {
+     "id": "medium",
+     "label": "5-8 kişi",
+     "icon": "groups"
+    },
+    {
+     "id": "large",
+     "label": "9+ kişi",
+     "icon": "diversity_3"
+    }
+   ],
+   "default": "small"
+  },
+  {
+   "id": "bbq",
+   "label": "Mangal",
+   "question": "Mangal yakılacak mı?",
+   "options": [
+    {
+     "id": "no",
+     "label": "Hayır"
+    },
+    {
+     "id": "yes",
+     "label": "Evet",
+     "icon": "outdoor_grill"
+    }
+   ],
+   "default": "yes"
+  },
+  {
+   "id": "kids",
+   "label": "Çocuk",
+   "question": "Çocuk olacak mı?",
+   "options": [
+    {
+     "id": "no",
+     "label": "Hayır"
+    },
+    {
+     "id": "yes",
+     "label": "Evet",
+     "icon": "child_care"
+    }
+   ],
+   "default": "no"
+  },
+  {
+   "id": "place",
+   "label": "Konum",
+   "question": "Nerede?",
+   "options": [
+    {
+     "id": "park",
+     "label": "Park / orman",
+     "icon": "park"
+    },
+    {
+     "id": "beach",
+     "label": "Sahil",
+     "icon": "beach_access"
+    },
+    {
+     "id": "countryside",
+     "label": "Bağ / köy",
+     "icon": "landscape"
+    }
+   ],
+   "default": "park"
+  }
+ ],
+ "sections": [
+  {
+   "id": "main",
+   "name": "Piknik",
+   "icon": "outdoor_grill"
+  }
+ ],
+ "categories": [
+  {
+   "id": "food",
+   "name": "Yiyecek",
+   "icon": "lunch_dining",
+   "color": "#FF9800",
+   "section": "main"
+  },
+  {
+   "id": "bbq",
+   "name": "Mangal ve Pişirme",
+   "icon": "outdoor_grill",
+   "color": "#EF5350",
+   "section": "main"
+  },
+  {
+   "id": "drinks",
+   "name": "İçecek",
+   "icon": "local_drink",
+   "color": "#26C6DA",
+   "section": "main"
+  },
+  {
+   "id": "serving",
+   "name": "Servis ve Sofra",
+   "icon": "table_restaurant",
+   "color": "#FFC107",
+   "section": "main"
+  },
+  {
+   "id": "seating",
+   "name": "Oturma ve Gölge",
+   "icon": "chair",
+   "color": "#66BB6A",
+   "section": "main"
+  },
+  {
+   "id": "fun",
+   "name": "Oyun ve Eğlence",
+   "icon": "sports_soccer",
+   "color": "#AB47BC",
+   "section": "main"
+  },
+  {
+   "id": "hygiene",
+   "name": "Temizlik ve Hijyen",
+   "icon": "sanitizer",
+   "color": "#26A69A",
+   "section": "main"
+  },
+  {
+   "id": "safety",
+   "name": "Güvenlik ve Sağlık",
+   "icon": "health_and_safety",
+   "color": "#EC407A",
+   "section": "main"
+  },
+  {
+   "id": "kids",
+   "name": "Çocuk",
+   "icon": "child_care",
+   "color": "#7E57C2",
+   "section": "main"
+  },
+  {
+   "id": "misc",
+   "name": "Diğer",
+   "icon": "category",
+   "color": "#9E9E9E",
+   "section": "main"
+  }
+ ],
+ "items": [
+  {
+   "id": "bread",
+   "name": "Ekmek / lavaş",
+   "category": "food",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet",
+   "essential": true
+  },
+  {
+   "id": "meat",
+   "name": "Et / köfte / tavuk (marine)",
+   "category": "food",
+   "when": {
+    "bbq": [
+     "yes"
+    ]
+   },
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg",
+   "essential": true
+  },
+  {
+   "id": "sausage",
+   "name": "Sucuk / sosis",
+   "category": "food",
+   "when": {
+    "bbq": [
+     "yes"
+    ]
+   },
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "veg_grill",
+   "name": "Mangallık sebze (biber, domates, patlıcan, mantar)",
+   "category": "food",
+   "when": {
+    "bbq": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "cheese",
+   "name": "Peynir çeşitleri",
+   "category": "food"
+  },
+  {
+   "id": "olives",
+   "name": "Zeytin",
+   "category": "food"
+  },
+  {
+   "id": "salad",
+   "name": "Salata malzemeleri",
+   "category": "food"
+  },
+  {
+   "id": "fruit",
+   "name": "Meyve",
+   "category": "food",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "watermelon",
+   "name": "Karpuz / kavun",
+   "category": "food",
+   "when": {
+    "place": [
+     "beach",
+     "countryside"
+    ]
+   }
+  },
+  {
+   "id": "pastry",
+   "name": "Börek / poğaça",
+   "category": "food"
+  },
+  {
+   "id": "boiled_eggs",
+   "name": "Haşlanmış yumurta",
+   "category": "food"
+  },
+  {
+   "id": "sandwiches",
+   "name": "Sandviç / dürüm",
+   "category": "food",
+   "when": {
+    "bbq": [
+     "no"
+    ]
+   }
+  },
+  {
+   "id": "chips",
+   "name": "Cips / kraker",
+   "category": "food"
+  },
+  {
+   "id": "nuts",
+   "name": "Kuruyemiş / çekirdek",
+   "category": "food"
+  },
+  {
+   "id": "dessert",
+   "name": "Tatlı / kek / kurabiye",
+   "category": "food"
+  },
+  {
+   "id": "condiments",
+   "name": "Ketçap, mayonez, hardal",
+   "category": "food"
+  },
+  {
+   "id": "salt_spices",
+   "name": "Tuz, karabiber, pul biber",
+   "category": "food",
+   "essential": true
+  },
+  {
+   "id": "butter_oil",
+   "name": "Tereyağı / zeytinyağı",
+   "category": "food"
+  },
+  {
+   "id": "lemon",
+   "name": "Limon",
+   "category": "food"
+  },
+  {
+   "id": "pickles",
+   "name": "Turşu",
+   "category": "food"
+  },
+  {
+   "id": "dips",
+   "name": "Sos / meze (humus, cacık, ezme)",
+   "category": "food"
+  },
+  {
+   "id": "grill",
+   "name": "Mangal",
+   "category": "bbq",
+   "when": {
+    "bbq": [
+     "yes"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "charcoal",
+   "name": "Mangal kömürü",
+   "category": "bbq",
+   "when": {
+    "bbq": [
+     "yes"
+    ]
+   },
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "torba",
+   "essential": true
+  },
+  {
+   "id": "firestarter",
+   "name": "Tutuşturucu / çıra",
+   "category": "bbq",
+   "when": {
+    "bbq": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "lighter",
+   "name": "Çakmak / kibrit",
+   "category": "bbq",
+   "when": {
+    "bbq": [
+     "yes"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "tongs",
+   "name": "Maşa",
+   "category": "bbq",
+   "when": {
+    "bbq": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "grill_grate",
+   "name": "Izgara teli",
+   "category": "bbq",
+   "when": {
+    "bbq": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "skewers",
+   "name": "Şiş",
+   "category": "bbq",
+   "when": {
+    "bbq": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "fan",
+   "name": "Yelpaze / körük",
+   "category": "bbq",
+   "when": {
+    "bbq": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "foil",
+   "name": "Alüminyum folyo",
+   "category": "bbq",
+   "when": {
+    "bbq": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "grill_brush",
+   "name": "Izgara fırçası",
+   "category": "bbq",
+   "when": {
+    "bbq": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "cutting_board",
+   "name": "Kesme tahtası",
+   "category": "bbq"
+  },
+  {
+   "id": "knife",
+   "name": "Bıçak",
+   "category": "bbq",
+   "essential": true
+  },
+  {
+   "id": "heat_gloves",
+   "name": "Isıya dayanıklı eldiven",
+   "category": "bbq",
+   "when": {
+    "bbq": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "water_for_fire",
+   "name": "Ateşi söndürmek için su",
+   "category": "bbq",
+   "when": {
+    "bbq": [
+     "yes"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "portable_stove",
+   "name": "Kamp ocağı / tüp",
+   "category": "bbq",
+   "when": {
+    "bbq": [
+     "no"
+    ]
+   }
+  },
+  {
+   "id": "teapot",
+   "name": "Çaydanlık / semaver",
+   "category": "bbq"
+  },
+  {
+   "id": "water",
+   "name": "Su",
+   "category": "drinks",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "büyük şişe",
+   "essential": true
+  },
+  {
+   "id": "tea",
+   "name": "Çay / demlik poşet",
+   "category": "drinks"
+  },
+  {
+   "id": "coffee",
+   "name": "Kahve",
+   "category": "drinks"
+  },
+  {
+   "id": "ayran",
+   "name": "Ayran",
+   "category": "drinks"
+  },
+  {
+   "id": "soda",
+   "name": "Gazlı içecek / meyve suyu",
+   "category": "drinks"
+  },
+  {
+   "id": "ice",
+   "name": "Buz",
+   "category": "drinks"
+  },
+  {
+   "id": "cooler",
+   "name": "Buzluk / soğutucu çanta",
+   "category": "drinks",
+   "essential": true
+  },
+  {
+   "id": "ice_packs",
+   "name": "Buz aküsü",
+   "category": "drinks"
+  },
+  {
+   "id": "thermos",
+   "name": "Termos",
+   "category": "drinks"
+  },
+  {
+   "id": "plates",
+   "name": "Tabak",
+   "category": "serving",
+   "qty": {
+    "base": 4,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "cups",
+   "name": "Bardak",
+   "category": "serving",
+   "qty": {
+    "base": 4,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "cutlery",
+   "name": "Çatal, kaşık, bıçak",
+   "category": "serving",
+   "qty": {
+    "base": 4,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "takım"
+  },
+  {
+   "id": "napkins",
+   "name": "Peçete",
+   "category": "serving",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "tablecloth",
+   "name": "Masa örtüsü / muşamba",
+   "category": "serving"
+  },
+  {
+   "id": "serving_bowls",
+   "name": "Servis kabı / kase",
+   "category": "serving"
+  },
+  {
+   "id": "bottle_opener",
+   "name": "Açacak / tirbuşon",
+   "category": "serving"
+  },
+  {
+   "id": "containers",
+   "name": "Saklama kabı",
+   "category": "serving"
+  },
+  {
+   "id": "tray",
+   "name": "Tepsi",
+   "category": "serving"
+  },
+  {
+   "id": "tea_glasses",
+   "name": "Çay bardağı",
+   "category": "serving",
+   "qty": {
+    "base": 4,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "blanket",
+   "name": "Piknik örtüsü / battaniye",
+   "category": "seating",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "essential": true
+  },
+  {
+   "id": "chairs",
+   "name": "Kamp sandalyesi",
+   "category": "seating",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "table",
+   "name": "Katlanır masa",
+   "category": "seating",
+   "when": {
+    "group": [
+     "medium",
+     "large"
+    ]
+   }
+  },
+  {
+   "id": "mat",
+   "name": "Mat / minder",
+   "category": "seating"
+  },
+  {
+   "id": "umbrella",
+   "name": "Şemsiye / tente",
+   "category": "seating",
+   "when": {
+    "place": [
+     "beach"
+    ]
+   }
+  },
+  {
+   "id": "hammock",
+   "name": "Hamak",
+   "category": "seating",
+   "when": {
+    "place": [
+     "park",
+     "countryside"
+    ]
+   }
+  },
+  {
+   "id": "gazebo",
+   "name": "Gölgelik / gazebo",
+   "category": "seating",
+   "when": {
+    "group": [
+     "medium",
+     "large"
+    ]
+   }
+  },
+  {
+   "id": "ball",
+   "name": "Top (futbol / voleybol)",
+   "category": "fun"
+  },
+  {
+   "id": "badminton",
+   "name": "Badminton / raket seti",
+   "category": "fun"
+  },
+  {
+   "id": "cards",
+   "name": "İskambil / okey / tavla",
+   "category": "fun"
+  },
+  {
+   "id": "speaker",
+   "name": "Bluetooth hoparlör",
+   "category": "fun"
+  },
+  {
+   "id": "frisbee",
+   "name": "Frizbi",
+   "category": "fun"
+  },
+  {
+   "id": "book",
+   "name": "Kitap / dergi",
+   "category": "fun"
+  },
+  {
+   "id": "camera",
+   "name": "Fotoğraf makinesi",
+   "category": "fun"
+  },
+  {
+   "id": "kite",
+   "name": "Uçurtma",
+   "category": "fun",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "wet_wipes",
+   "name": "Islak mendil",
+   "category": "hygiene",
+   "essential": true
+  },
+  {
+   "id": "sanitizer",
+   "name": "El dezenfektanı",
+   "category": "hygiene"
+  },
+  {
+   "id": "trash_bags",
+   "name": "Çöp poşeti",
+   "category": "hygiene",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "rulo",
+   "essential": true
+  },
+  {
+   "id": "paper_towel",
+   "name": "Kağıt havlu",
+   "category": "hygiene"
+  },
+  {
+   "id": "toilet_paper",
+   "name": "Tuvalet kağıdı",
+   "category": "hygiene"
+  },
+  {
+   "id": "soap_water",
+   "name": "Sabun ve el yıkama suyu",
+   "category": "hygiene"
+  },
+  {
+   "id": "dish_soap",
+   "name": "Bulaşık deterjanı / sünger",
+   "category": "hygiene",
+   "when": {
+    "group": [
+     "medium",
+     "large"
+    ]
+   }
+  },
+  {
+   "id": "towels",
+   "name": "Havlu",
+   "category": "hygiene"
+  },
+  {
+   "id": "first_aid",
+   "name": "İlk yardım çantası",
+   "category": "safety",
+   "essential": true
+  },
+  {
+   "id": "sunscreen",
+   "name": "Güneş kremi",
+   "category": "safety",
+   "essential": true
+  },
+  {
+   "id": "insect_repellent",
+   "name": "Sinek / kene kovucu",
+   "category": "safety"
+  },
+  {
+   "id": "bite_cream",
+   "name": "Böcek ısırığı kremi",
+   "category": "safety"
+  },
+  {
+   "id": "hats",
+   "name": "Şapka",
+   "category": "safety"
+  },
+  {
+   "id": "sunglasses",
+   "name": "Güneş gözlüğü",
+   "category": "safety"
+  },
+  {
+   "id": "painkiller",
+   "name": "Ağrı kesici",
+   "category": "safety"
+  },
+  {
+   "id": "allergy_med",
+   "name": "Alerji ilacı",
+   "category": "safety"
+  },
+  {
+   "id": "flashlight",
+   "name": "El feneri",
+   "category": "safety",
+   "when": {
+    "place": [
+     "park",
+     "countryside"
+    ]
+   }
+  },
+  {
+   "id": "powerbank",
+   "name": "Powerbank",
+   "category": "safety"
+  },
+  {
+   "id": "phone_charger",
+   "name": "Araç şarjı",
+   "category": "safety"
+  },
+  {
+   "id": "kid_snacks",
+   "name": "Çocuk atıştırmalıkları",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "kid_toys",
+   "name": "Oyuncaklar / kova kürek",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "spare_clothes",
+   "name": "Yedek kıyafet",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "kid_sunscreen",
+   "name": "Çocuk güneş kremi",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "kid_hat",
+   "name": "Çocuk şapkası",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "bubbles",
+   "name": "Baloncuk / tebeşir",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "kid_water_bottle",
+   "name": "Çocuk matarası",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "kid_meds",
+   "name": "Çocuk ateş düşürücü",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "floaties",
+   "name": "Kolluk / can yeleği",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ],
+    "place": [
+     "beach"
+    ]
+   }
+  },
+  {
+   "id": "cash",
+   "name": "Nakit para (giriş ücreti / otopark)",
+   "category": "misc"
+  },
+  {
+   "id": "keys",
+   "name": "Anahtarlar",
+   "category": "misc",
+   "essential": true
+  },
+  {
+   "id": "bags",
+   "name": "Yedek poşet / torba",
+   "category": "misc"
+  },
+  {
+   "id": "rope",
+   "name": "İp / mandal",
+   "category": "misc"
+  },
+  {
+   "id": "swimsuit",
+   "name": "Mayo / havlu",
+   "category": "misc",
+   "when": {
+    "place": [
+     "beach"
+    ]
+   }
+  },
+  {
+   "id": "spare_shoes",
+   "name": "Yedek terlik / ayakkabı",
+   "category": "misc"
+  },
+  {
+   "id": "multitool",
+   "name": "Çakı",
+   "category": "misc"
+  }
+ ],
+ "preselect": true,
+ "quickAdd": false
+}

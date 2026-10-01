@@ -1,0 +1,736 @@
+{
+ "id": "plaj",
+ "name": "Plaj",
+ "description": "Deniz günü için güneş koruma, yüzme, çocuk ve aktivite ekipmanı; akşam dönüşü unutulanlar dahil.",
+ "icon": "beach_access",
+ "color": "#00ACC1",
+ "dateMode": "single",
+ "dateLabel": "Plaj günü",
+ "endDateLabel": null,
+ "textFields": [
+  {
+   "id": "place",
+   "label": "Plaj / yer",
+   "hint": "İsteğe bağlı"
+  }
+ ],
+ "filters": [
+  {
+   "id": "who",
+   "label": "Kimler",
+   "question": "Kimler gidiyor?",
+   "options": [
+    {
+     "id": "solo",
+     "label": "Tek / çift",
+     "icon": "person"
+    },
+    {
+     "id": "family",
+     "label": "Aile",
+     "icon": "family_restroom"
+    },
+    {
+     "id": "friends",
+     "label": "Arkadaş grubu",
+     "icon": "groups"
+    }
+   ],
+   "default": "family"
+  },
+  {
+   "id": "kids",
+   "label": "Çocuk",
+   "question": "Çocuk olacak mı?",
+   "options": [
+    {
+     "id": "no",
+     "label": "Hayır"
+    },
+    {
+     "id": "yes",
+     "label": "Evet",
+     "icon": "child_care"
+    }
+   ],
+   "default": "no"
+  },
+  {
+   "id": "duration",
+   "label": "Süre",
+   "question": "Ne kadar kalınacak?",
+   "options": [
+    {
+     "id": "half",
+     "label": "Yarım gün",
+     "icon": "wb_sunny"
+    },
+    {
+     "id": "full",
+     "label": "Tüm gün",
+     "icon": "beach_access"
+    }
+   ],
+   "default": "full"
+  },
+  {
+   "id": "activity",
+   "label": "Aktivite",
+   "question": "Ne yapılacak?",
+   "options": [
+    {
+     "id": "swim",
+     "label": "Yüzme / güneşlenme",
+     "icon": "pool"
+    },
+    {
+     "id": "snorkel",
+     "label": "Şnorkel / dalış",
+     "icon": "scuba_diving"
+    },
+    {
+     "id": "sport",
+     "label": "Spor (voleybol, raket)",
+     "icon": "sports_volleyball"
+    }
+   ],
+   "default": "swim"
+  },
+  {
+   "id": "food",
+   "label": "Yemek",
+   "question": "Yemek nasıl?",
+   "options": [
+    {
+     "id": "bring",
+     "label": "Evden götürülecek",
+     "icon": "lunch_dining"
+    },
+    {
+     "id": "buy",
+     "label": "Orada alınacak",
+     "icon": "storefront"
+    }
+   ],
+   "default": "bring"
+  }
+ ],
+ "sections": [
+  {
+   "id": "main",
+   "name": "Plaj",
+   "icon": "beach_access"
+  }
+ ],
+ "categories": [
+  {
+   "id": "sun",
+   "name": "Güneş Koruma",
+   "icon": "wb_sunny",
+   "color": "#FFC107",
+   "section": "main"
+  },
+  {
+   "id": "swim",
+   "name": "Yüzme ve Havlu",
+   "icon": "pool",
+   "color": "#26C6DA",
+   "section": "main"
+  },
+  {
+   "id": "comfort",
+   "name": "Oturma ve Gölge",
+   "icon": "beach_access",
+   "color": "#FF9800",
+   "section": "main"
+  },
+  {
+   "id": "food",
+   "name": "Yiyecek ve İçecek",
+   "icon": "local_drink",
+   "color": "#66BB6A",
+   "section": "main"
+  },
+  {
+   "id": "gear",
+   "name": "Aktivite Ekipmanı",
+   "icon": "sports_volleyball",
+   "color": "#448AFF",
+   "section": "main"
+  },
+  {
+   "id": "care",
+   "name": "Bakım ve Hijyen",
+   "icon": "sanitizer",
+   "color": "#26A69A",
+   "section": "main"
+  },
+  {
+   "id": "kids",
+   "name": "Çocuk",
+   "icon": "child_care",
+   "color": "#7E57C2",
+   "section": "main"
+  },
+  {
+   "id": "misc",
+   "name": "Diğer",
+   "icon": "category",
+   "color": "#9E9E9E",
+   "section": "main"
+  }
+ ],
+ "items": [
+  {
+   "id": "sunscreen",
+   "name": "Güneş kremi (SPF 30+)",
+   "category": "sun",
+   "essential": true
+  },
+  {
+   "id": "after_sun",
+   "name": "Güneş sonrası losyon / aloe vera",
+   "category": "sun"
+  },
+  {
+   "id": "sunglasses",
+   "name": "Güneş gözlüğü",
+   "category": "sun",
+   "essential": true
+  },
+  {
+   "id": "hat",
+   "name": "Şapka",
+   "category": "sun",
+   "essential": true
+  },
+  {
+   "id": "lip_balm",
+   "name": "Güneş korumalı dudak kremi",
+   "category": "sun"
+  },
+  {
+   "id": "umbrella",
+   "name": "Plaj şemsiyesi",
+   "category": "sun",
+   "when": {
+    "duration": [
+     "full"
+    ]
+   }
+  },
+  {
+   "id": "sun_tent",
+   "name": "Gölgelik / plaj çadırı",
+   "category": "sun",
+   "when": [
+    {
+     "kids": [
+      "yes"
+     ]
+    },
+    {
+     "who": [
+      "family"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "swimsuit",
+   "name": "Mayo / bikini / şort",
+   "category": "swim",
+   "essential": true
+  },
+  {
+   "id": "spare_swimsuit",
+   "name": "Yedek mayo",
+   "category": "swim",
+   "when": {
+    "duration": [
+     "full"
+    ]
+   }
+  },
+  {
+   "id": "towel",
+   "name": "Plaj havlusu",
+   "category": "swim",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet",
+   "essential": true
+  },
+  {
+   "id": "small_towel",
+   "name": "Küçük havlu / peştemal",
+   "category": "swim"
+  },
+  {
+   "id": "flipflops",
+   "name": "Terlik",
+   "category": "swim",
+   "essential": true
+  },
+  {
+   "id": "water_shoes",
+   "name": "Deniz ayakkabısı (taşlı plaj)",
+   "category": "swim"
+  },
+  {
+   "id": "goggles",
+   "name": "Yüzücü gözlüğü",
+   "category": "swim"
+  },
+  {
+   "id": "swim_cap",
+   "name": "Bone",
+   "category": "swim"
+  },
+  {
+   "id": "dry_bag",
+   "name": "Islak eşya poşeti / kuru çanta",
+   "category": "swim"
+  },
+  {
+   "id": "change_clothes",
+   "name": "Dönüş için kuru kıyafet / iç çamaşırı",
+   "category": "swim",
+   "essential": true
+  },
+  {
+   "id": "cover_up",
+   "name": "Pareo / plaj elbisesi",
+   "category": "swim"
+  },
+  {
+   "id": "mat",
+   "name": "Plaj matı / hasır",
+   "category": "comfort",
+   "essential": true
+  },
+  {
+   "id": "chair",
+   "name": "Katlanır plaj sandalyesi",
+   "category": "comfort",
+   "when": {
+    "duration": [
+     "full"
+    ]
+   }
+  },
+  {
+   "id": "cooler",
+   "name": "Soğutucu çanta / buzluk",
+   "category": "comfort",
+   "when": {
+    "duration": [
+     "full"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "ice_packs",
+   "name": "Buz aküsü",
+   "category": "comfort",
+   "when": {
+    "duration": [
+     "full"
+    ]
+   }
+  },
+  {
+   "id": "beach_bag",
+   "name": "Plaj çantası",
+   "category": "comfort",
+   "essential": true
+  },
+  {
+   "id": "pillow",
+   "name": "Şişme yastık",
+   "category": "comfort"
+  },
+  {
+   "id": "blanket",
+   "name": "Örtü / ince battaniye (akşam serinliği)",
+   "category": "comfort",
+   "when": {
+    "duration": [
+     "full"
+    ]
+   }
+  },
+  {
+   "id": "water",
+   "name": "Su",
+   "category": "food",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "büyük şişe",
+   "essential": true
+  },
+  {
+   "id": "cold_drinks",
+   "name": "Soğuk içecek / ayran / meyve suyu",
+   "category": "food"
+  },
+  {
+   "id": "fruit",
+   "name": "Meyve (karpuz, kavun, üzüm)",
+   "category": "food",
+   "when": {
+    "food": [
+     "bring"
+    ]
+   }
+  },
+  {
+   "id": "sandwiches",
+   "name": "Sandviç / dürüm / börek",
+   "category": "food",
+   "when": {
+    "food": [
+     "bring"
+    ]
+   }
+  },
+  {
+   "id": "snacks",
+   "name": "Atıştırmalık (kraker, kuruyemiş)",
+   "category": "food"
+  },
+  {
+   "id": "salt_snack",
+   "name": "Tuzlu atıştırmalık (terleme için)",
+   "category": "food",
+   "when": {
+    "duration": [
+     "full"
+    ]
+   }
+  },
+  {
+   "id": "cutlery",
+   "name": "Tabak, çatal, bardak",
+   "category": "food",
+   "when": {
+    "food": [
+     "bring"
+    ]
+   }
+  },
+  {
+   "id": "napkins",
+   "name": "Peçete / kağıt havlu",
+   "category": "food",
+   "when": {
+    "food": [
+     "bring"
+    ]
+   }
+  },
+  {
+   "id": "cash",
+   "name": "Nakit para (büfe, şezlong, otopark)",
+   "category": "food",
+   "when": {
+    "food": [
+     "buy"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "thermos",
+   "name": "Termos (çay / kahve)",
+   "category": "food"
+  },
+  {
+   "id": "snorkel",
+   "name": "Şnorkel + maske",
+   "category": "gear",
+   "when": {
+    "activity": [
+     "snorkel"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "fins",
+   "name": "Palet",
+   "category": "gear",
+   "when": {
+    "activity": [
+     "snorkel"
+    ]
+   }
+  },
+  {
+   "id": "ball",
+   "name": "Plaj topu / voleybol topu",
+   "category": "gear",
+   "when": {
+    "activity": [
+     "sport"
+    ]
+   }
+  },
+  {
+   "id": "rackets",
+   "name": "Plaj raketi",
+   "category": "gear",
+   "when": {
+    "activity": [
+     "sport"
+    ]
+   }
+  },
+  {
+   "id": "frisbee",
+   "name": "Frizbi",
+   "category": "gear",
+   "when": {
+    "who": [
+     "friends",
+     "family"
+    ]
+   }
+  },
+  {
+   "id": "float",
+   "name": "Şişme deniz yatağı / simit",
+   "category": "gear"
+  },
+  {
+   "id": "pump",
+   "name": "Şişirme pompası",
+   "category": "gear"
+  },
+  {
+   "id": "speaker",
+   "name": "Bluetooth hoparlör",
+   "category": "gear",
+   "when": {
+    "who": [
+     "friends"
+    ]
+   }
+  },
+  {
+   "id": "book",
+   "name": "Kitap / dergi / kulaklık",
+   "category": "gear"
+  },
+  {
+   "id": "waterproof_case",
+   "name": "Su geçirmez telefon kılıfı",
+   "category": "gear"
+  },
+  {
+   "id": "camera",
+   "name": "Fotoğraf makinesi / aksiyon kamerası",
+   "category": "gear"
+  },
+  {
+   "id": "powerbank",
+   "name": "Powerbank",
+   "category": "gear",
+   "when": {
+    "duration": [
+     "full"
+    ]
+   }
+  },
+  {
+   "id": "wet_wipes",
+   "name": "Islak mendil",
+   "category": "care",
+   "essential": true
+  },
+  {
+   "id": "hand_sanitizer",
+   "name": "El dezenfektanı",
+   "category": "care"
+  },
+  {
+   "id": "trash_bags",
+   "name": "Çöp poşeti",
+   "category": "care",
+   "essential": true
+  },
+  {
+   "id": "zip_bags",
+   "name": "Kilitli poşet (telefon, anahtar)",
+   "category": "care"
+  },
+  {
+   "id": "first_aid",
+   "name": "Küçük ilk yardım seti (yara bandı, antiseptik)",
+   "category": "care"
+  },
+  {
+   "id": "sting_relief",
+   "name": "Denizanası / böcek sokması kremi",
+   "category": "care"
+  },
+  {
+   "id": "hair_brush",
+   "name": "Tarak / saç tokası",
+   "category": "care"
+  },
+  {
+   "id": "deodorant",
+   "name": "Deodorant",
+   "category": "care"
+  },
+  {
+   "id": "tissues",
+   "name": "Kağıt mendil",
+   "category": "care"
+  },
+  {
+   "id": "talc",
+   "name": "Kumu temizlemek için talk pudrası",
+   "category": "care",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "kid_sunscreen",
+   "name": "Çocuk güneş kremi (SPF 50)",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "kid_swim",
+   "name": "Çocuk mayosu / UV t-shirt",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "kid_hat",
+   "name": "Çocuk şapkası",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "armbands",
+   "name": "Kolluk / can yeleği",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "sand_toys",
+   "name": "Kum oyuncakları (kova, kürek)",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "kid_snacks",
+   "name": "Çocuk atıştırmalıkları",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "kid_change",
+   "name": "Yedek çocuk kıyafeti",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   },
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "takım"
+  },
+  {
+   "id": "kid_towel",
+   "name": "Çocuk havlusu / pançosu",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "keys_wallet",
+   "name": "Anahtar, cüzdan, kimlik",
+   "category": "misc",
+   "essential": true
+  },
+  {
+   "id": "phone",
+   "name": "Telefon (şarjı dolu)",
+   "category": "misc",
+   "essential": true
+  },
+  {
+   "id": "parking",
+   "name": "Otopark / plaj giriş bilgisi",
+   "category": "misc",
+   "note": "Rezervasyon gerekiyorsa önceden kontrol et"
+  },
+  {
+   "id": "spare_bag",
+   "name": "Yedek poşet / file",
+   "category": "misc"
+  },
+  {
+   "id": "sweater",
+   "name": "Hırka / ince mont (akşam)",
+   "category": "misc",
+   "when": {
+    "duration": [
+     "full"
+    ]
+   }
+  }
+ ],
+ "kind": "checklist",
+ "preselect": true,
+ "quickAdd": false
+}

@@ -1,0 +1,1483 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
+import '../core/app_icons.dart';
+import '../core/utils.dart';
+import '../models/template.dart';
+import '../models/user_list.dart';
+import '../providers/catalog_provider.dart';
+import '../providers/lists_provider.dart';
+import '../widgets/common.dart';
+import 'selection_screen.dart';
+
+class ListDetailScreen extends StatefulWidget {
+  const ListDetailScreen({super.key, required this.listId});
+  final String listId;
+
+  @override
+  State<ListDetailScreen> createState() => _ListDetailScreenState();
+}
+
+class _ListDetailScreenState extends State<ListDetailScreen> {
+  /// Kontrol listesinde: sadece işaretlenmemişler. Stok listesinde: sadece eksikler.
+  bool _onlyRemaining = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final lists = context.watch<ListsProvider>();
+    final list = lists.byId(widget.listId);
+    if (list == null) {
+      return Scaffold(
+        appBar: AppBar(),
+        body:
+            const EmptyView(icon: Icons.search_off, title: 'Liste bulunamadı'),
+      );
+    }
+    final color = colorFromHex(list.color);
+    final hasTabs = list.hasSections;
+
+    final scaffold = Scaffold(
+      appBar: AppBar(
+        title: Text(list.name, maxLines: 1, overflow: TextOverflow.ellipsis),
+        actions: [
+          IconButton(
+            tooltip: _onlyRemaining
+                ? 'Tümünü göster'
+                : (list.isInventory ? 'Sadece eksikler' : 'Sadece kalanlar'),
+            icon: Icon(_onlyRemaining
+                ? Icons.filter_alt_off_outlined
+                : (list.isInventory
+                    ? Icons.production_quantity_limits
+                    : Icons.rule)),
+            onPressed: () => setState(() => _onlyRemaining = !_onlyRemaining),
+          ),
+          IconButton(
+            tooltip: list.isFavorite ? 'Favoriden çıkar' : 'Favorilere ekle',
+            icon: Icon(list.isFavorite ? Icons.star : Icons.star_border,
+                color: list.isFavorite ? Colors.amber : null),
+            onPressed: () => lists.setFavorite(list.id, !list.isFavorite),
+          ),
+          PopupMenuButton<String>(
+            onSelected: (v) => _menuAction(v, list),
+            itemBuilder: (_) => [
+              if (list.isInventory) ...[
+                PopupMenuItem(
+                    value: 'transfer',
+                    enabled: list.missingCount > 0,
+                    child: ListTile(
+                        leading: const Icon(Icons.move_to_inbox_outlined),
+                        title: const Text('Eksikleri markete aktar'),
+                        subtitle: Text(list.missingCount == 0
+                            ? 'Eksik yok'
+                            : '${list.missingCount} kalem'))),
+                PopupMenuItem(
+                    value: 'shareMissing',
+                    enabled: list.missingCount > 0,
+                    child: const ListTile(
+                        leading: Icon(Icons.send_outlined),
+                        title: Text('Eksikleri paylaş'))),
+                const PopupMenuItem(
+                    value: 'stockAll',
+                    child: ListTile(
+                        leading: Icon(Icons.inventory_2_outlined),
+                        title: Text('Hepsini stokta işaretle'))),
+                const PopupMenuItem(
+                    value: 'stockNone',
+                    child: ListTile(
+                        leading: Icon(Icons.remove_shopping_cart_outlined),
+                        title: Text('Stokları sıfırla'))),
+                const PopupMenuDivider(),
+              ],
+              const PopupMenuItem(
+                  value: 'addCatalog',
+                  child: ListTile(
+                      leading: Icon(Icons.library_add_outlined),
+                      title: Text('Katalogdan ekle'))),
+              const PopupMenuItem(
+                  value: 'rename',
+                  child: ListTile(
+                      leading: Icon(Icons.edit_outlined),
+                      title: Text('Yeniden adlandır'))),
+              const PopupMenuItem(
+                  value: 'dates',
+                  child: ListTile(
+                      leading: Icon(Icons.event_outlined),
+                      title: Text('Tarihleri düzenle'))),
+              const PopupMenuItem(
+                  value: 'share',
+                  child: ListTile(
+                      leading: Icon(Icons.share_outlined),
+                      title: Text('Paylaş'))),
+              const PopupMenuItem(
+                  value: 'shareRemaining',
+                  child: ListTile(
+                      leading: Icon(Icons.send_outlined),
+                      title: Text('Kalanları paylaş'))),
+              const PopupMenuItem(
+                  value: 'duplicate',
+                  child: ListTile(
+                      leading: Icon(Icons.copy_outlined),
+                      title: Text('Kopyala'))),
+              const PopupMenuItem(
+                  value: 'reset',
+                  child: ListTile(
+                      leading: Icon(Icons.restart_alt),
+                      title: Text('İşaretleri sıfırla'))),
+              if (list.items.any((i) => i.reminderAt != null))
+                PopupMenuItem(
+                  value:
+                      lists.pendingReminderCount(list) > 0 ? 'remOff' : 'remOn',
+                  child: ListTile(
+                    leading: Icon(lists.pendingReminderCount(list) > 0
+                        ? Icons.notifications_off_outlined
+                        : Icons.notifications_active_outlined),
+                    title: Text(lists.pendingReminderCount(list) > 0
+                        ? 'Hatırlatıcıları kapat'
+                        : 'Hatırlatıcıları aç'),
+                  ),
+                ),
+              PopupMenuItem(
+                value: 'archive',
+                child: ListTile(
+                  leading: Icon(list.isArchived
+                      ? Icons.unarchive_outlined
+                      : Icons.archive_outlined),
+                  title: Text(list.isArchived ? 'Arşivden çıkar' : 'Arşivle'),
+                ),
+              ),
+              const PopupMenuDivider(),
+              PopupMenuItem(
+                value: 'delete',
+                child: ListTile(
+                  leading: Icon(Icons.delete_outline,
+                      color: Theme.of(context).colorScheme.error),
+                  title: Text('Sil',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.error)),
+                ),
+              ),
+            ],
+          ),
+        ],
+        bottom: hasTabs
+            ? TabBar(
+                isScrollable: true,
+                tabAlignment: TabAlignment.start,
+                tabs: [
+                  for (final s in list.sections)
+                    Tab(
+                        text:
+                            '${s.name} ${list.checkedInSection(s.id)}/${list.itemsOfSection(s.id).length}'),
+                ],
+              )
+            : null,
+      ),
+      floatingActionButton: list.quickAdd
+          ? null
+          : FloatingActionButton(
+              onPressed: () => _addItemDialog(list),
+              child: const Icon(Icons.add),
+            ),
+      bottomNavigationBar: list.quickAdd
+          ? _QuickAddBar(
+              list: list,
+              template:
+                  context.read<CatalogProvider>().templateById(list.templateId),
+              onDetailed: () => _addItemDialog(list),
+            )
+          : null,
+      body: Column(
+        children: [
+          _Header(
+              list: list,
+              color: color,
+              pendingReminders: lists.pendingReminderCount(list)),
+          Expanded(
+            child: hasTabs
+                ? TabBarView(children: [
+                    for (final s in list.sections) _sectionBody(list, s.id)
+                  ])
+                : _sectionBody(list, list.sections.first.id),
+          ),
+        ],
+      ),
+    );
+    return hasTabs
+        ? DefaultTabController(length: list.sections.length, child: scaffold)
+        : scaffold;
+  }
+
+  Widget _sectionBody(UserList list, String sectionId) {
+    final lists = context.read<ListsProvider>();
+    final children = <Widget>[];
+    for (final c in list.categoriesOf(sectionId)) {
+      var items = list.itemsOfCategory(c.id);
+      if (items.isEmpty) continue;
+      final total = items.length;
+      final done = list.isInventory
+          ? items.where((i) => i.inStock).length
+          : items.where((i) => i.isChecked).length;
+      if (_onlyRemaining) {
+        items = list.isInventory
+            ? items.where((i) => i.isMissing).toList()
+            : items.where((i) => !i.isChecked).toList();
+      } else if (list.isInventory) {
+        // Eksikler üstte, sıra korunarak
+        items = [
+          ...items.where((i) => i.isMissing),
+          ...items.where((i) => i.inStock),
+        ];
+      }
+      if (items.isEmpty) continue;
+      children.add(CategoryHeader(
+        name: c.name,
+        icon: c.icon,
+        colorHex: c.color,
+        count: done,
+        total: total,
+        onTap: () => _categoryMenu(list, c),
+      ));
+      for (final i in items) {
+        children.add(_ItemTile(
+          item: i,
+          color: colorFromHex(c.color),
+          inventory: list.isInventory,
+          onToggle: () => lists.toggleItem(list.id, i.id),
+          onLongPress: () => _itemSheet(list, i),
+          onQty: i.quantity == null
+              ? null
+              : (d) => lists.setQuantity(
+                  list.id, i.id, (i.quantity! + d).clamp(1, 999)),
+          onStock: (d) => lists.setStock(list.id, i.id, i.stockQty + d),
+          onStockToggle: () => _stockSheet(list, i),
+        ));
+      }
+    }
+    if (children.isEmpty) {
+      return EmptyView(
+        icon: _onlyRemaining ? Icons.celebration_outlined : Icons.playlist_add,
+        title: _onlyRemaining
+            ? (list.isInventory
+                ? 'Bu bölümde eksik yok!'
+                : 'Bu bölümde her şey tamam!')
+            : 'Bu bölüm boş',
+        subtitle: _onlyRemaining
+            ? null
+            : 'Sağ alttaki + ile kalem ekle veya menüden "Katalogdan ekle".',
+      );
+    }
+    return ListView(
+        padding: const EdgeInsets.only(bottom: 96), children: children);
+  }
+
+  // ── Menü aksiyonları ──────────────────────────────────────────────────────
+  Future<void> _menuAction(String v, UserList list) async {
+    final lists = context.read<ListsProvider>();
+    switch (v) {
+      case 'addCatalog':
+        final template =
+            context.read<CatalogProvider>().templateById(list.templateId);
+        if (template == null) {
+          showSnack(context,
+              'Bu listenin şablonu artık yok; + ile elle ekleyebilirsin.');
+          return;
+        }
+        final n = await Navigator.push<int>(
+            context,
+            MaterialPageRoute(
+                builder: (_) =>
+                    SelectionScreen.add(template: template, existing: list)));
+        if (n != null && n > 0 && mounted) {
+          showSnack(context, '$n kalem eklendi');
+        }
+      case 'rename':
+        final name =
+            await promptText(context, title: 'Liste adı', initial: list.name);
+        if (name != null) await lists.rename(list.id, name);
+      case 'dates':
+        await _editDates(list);
+      case 'share':
+        await SharePlus.instance.share(
+            ShareParams(text: lists.shareText(list), subject: list.name));
+      case 'shareRemaining':
+        await SharePlus.instance.share(ShareParams(
+            text: lists.shareText(list, onlyUnchecked: true),
+            subject: list.name));
+      case 'shareMissing':
+        await SharePlus.instance.share(ShareParams(
+            text: lists.shareText(list, onlyMissing: true),
+            subject: '${list.name} – eksikler'));
+      case 'transfer':
+        await _transferMissing(list);
+      case 'stockAll':
+        await lists.setAllStock(list.id, true);
+        if (mounted) showSnack(context, 'Tüm kalemler stokta');
+      case 'stockNone':
+        if (await confirm(context,
+            title: 'Stokları sıfırla',
+            message: 'Tüm kalemlerin stok miktarı 0 olacak.',
+            okLabel: 'Sıfırla',
+            destructive: false)) {
+          await lists.setAllStock(list.id, false);
+        }
+      case 'duplicate':
+        await lists.duplicate(list.id);
+        if (mounted) showSnack(context, 'Kopya oluşturuldu');
+      case 'reset':
+        if (await confirm(context,
+            title: 'İşaretleri sıfırla',
+            message: 'Tüm kalemler işaretsiz hale gelecek.',
+            okLabel: 'Sıfırla',
+            destructive: false)) {
+          await lists.resetChecks(list.id);
+        }
+      case 'remOn':
+        await lists.setAllReminders(list.id, true);
+        if (mounted) showSnack(context, 'Hatırlatıcılar açıldı');
+      case 'remOff':
+        await lists.setAllReminders(list.id, false);
+        if (mounted) showSnack(context, 'Hatırlatıcılar kapatıldı');
+      case 'archive':
+        await lists.setArchived(list.id, !list.isArchived);
+        if (mounted) Navigator.pop(context);
+      case 'delete':
+        if (await confirm(context,
+            title: 'Listeyi sil',
+            message: '"${list.name}" kalıcı olarak silinecek.')) {
+          await lists.delete(list.id);
+          if (mounted) Navigator.pop(context);
+        }
+    }
+  }
+
+  // ── Eksikleri aktar ───────────────────────────────────────────────────────
+  Future<void> _transferMissing(UserList list) async {
+    final lists = context.read<ListsProvider>();
+    final catalog = context.read<CatalogProvider>();
+    final targets = lists.transferTargets(list.id);
+    final choice = await showModalBottomSheet<String>(
+      context: context,
+      showDragHandle: true,
+      builder: (ctx) => SafeArea(
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+              child: Text('${list.missingCount} eksik kalem nereye aktarılsın?',
+                  style: Theme.of(ctx).textTheme.titleMedium),
+            ),
+            ListTile(
+              leading: const Icon(Icons.add_shopping_cart),
+              title: const Text('Yeni market listesi oluştur'),
+              subtitle: Text('"Alışveriş – ${list.name}"'),
+              onTap: () => Navigator.pop(ctx, '__new__'),
+            ),
+            if (targets.isNotEmpty) const Divider(),
+            for (final t in targets)
+              ListTile(
+                leading:
+                    Icon(AppIcons.get(t.icon), color: colorFromHex(t.color)),
+                title: Text(t.name),
+                subtitle: Text(
+                    '${t.templateName} · ${t.totalCount} kalem · ${t.missingCount} eksik'),
+                onTap: () => Navigator.pop(ctx, t.id),
+              ),
+          ],
+        ),
+      ),
+    );
+    if (choice == null || !mounted) return;
+
+    String targetId = choice;
+    if (choice == '__new__') {
+      final market = catalog.templateById('market');
+      if (market == null) {
+        showSnack(context, 'Market şablonu bulunamadı');
+        return;
+      }
+      final created = await lists.createList(
+        template: market,
+        name: 'Alışveriş – ${list.name}',
+        fields: const {},
+        answers: market.defaultAnswers(),
+        startDate: null,
+        endDate: null,
+        items: const [],
+      );
+      targetId = created.id;
+    }
+    final n = await lists.transferMissing(list.id, targetId);
+    if (!mounted) return;
+    final target = lists.byId(targetId);
+    showSnack(
+        context, '$n kalem "${target?.name ?? 'liste'}" listesine aktarıldı');
+  }
+
+  Future<void> _editDates(UserList list) async {
+    final lists = context.read<ListsProvider>();
+    final now = DateTime.now();
+    final start = await showDatePicker(
+      context: context,
+      initialDate: list.startDate ?? now,
+      firstDate: DateTime(now.year - 1),
+      lastDate: DateTime(now.year + 5),
+      helpText: 'Başlangıç tarihi',
+      locale: const Locale('tr', 'TR'),
+    );
+    if (start == null || !mounted) return;
+    DateTime? end;
+    if (list.endDate != null ||
+        list.templateId == 'seyahat' ||
+        list.templateId == 'kamp') {
+      end = await showDatePicker(
+        context: context,
+        initialDate: (list.endDate != null && !list.endDate!.isBefore(start))
+            ? list.endDate!
+            : start,
+        firstDate: start,
+        lastDate: DateTime(now.year + 5),
+        helpText: 'Bitiş tarihi (isteğe bağlı)',
+        locale: const Locale('tr', 'TR'),
+      );
+    }
+    await lists.updateMeta(list.id, start: start, end: end);
+  }
+
+  void _categoryMenu(UserList list, TemplateCategory c) {
+    final lists = context.read<ListsProvider>();
+    final items = list.itemsOfCategory(c.id);
+    showModalBottomSheet(
+      context: context,
+      showDragHandle: true,
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+                title: Text(c.name,
+                    style: const TextStyle(fontWeight: FontWeight.bold))),
+            ListTile(
+              leading: const Icon(Icons.done_all),
+              title: const Text('Tümünü işaretle'),
+              onTap: () async {
+                Navigator.pop(ctx);
+                for (final i in items.where((i) => !i.isChecked)) {
+                  await lists.toggleItem(list.id, i.id);
+                }
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.remove_done),
+              title: const Text('İşaretleri kaldır'),
+              onTap: () async {
+                Navigator.pop(ctx);
+                for (final i in items.where((i) => i.isChecked)) {
+                  await lists.toggleItem(list.id, i.id);
+                }
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.delete_sweep_outlined,
+                  color: Theme.of(ctx).colorScheme.error),
+              title: Text('Kategoriyi listeden çıkar',
+                  style: TextStyle(color: Theme.of(ctx).colorScheme.error)),
+              onTap: () async {
+                Navigator.pop(ctx);
+                if (await confirm(context,
+                    title: 'Kategoriyi çıkar',
+                    message:
+                        '"${c.name}" altındaki ${items.length} kalem listeden çıkarılacak.')) {
+                  await lists.removeItems(
+                      list.id, items.map((i) => i.id).toSet());
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ── Kalem ekleme ──────────────────────────────────────────────────────────
+  Future<void> _addItemDialog(UserList list) async {
+    final lists = context.read<ListsProvider>();
+    final result = await showModalBottomSheet<_ItemFormResult>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (_) => _ItemForm(list: list),
+    );
+    if (result == null) return;
+    await lists.addCustomItem(list.id,
+        name: result.name,
+        categoryId: result.categoryId,
+        quantity: result.quantity,
+        unit: result.unit,
+        note: result.note,
+        stockQty: result.stockQty);
+  }
+
+  // ── Kalem detay/düzenleme ─────────────────────────────────────────────────
+  // ── Stok düzenleme (hedef + mevcut) ───────────────────────────────────────
+  Future<void> _stockSheet(UserList list, ListItem item) async {
+    final lists = context.read<ListsProvider>();
+    var need = item.needQty;
+    var stock = item.stockQty;
+    final unit =
+        (item.unit == null || item.unit!.isEmpty) ? '' : ' ${item.unit}';
+    final result = await showModalBottomSheet<(int, int)>(
+      context: context,
+      showDragHandle: true,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setSheet) {
+          final missing = (need - stock).clamp(0, 9999);
+          final scheme = Theme.of(ctx).colorScheme;
+          return SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(item.name,
+                      style: Theme.of(ctx)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 14),
+                  _LevelRow(
+                    label: 'Olması gereken',
+                    hint: 'Hedef stok (örn. 5)',
+                    value: need,
+                    unit: unit,
+                    min: 1,
+                    onChanged: (v) => setSheet(() {
+                      need = v;
+                    }),
+                  ),
+                  const SizedBox(height: 10),
+                  _LevelRow(
+                    label: 'Şu an stokta',
+                    hint: 'Elinizdeki miktar',
+                    value: stock,
+                    unit: unit,
+                    min: 0,
+                    onChanged: (v) => setSheet(() {
+                      stock = v;
+                    }),
+                  ),
+                  const SizedBox(height: 14),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: (missing > 0 ? scheme.error : Colors.green)
+                          .withValues(alpha: 0.10),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      missing > 0
+                          ? 'Eksik: $missing$unit → markete bu kadar aktarılır'
+                          : 'Stok yeterli',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: missing > 0
+                              ? scheme.error
+                              : Colors.green.shade700),
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  Row(
+                    children: [
+                      OutlinedButton.icon(
+                        onPressed: () => setSheet(() => stock = need),
+                        icon: const Icon(Icons.check, size: 18),
+                        label: const Text('Hepsi var'),
+                      ),
+                      const SizedBox(width: 8),
+                      OutlinedButton.icon(
+                        onPressed: () => setSheet(() => stock = 0),
+                        icon: const Icon(Icons.close, size: 18),
+                        label: const Text('Hiç yok'),
+                      ),
+                      const Spacer(),
+                      FilledButton(
+                        onPressed: () => Navigator.pop(ctx, (need, stock)),
+                        child: const Text('Kaydet'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+    if (result == null) return;
+    await lists.setStockLevels(list.id, item.id,
+        need: result.$1, stock: result.$2);
+  }
+
+  Future<void> _itemSheet(UserList list, ListItem item) async {
+    final result = await showModalBottomSheet<_ItemFormResult>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (_) => _ItemForm(list: list, item: item),
+    );
+    if (result == null || !mounted) return;
+    final lists = context.read<ListsProvider>();
+    if (result.delete) {
+      await lists.removeItem(list.id, item.id);
+      return;
+    }
+    await lists.updateItem(
+      list.id,
+      item.copyWith(
+        name: result.name,
+        categoryId: result.categoryId,
+        quantity: result.quantity,
+        clearQuantity: result.quantity == null,
+        unit: result.unit,
+        note: result.note,
+        clearNote: result.note == null,
+        reminderAt: result.reminderAt,
+        clearReminder: result.reminderAt == null,
+        reminderEnabled: result.reminderEnabled,
+        stockQty: result.stockQty,
+      ),
+    );
+  }
+}
+
+// ── Hızlı ekleme çubuğu (market) ────────────────────────────────────────────
+/// Alt kısımda sabit metin kutusu: yazdıkça katalogdan öneri çıkar, Enter veya
+/// öneriye dokununca kalem eklenir. Katalogda yoksa serbest kalem olarak eklenir.
+class _QuickAddBar extends StatefulWidget {
+  const _QuickAddBar(
+      {required this.list, required this.template, required this.onDetailed});
+  final UserList list;
+  final ListTemplate? template;
+  final VoidCallback onDetailed;
+
+  @override
+  State<_QuickAddBar> createState() => _QuickAddBarState();
+}
+
+class _QuickAddBarState extends State<_QuickAddBar> {
+  final _ctrl = TextEditingController();
+  final _focus = FocusNode();
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    _focus.dispose();
+    super.dispose();
+  }
+
+  Iterable<CatalogItem> _options(TextEditingValue v) {
+    final t = widget.template;
+    final q = normalizeTr(v.text.trim());
+    if (t == null || q.length < 2) return const Iterable.empty();
+    final inList = widget.list.items.map((i) => normalizeTr(i.name)).toSet();
+    final starts = <CatalogItem>[];
+    final contains = <CatalogItem>[];
+    for (final c in t.items) {
+      final n = normalizeTr(c.name);
+      if (inList.contains(n)) continue;
+      if (n.startsWith(q)) {
+        starts.add(c);
+      } else if (n.contains(q)) {
+        contains.add(c);
+      }
+    }
+    return [...starts, ...contains].take(6);
+  }
+
+  Future<void> _submit(String text, {CatalogItem? pick}) async {
+    final name = pick?.name ?? text;
+    if (name.trim().isEmpty) return;
+    final lists = context.read<ListsProvider>();
+    final added = await lists.quickAdd(widget.list.id, name,
+        template: widget.template, catalogItem: pick);
+    if (!mounted) return;
+    _ctrl.clear();
+    _focus.requestFocus();
+    if (added != null) {
+      ScaffoldMessenger.of(context)
+        ..clearSnackBars()
+        ..showSnackBar(SnackBar(
+          content: Text('${added.name} eklendi'),
+          duration: const Duration(milliseconds: 900),
+          behavior: SnackBarBehavior.floating,
+        ));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Material(
+      color: scheme.surfaceContainer,
+      elevation: 6,
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(
+              12, 8, 8, 8 + MediaQuery.viewInsetsOf(context).bottom),
+          child: Row(
+            children: [
+              Expanded(
+                child: RawAutocomplete<CatalogItem>(
+                  textEditingController: _ctrl,
+                  focusNode: _focus,
+                  optionsViewOpenDirection: OptionsViewOpenDirection.up,
+                  displayStringForOption: (c) => c.name,
+                  optionsBuilder: _options,
+                  onSelected: (c) => _submit(c.name, pick: c),
+                  fieldViewBuilder: (context, ctrl, focus, onSubmit) =>
+                      TextField(
+                    controller: ctrl,
+                    focusNode: focus,
+                    textCapitalization: TextCapitalization.sentences,
+                    textInputAction: TextInputAction.done,
+                    decoration: InputDecoration(
+                      hintText: 'Hızlı ekle: süt, ekmek…',
+                      prefixIcon: const Icon(Icons.add_shopping_cart),
+                      isDense: true,
+                      filled: true,
+                      fillColor: scheme.surface,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(24),
+                          borderSide: BorderSide.none),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 10),
+                    ),
+                    onSubmitted: (v) => _submit(v),
+                  ),
+                  optionsViewBuilder: (context, onSelected, options) {
+                    final cats = widget.list.categories;
+                    return Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Material(
+                        elevation: 8,
+                        borderRadius: BorderRadius.circular(12),
+                        clipBehavior: Clip.antiAlias,
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(
+                              maxHeight: 260, maxWidth: 420),
+                          child: ListView(
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            children: [
+                              for (final c in options)
+                                ListTile(
+                                  dense: true,
+                                  leading: Icon(
+                                      AppIcons.get(cats
+                                              .firstWhereOrNull(
+                                                  (x) => x.id == c.category)
+                                              ?.icon ??
+                                          'category'),
+                                      size: 20),
+                                  title: Text(c.name),
+                                  subtitle: c.qty == null
+                                      ? null
+                                      : Text(
+                                          '${c.qty!.compute(1)} ${c.unit ?? ''}'
+                                              .trim()),
+                                  onTap: () => onSelected(c),
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              IconButton(
+                tooltip: 'Ayrıntılı ekle (kategori, miktar, not)',
+                icon: const Icon(Icons.playlist_add),
+                onPressed: widget.onDetailed,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ── Üst bilgi ───────────────────────────────────────────────────────────────
+class _Header extends StatelessWidget {
+  const _Header(
+      {required this.list,
+      required this.color,
+      required this.pendingReminders});
+  final UserList list;
+  final Color color;
+  final int pendingReminders;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+      color: scheme.surfaceContainerLow,
+      child: Row(
+        children: [
+          ProgressRing(
+              progress: list.isInventory
+                  ? (list.totalCount == 0
+                      ? 0
+                      : list.inStockCount / list.totalCount)
+                  : list.progress,
+              size: 60,
+              color: (list.isInventory
+                      ? list.missingCount == 0 && list.totalCount > 0
+                      : list.isComplete)
+                  ? Colors.green
+                  : color),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                    list.isInventory
+                        ? '${list.inStockCount} / ${list.totalCount} stokta'
+                        : '${list.checkedCount} / ${list.totalCount} tamamlandı',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall
+                        ?.copyWith(fontWeight: FontWeight.bold)),
+                if (list.subtitle.isNotEmpty)
+                  Text(list.subtitle,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: scheme.outline)),
+                const SizedBox(height: 6),
+                Wrap(
+                  spacing: 6,
+                  runSpacing: 4,
+                  children: [
+                    if (list.startDate != null)
+                      CountdownChip(
+                          start: list.startDate!,
+                          end: list.endDate,
+                          color: color),
+                    if (list.isInventory)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
+                            color: (list.missingCount > 0
+                                    ? scheme.error
+                                    : Colors.green)
+                                .withValues(alpha: 0.15),
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Row(mainAxisSize: MainAxisSize.min, children: [
+                          Icon(
+                              list.missingCount > 0
+                                  ? Icons.remove_shopping_cart_outlined
+                                  : Icons.check_circle_outline,
+                              size: 14,
+                              color: list.missingCount > 0
+                                  ? scheme.error
+                                  : Colors.green),
+                          const SizedBox(width: 4),
+                          Text(
+                              list.missingCount > 0
+                                  ? '${list.missingCount} eksik'
+                                  : 'Eksik yok',
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: list.missingCount > 0
+                                      ? scheme.error
+                                      : Colors.green,
+                                  fontWeight: FontWeight.w600)),
+                        ]),
+                      ),
+                    if (pendingReminders > 0)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
+                            color: scheme.tertiary.withValues(alpha: 0.15),
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Row(mainAxisSize: MainAxisSize.min, children: [
+                          Icon(Icons.notifications_active,
+                              size: 14, color: scheme.tertiary),
+                          const SizedBox(width: 4),
+                          Text('$pendingReminders hatırlatıcı',
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: scheme.tertiary,
+                                  fontWeight: FontWeight.w600)),
+                        ]),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ── Kalem satırı ────────────────────────────────────────────────────────────
+class _ItemTile extends StatelessWidget {
+  const _ItemTile(
+      {required this.item,
+      required this.color,
+      required this.onToggle,
+      required this.onLongPress,
+      this.onQty,
+      this.inventory = false,
+      this.onStock,
+      this.onStockToggle});
+  final ListItem item;
+  final Color color;
+  final VoidCallback onToggle;
+  final VoidCallback onLongPress;
+  final void Function(int delta)? onQty;
+
+  /// Stok listesi: sağda miktar yerine stok kontrolü gösterilir.
+  final bool inventory;
+  final void Function(int delta)? onStock;
+  final VoidCallback? onStockToggle;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final checked = item.isChecked;
+    final hasReminder = item.reminderAt != null;
+    return InkWell(
+      onTap: onToggle,
+      onLongPress: onLongPress,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 4, 8, 4),
+        child: Row(
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 150),
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                color: checked ? color : Colors.transparent,
+                border: Border.all(
+                    color: checked ? color : scheme.outline, width: 2),
+                borderRadius: BorderRadius.circular(7),
+              ),
+              child: checked
+                  ? const Icon(Icons.check, size: 16, color: Colors.white)
+                  : null,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          item.name,
+                          style: TextStyle(
+                            fontSize: 15,
+                            decoration:
+                                checked ? TextDecoration.lineThrough : null,
+                            color: checked ? scheme.outline : null,
+                          ),
+                        ),
+                      ),
+                      if (item.isEssential && !checked) ...[
+                        const SizedBox(width: 4),
+                        const Icon(Icons.star, size: 14, color: Colors.amber),
+                      ],
+                    ],
+                  ),
+                  if (item.note != null && item.note!.isNotEmpty || hasReminder)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Row(
+                        children: [
+                          if (hasReminder) ...[
+                            Icon(
+                                item.reminderEnabled
+                                    ? Icons.notifications_active
+                                    : Icons.notifications_off_outlined,
+                                size: 12,
+                                color: item.reminderEnabled
+                                    ? scheme.tertiary
+                                    : scheme.outline),
+                            const SizedBox(width: 3),
+                            Text(fmtDateTime(item.reminderAt!),
+                                style: TextStyle(
+                                    fontSize: 11,
+                                    color: item.reminderEnabled
+                                        ? scheme.tertiary
+                                        : scheme.outline)),
+                            const SizedBox(width: 8),
+                          ],
+                          if (item.note != null && item.note!.isNotEmpty)
+                            Flexible(
+                              child: Text(item.note!,
+                                  style: TextStyle(
+                                      fontSize: 11, color: scheme.outline),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis),
+                            ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            if (inventory)
+              _StockControl(
+                  item: item,
+                  onStock: onStock,
+                  onToggle: onStockToggle,
+                  dim: checked)
+            else if (item.quantity != null)
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _QtyBtn(
+                      icon: Icons.remove,
+                      onTap: onQty == null || item.quantity! <= 1
+                          ? null
+                          : () => onQty!(-1)),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: Text(item.quantityLabel,
+                        style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            color: checked ? scheme.outline : null)),
+                  ),
+                  _QtyBtn(
+                      icon: Icons.add,
+                      onTap: onQty == null ? null : () => onQty!(1)),
+                ],
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Stok listesi satırındaki "stok / gereken" kontrolü.
+/// − / + stoğu değiştirir; etikete dokunmak hedef + stok düzenleme sayfasını açar.
+class _StockControl extends StatelessWidget {
+  const _StockControl(
+      {required this.item, this.onStock, this.onToggle, this.dim = false});
+  final ListItem item;
+  final void Function(int delta)? onStock;
+  final VoidCallback? onToggle;
+  final bool dim;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final missing = item.isMissing;
+    final c =
+        dim ? scheme.outline : (missing ? scheme.error : Colors.green.shade700);
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _QtyBtn(
+            icon: Icons.remove,
+            onTap: onStock == null || item.stockQty <= 0
+                ? null
+                : () => onStock!(-1)),
+        InkWell(
+          onTap: onToggle,
+          borderRadius: BorderRadius.circular(12),
+          child: Container(
+            constraints: const BoxConstraints(minWidth: 56),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+            decoration: BoxDecoration(
+              color: c.withValues(alpha: 0.12),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(item.stockLabel,
+                    style: TextStyle(
+                        fontSize: 12.5, fontWeight: FontWeight.w700, color: c)),
+                Text(missing ? 'eksik' : 'stokta',
+                    style: TextStyle(fontSize: 9.5, color: c)),
+              ],
+            ),
+          ),
+        ),
+        _QtyBtn(
+            icon: Icons.add, onTap: onStock == null ? null : () => onStock!(1)),
+      ],
+    );
+  }
+}
+
+/// Stok sayfasındaki tek satır: etiket + − sayı + (sayıya dokununca elle giriş).
+class _LevelRow extends StatelessWidget {
+  const _LevelRow(
+      {required this.label,
+      required this.hint,
+      required this.value,
+      required this.unit,
+      required this.min,
+      required this.onChanged});
+  final String label;
+  final String hint;
+  final int value;
+  final String unit;
+  final int min;
+  final ValueChanged<int> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
+              Text(hint, style: TextStyle(fontSize: 12, color: scheme.outline)),
+            ],
+          ),
+        ),
+        IconButton.filledTonal(
+          onPressed: value > min ? () => onChanged(value - 1) : null,
+          icon: const Icon(Icons.remove),
+        ),
+        InkWell(
+          borderRadius: BorderRadius.circular(8),
+          onTap: () async {
+            final t = await promptText(context,
+                title: label,
+                initial: value.toString(),
+                keyboard: TextInputType.number);
+            final n = int.tryParse((t ?? '').trim());
+            if (n != null) onChanged(n < min ? min : n);
+          },
+          child: Container(
+            constraints: const BoxConstraints(minWidth: 72),
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: Text('$value$unit',
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          ),
+        ),
+        IconButton.filledTonal(
+          onPressed: () => onChanged(value + 1),
+          icon: const Icon(Icons.add),
+        ),
+      ],
+    );
+  }
+}
+
+class _QtyBtn extends StatelessWidget {
+  const _QtyBtn({required this.icon, this.onTap});
+  final IconData icon;
+  final VoidCallback? onTap;
+  @override
+  Widget build(BuildContext context) => InkResponse(
+        onTap: onTap,
+        radius: 18,
+        child: Padding(
+          padding: const EdgeInsets.all(6),
+          child: Icon(icon,
+              size: 16,
+              color: onTap == null ? Theme.of(context).disabledColor : null),
+        ),
+      );
+}
+
+// ── Kalem formu (ekle / düzenle) ────────────────────────────────────────────
+class _ItemFormResult {
+  _ItemFormResult({
+    required this.name,
+    required this.categoryId,
+    this.quantity,
+    this.unit,
+    this.note,
+    this.reminderAt,
+    this.reminderEnabled = false,
+    this.delete = false,
+    this.stockQty = 0,
+  });
+  final String name;
+  final String categoryId;
+  final int? quantity;
+  final String? unit;
+  final String? note;
+  final DateTime? reminderAt;
+  final bool reminderEnabled;
+  final bool delete;
+  final int stockQty;
+}
+
+class _ItemForm extends StatefulWidget {
+  const _ItemForm({required this.list, this.item});
+  final UserList list;
+  final ListItem? item;
+
+  @override
+  State<_ItemForm> createState() => _ItemFormState();
+}
+
+class _ItemFormState extends State<_ItemForm> {
+  late final TextEditingController _name =
+      TextEditingController(text: widget.item?.name ?? '');
+  late final TextEditingController _qty =
+      TextEditingController(text: widget.item?.quantity?.toString() ?? '');
+  late final TextEditingController _unit =
+      TextEditingController(text: widget.item?.unit ?? '');
+  late final TextEditingController _note =
+      TextEditingController(text: widget.item?.note ?? '');
+  late final TextEditingController _stock =
+      TextEditingController(text: (widget.item?.stockQty ?? 0).toString());
+  late String _categoryId;
+  DateTime? _reminderAt;
+  bool _reminderEnabled = false;
+
+  bool get isEdit => widget.item != null;
+
+  @override
+  void initState() {
+    super.initState();
+    _categoryId = widget.item?.categoryId ??
+        (widget.list.categories.isNotEmpty
+            ? widget.list.categories.first.id
+            : 'other');
+    if (widget.list.categoryById(_categoryId) == null &&
+        widget.list.categories.isNotEmpty) {
+      _categoryId = widget.list.categories.first.id;
+    }
+    _reminderAt = widget.item?.reminderAt;
+    _reminderEnabled = widget.item?.reminderEnabled ?? false;
+  }
+
+  @override
+  void dispose() {
+    _name.dispose();
+    _qty.dispose();
+    _unit.dispose();
+    _note.dispose();
+    _stock.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bottom = MediaQuery.of(context).viewInsets.bottom;
+    return Padding(
+      padding: EdgeInsets.fromLTRB(16, 0, 16, bottom + 16),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(isEdit ? 'Kalemi düzenle' : 'Yeni kalem',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _name,
+              autofocus: !isEdit,
+              textCapitalization: TextCapitalization.sentences,
+              decoration: const InputDecoration(labelText: 'Ad'),
+            ),
+            const SizedBox(height: 12),
+            DropdownButtonFormField<String>(
+              initialValue: _categoryId,
+              isExpanded: true,
+              decoration: const InputDecoration(labelText: 'Kategori'),
+              items: [
+                for (final s in widget.list.sections)
+                  for (final c in widget.list.categoriesOf(s.id))
+                    DropdownMenuItem(
+                      value: c.id,
+                      child: Text(
+                          widget.list.hasSections
+                              ? '${s.name} › ${c.name}'
+                              : c.name,
+                          overflow: TextOverflow.ellipsis),
+                    ),
+              ],
+              onChanged: (v) => setState(() => _categoryId = v ?? _categoryId),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _qty,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        labelText: widget.list.isInventory
+                            ? 'Olması gereken'
+                            : 'Miktar',
+                        hintText: widget.list.isInventory ? '1' : 'boş = yok'),
+                  ),
+                ),
+                if (widget.list.isInventory) ...[
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: _stock,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                          labelText: 'Stokta', hintText: '0'),
+                    ),
+                  ),
+                ],
+                const SizedBox(width: 10),
+                Expanded(
+                  child: TextField(
+                      controller: _unit,
+                      decoration: const InputDecoration(
+                          labelText: 'Birim', hintText: 'adet, kg…')),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _note,
+              textCapitalization: TextCapitalization.sentences,
+              decoration: const InputDecoration(labelText: 'Not'),
+              maxLines: 2,
+              minLines: 1,
+            ),
+            const SizedBox(height: 8),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.alarm),
+              title: Text(_reminderAt == null
+                  ? 'Hatırlatıcı yok'
+                  : fmtDateTime(_reminderAt!)),
+              subtitle: _reminderAt == null
+                  ? const Text('Tarih ve saat seçmek için dokun')
+                  : null,
+              trailing: _reminderAt == null
+                  ? null
+                  : Switch(
+                      value: _reminderEnabled,
+                      onChanged: (v) => setState(() => _reminderEnabled = v)),
+              onTap: _pickReminder,
+              onLongPress: _reminderAt == null
+                  ? null
+                  : () => setState(() {
+                        _reminderAt = null;
+                        _reminderEnabled = false;
+                      }),
+            ),
+            if (_reminderAt != null)
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton.icon(
+                  onPressed: () => setState(() {
+                    _reminderAt = null;
+                    _reminderEnabled = false;
+                  }),
+                  icon: const Icon(Icons.alarm_off, size: 18),
+                  label: const Text('Hatırlatıcıyı kaldır'),
+                ),
+              ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                if (isEdit)
+                  TextButton.icon(
+                    style: TextButton.styleFrom(
+                        foregroundColor: Theme.of(context).colorScheme.error),
+                    onPressed: () => Navigator.pop(
+                        context,
+                        _ItemFormResult(
+                            name: '', categoryId: '', delete: true)),
+                    icon: const Icon(Icons.delete_outline),
+                    label: const Text('Çıkar'),
+                  ),
+                const Spacer(),
+                TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('İptal')),
+                const SizedBox(width: 8),
+                FilledButton(
+                    onPressed: _save, child: Text(isEdit ? 'Kaydet' : 'Ekle')),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _pickReminder() async {
+    final now = DateTime.now();
+    final d = await showDatePicker(
+      context: context,
+      initialDate: _reminderAt ?? now,
+      firstDate: DateTime(now.year - 1),
+      lastDate: DateTime(now.year + 5),
+      locale: const Locale('tr', 'TR'),
+    );
+    if (d == null || !mounted) return;
+    final t = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(
+          _reminderAt ?? DateTime(now.year, now.month, now.day, 10)),
+    );
+    if (t == null) return;
+    final at = DateTime(d.year, d.month, d.day, t.hour, t.minute);
+    setState(() {
+      _reminderAt = at;
+      _reminderEnabled = at.isAfter(DateTime.now());
+    });
+    if (!at.isAfter(DateTime.now()) && mounted) {
+      showSnack(context, 'Geçmiş bir tarih; bildirim gönderilmeyecek.');
+    }
+  }
+
+  void _save() {
+    final name = _name.text.trim();
+    if (name.isEmpty) {
+      showSnack(context, 'Ad boş olamaz');
+      return;
+    }
+    final qty = int.tryParse(_qty.text.trim());
+    final stock = (int.tryParse(_stock.text.trim()) ?? 0).clamp(0, 9999);
+    final unit = _unit.text.trim();
+    final note = _note.text.trim();
+    Navigator.pop(
+      context,
+      _ItemFormResult(
+        name: name,
+        categoryId: _categoryId,
+        quantity: qty,
+        stockQty: stock,
+        unit: unit.isEmpty ? null : unit,
+        note: note.isEmpty ? null : note,
+        reminderAt: _reminderAt,
+        reminderEnabled: _reminderEnabled && _reminderAt != null,
+      ),
+    );
+  }
+}

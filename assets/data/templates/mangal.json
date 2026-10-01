@@ -1,0 +1,265 @@
+{
+ "id": "mangal",
+ "name": "Mangal",
+ "description": "Sabit mangal listesi: ekipman, yiyecek, içecek ve servis. Eksikler markete aktarılabilir.",
+ "icon": "outdoor_grill",
+ "color": "#E64A19",
+ "kind": "inventory",
+ "dateMode": "none",
+ "dateLabel": "Tarih",
+ "endDateLabel": null,
+ "textFields": [],
+ "filters": [],
+ "sections": [
+  {
+   "id": "main",
+   "name": "Mangal",
+   "icon": "outdoor_grill"
+  }
+ ],
+ "categories": [
+  {
+   "id": "fire",
+   "name": "Mangal ve Ateş Ekipmanları",
+   "icon": "outdoor_grill",
+   "color": "#EF5350",
+   "section": "main"
+  },
+  {
+   "id": "food",
+   "name": "Etler ve Yiyecekler",
+   "icon": "kebab_dining",
+   "color": "#FF9800",
+   "section": "main"
+  },
+  {
+   "id": "sauce",
+   "name": "Yağ, Sos ve Baharatlar",
+   "icon": "restaurant",
+   "color": "#D4E157",
+   "section": "main"
+  },
+  {
+   "id": "drinks",
+   "name": "İçecekler ve Termoslar",
+   "icon": "local_drink",
+   "color": "#26C6DA",
+   "section": "main"
+  },
+  {
+   "id": "serving",
+   "name": "Servis ve Mutfak Gereçleri",
+   "icon": "table_restaurant",
+   "color": "#FFC107",
+   "section": "main"
+  },
+  {
+   "id": "table",
+   "name": "Masa Düzeni ve Hijyen",
+   "icon": "sanitizer",
+   "color": "#26A69A",
+   "section": "main"
+  },
+  {
+   "id": "personal",
+   "name": "Kişisel ve Ekstra",
+   "icon": "checkroom",
+   "color": "#9E9E9E",
+   "section": "main"
+  }
+ ],
+ "items": [
+  {
+   "id": "grill",
+   "name": "Mangal",
+   "category": "fire"
+  },
+  {
+   "id": "charcoal",
+   "name": "Kömür",
+   "category": "fire"
+  },
+  {
+   "id": "firestarter",
+   "name": "Reşo yakıtı (tutuşturucu)",
+   "category": "fire"
+  },
+  {
+   "id": "lighter",
+   "name": "Çakmak",
+   "category": "fire"
+  },
+  {
+   "id": "grate",
+   "name": "Izgara teli",
+   "category": "fire"
+  },
+  {
+   "id": "fan",
+   "name": "Yelpaze",
+   "category": "fire"
+  },
+  {
+   "id": "tongs",
+   "name": "Maşa",
+   "category": "fire"
+  },
+  {
+   "id": "grill_cleaner",
+   "name": "Izgara temizleme malzemesi",
+   "category": "fire"
+  },
+  {
+   "id": "skewers",
+   "name": "Şiş",
+   "category": "fire"
+  },
+  {
+   "id": "chicken",
+   "name": "Tavuk",
+   "category": "food"
+  },
+  {
+   "id": "meatballs",
+   "name": "Köfte",
+   "category": "food"
+  },
+  {
+   "id": "sausage",
+   "name": "Sucuk",
+   "category": "food"
+  },
+  {
+   "id": "corn",
+   "name": "Mısır",
+   "category": "food"
+  },
+  {
+   "id": "fruit",
+   "name": "Meyve",
+   "category": "food"
+  },
+  {
+   "id": "nuts",
+   "name": "Kuru yemiş",
+   "category": "food"
+  },
+  {
+   "id": "olive_oil",
+   "name": "Zeytinyağı",
+   "category": "sauce"
+  },
+  {
+   "id": "lemon_juice",
+   "name": "Limon suyu",
+   "category": "sauce"
+  },
+  {
+   "id": "butter",
+   "name": "Tereyağı",
+   "category": "sauce"
+  },
+  {
+   "id": "salt",
+   "name": "Tuz",
+   "category": "sauce"
+  },
+  {
+   "id": "water",
+   "name": "Su",
+   "category": "drinks"
+  },
+  {
+   "id": "ayran",
+   "name": "Ayran",
+   "category": "drinks"
+  },
+  {
+   "id": "soda",
+   "name": "Soda",
+   "category": "drinks"
+  },
+  {
+   "id": "tea_thermos",
+   "name": "Çay termosu",
+   "category": "drinks"
+  },
+  {
+   "id": "coffee_thermos",
+   "name": "Kahve termosu",
+   "category": "drinks"
+  },
+  {
+   "id": "sugar",
+   "name": "Çay şekeri",
+   "category": "drinks"
+  },
+  {
+   "id": "plates",
+   "name": "Plastik tabak",
+   "category": "serving"
+  },
+  {
+   "id": "cutlery",
+   "name": "Çatal, kaşık, bıçak seti",
+   "category": "serving"
+  },
+  {
+   "id": "tea_glasses",
+   "name": "Çay bardağı ve çay kaşığı",
+   "category": "serving"
+  },
+  {
+   "id": "cutting_board",
+   "name": "Kesme tahtası",
+   "category": "serving"
+  },
+  {
+   "id": "empty_bottle",
+   "name": "Boş su şişesi",
+   "category": "serving"
+  },
+  {
+   "id": "fridge_bags",
+   "name": "Buzdolabı poşeti",
+   "category": "serving"
+  },
+  {
+   "id": "cling_film",
+   "name": "Streç film",
+   "category": "serving"
+  },
+  {
+   "id": "table_cloth",
+   "name": "Masa / masa örtüsü",
+   "category": "table"
+  },
+  {
+   "id": "dish_cloth",
+   "name": "Sofra bezi",
+   "category": "table"
+  },
+  {
+   "id": "napkins",
+   "name": "Peçete",
+   "category": "table"
+  },
+  {
+   "id": "soap",
+   "name": "Sabun",
+   "category": "table"
+  },
+  {
+   "id": "gloves",
+   "name": "Eldiven",
+   "category": "table"
+  },
+  {
+   "id": "warm_clothes",
+   "name": "Kalın giyecek / hırka",
+   "category": "personal"
+  }
+ ],
+ "preselect": true,
+ "quickAdd": false
+}

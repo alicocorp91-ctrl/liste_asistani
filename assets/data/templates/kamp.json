@@ -1,0 +1,1488 @@
+{
+ "id": "kamp",
+ "name": "Kamp",
+ "description": "Çadır, karavan veya bungalov — mevsim, ulaşım ve tesis durumuna göre ekipman ve yiyecek.",
+ "icon": "forest",
+ "color": "#2E7D32",
+ "kind": "inventory",
+ "dateMode": "range",
+ "dateLabel": "Gidiş",
+ "endDateLabel": "Dönüş",
+ "textFields": [
+  {
+   "id": "place",
+   "label": "Kamp yeri",
+   "hint": "Kazdağları"
+  }
+ ],
+ "filters": [
+  {
+   "id": "campType",
+   "label": "Kamp Tipi",
+   "question": "Nasıl konaklayacaksınız?",
+   "options": [
+    {
+     "id": "tent",
+     "label": "Çadır",
+     "icon": "holiday_village"
+    },
+    {
+     "id": "caravan",
+     "label": "Karavan / araç",
+     "icon": "airport_shuttle"
+    },
+    {
+     "id": "bungalow",
+     "label": "Bungalov / kamp alanı",
+     "icon": "cabin"
+    }
+   ],
+   "default": "tent"
+  },
+  {
+   "id": "season",
+   "label": "Mevsim",
+   "question": "Hangi mevsim?",
+   "options": [
+    {
+     "id": "summer",
+     "label": "Yaz",
+     "icon": "wb_sunny"
+    },
+    {
+     "id": "spring_autumn",
+     "label": "İlkbahar / Sonbahar",
+     "icon": "eco"
+    },
+    {
+     "id": "winter",
+     "label": "Kış",
+     "icon": "ac_unit"
+    }
+   ],
+   "default": "summer"
+  },
+  {
+   "id": "access",
+   "label": "Ulaşım",
+   "question": "Kamp yerine nasıl ulaşacaksınız?",
+   "options": [
+    {
+     "id": "car",
+     "label": "Araçla",
+     "icon": "directions_car"
+    },
+    {
+     "id": "hike",
+     "label": "Yürüyerek (sırt çantası)",
+     "icon": "hiking"
+    }
+   ],
+   "default": "car"
+  },
+  {
+   "id": "kids",
+   "label": "Çocuk",
+   "question": "Çocuk olacak mı?",
+   "options": [
+    {
+     "id": "no",
+     "label": "Hayır"
+    },
+    {
+     "id": "yes",
+     "label": "Evet",
+     "icon": "child_care"
+    }
+   ],
+   "default": "no"
+  },
+  {
+   "id": "water",
+   "label": "Su Kaynağı",
+   "question": "Kamp alanında su / tuvalet var mı?",
+   "options": [
+    {
+     "id": "yes",
+     "label": "Var (tesisli)",
+     "icon": "water_drop"
+    },
+    {
+     "id": "no",
+     "label": "Yok (doğa kampı)",
+     "icon": "forest"
+    }
+   ],
+   "default": "yes"
+  }
+ ],
+ "sections": [
+  {
+   "id": "gear",
+   "name": "Ekipman",
+   "icon": "backpack"
+  },
+  {
+   "id": "food",
+   "name": "Yiyecek ve Mutfak",
+   "icon": "restaurant"
+  },
+  {
+   "id": "prep",
+   "name": "Hazırlık",
+   "icon": "event_note"
+  }
+ ],
+ "categories": [
+  {
+   "id": "shelter",
+   "name": "Barınma",
+   "icon": "holiday_village",
+   "color": "#66BB6A",
+   "section": "gear"
+  },
+  {
+   "id": "sleep",
+   "name": "Uyku",
+   "icon": "bed",
+   "color": "#5C6BC0",
+   "section": "gear"
+  },
+  {
+   "id": "clothing",
+   "name": "Giyim",
+   "icon": "checkroom",
+   "color": "#448AFF",
+   "section": "gear"
+  },
+  {
+   "id": "light",
+   "name": "Aydınlatma ve Enerji",
+   "icon": "flashlight_on",
+   "color": "#FFC107",
+   "section": "gear"
+  },
+  {
+   "id": "tools",
+   "name": "Araç Gereç",
+   "icon": "construction",
+   "color": "#FF7043",
+   "section": "gear"
+  },
+  {
+   "id": "nav",
+   "name": "Navigasyon ve Belgeler",
+   "icon": "explore",
+   "color": "#EF5350",
+   "section": "gear"
+  },
+  {
+   "id": "hygiene",
+   "name": "Hijyen ve Sağlık",
+   "icon": "medical_services",
+   "color": "#26A69A",
+   "section": "gear"
+  },
+  {
+   "id": "kids",
+   "name": "Çocuk",
+   "icon": "child_care",
+   "color": "#EC407A",
+   "section": "gear"
+  },
+  {
+   "id": "fun",
+   "name": "Aktivite",
+   "icon": "hiking",
+   "color": "#AB47BC",
+   "section": "gear"
+  },
+  {
+   "id": "kitchen",
+   "name": "Mutfak Ekipmanı",
+   "icon": "outdoor_grill",
+   "color": "#FF9800",
+   "section": "food"
+  },
+  {
+   "id": "foodstuff",
+   "name": "Yiyecek",
+   "icon": "lunch_dining",
+   "color": "#D4E157",
+   "section": "food"
+  },
+  {
+   "id": "drinks",
+   "name": "Su ve İçecek",
+   "icon": "local_drink",
+   "color": "#26C6DA",
+   "section": "food"
+  },
+  {
+   "id": "prepList",
+   "name": "Kamp Öncesi",
+   "icon": "checklist",
+   "color": "#78909C",
+   "section": "prep"
+  }
+ ],
+ "items": [
+  {
+   "id": "tent",
+   "name": "Çadır",
+   "category": "shelter",
+   "when": {
+    "campType": [
+     "tent"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "tent_pegs",
+   "name": "Çadır kazığı (yedekli)",
+   "category": "shelter",
+   "when": {
+    "campType": [
+     "tent"
+    ]
+   }
+  },
+  {
+   "id": "mallet",
+   "name": "Tokmak",
+   "category": "shelter",
+   "when": {
+    "campType": [
+     "tent"
+    ],
+    "access": [
+     "car"
+    ]
+   }
+  },
+  {
+   "id": "footprint",
+   "name": "Çadır altı örtüsü / branda",
+   "category": "shelter",
+   "when": {
+    "campType": [
+     "tent"
+    ]
+   }
+  },
+  {
+   "id": "tarp",
+   "name": "Tente / tarp + ip",
+   "category": "shelter"
+  },
+  {
+   "id": "guy_lines",
+   "name": "Yedek ip / paracord",
+   "category": "shelter"
+  },
+  {
+   "id": "tent_repair",
+   "name": "Çadır tamir kiti",
+   "category": "shelter",
+   "when": {
+    "campType": [
+     "tent"
+    ]
+   }
+  },
+  {
+   "id": "caravan_hookup",
+   "name": "Karavan elektrik / su bağlantı seti",
+   "category": "shelter",
+   "when": {
+    "campType": [
+     "caravan"
+    ]
+   }
+  },
+  {
+   "id": "leveling_blocks",
+   "name": "Karavan denge takozu",
+   "category": "shelter",
+   "when": {
+    "campType": [
+     "caravan"
+    ]
+   }
+  },
+  {
+   "id": "awning",
+   "name": "Karavan tentesi",
+   "category": "shelter",
+   "when": {
+    "campType": [
+     "caravan"
+    ]
+   }
+  },
+  {
+   "id": "sleeping_bag",
+   "name": "Uyku tulumu",
+   "category": "sleep",
+   "essential": true,
+   "note": "Mevsime uygun konfor sıcaklığı seçin."
+  },
+  {
+   "id": "sleeping_mat",
+   "name": "Mat / şişme yatak",
+   "category": "sleep",
+   "essential": true
+  },
+  {
+   "id": "pillow",
+   "name": "Kamp yastığı",
+   "category": "sleep"
+  },
+  {
+   "id": "liner",
+   "name": "Tulum içliği",
+   "category": "sleep",
+   "when": {
+    "season": [
+     "winter",
+     "spring_autumn"
+    ]
+   }
+  },
+  {
+   "id": "extra_blanket",
+   "name": "Ek battaniye",
+   "category": "sleep",
+   "when": {
+    "season": [
+     "winter",
+     "spring_autumn"
+    ]
+   }
+  },
+  {
+   "id": "pump",
+   "name": "Pompa (şişme yatak için)",
+   "category": "sleep",
+   "when": {
+    "access": [
+     "car"
+    ]
+   }
+  },
+  {
+   "id": "eye_mask_earplugs",
+   "name": "Uyku maskesi / kulak tıkacı",
+   "category": "sleep"
+  },
+  {
+   "id": "cot",
+   "name": "Kamp yatağı (karyola)",
+   "category": "sleep",
+   "when": {
+    "access": [
+     "car"
+    ],
+    "campType": [
+     "tent"
+    ]
+   }
+  },
+  {
+   "id": "base_layer",
+   "name": "Termal içlik",
+   "category": "clothing",
+   "when": {
+    "season": [
+     "winter",
+     "spring_autumn"
+    ]
+   }
+  },
+  {
+   "id": "fleece",
+   "name": "Polar",
+   "category": "clothing",
+   "when": {
+    "season": [
+     "winter",
+     "spring_autumn"
+    ]
+   },
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   }
+  },
+  {
+   "id": "down_jacket",
+   "name": "Şişme mont",
+   "category": "clothing",
+   "when": {
+    "season": [
+     "winter"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "rain_jacket",
+   "name": "Yağmurluk / hardshell",
+   "category": "clothing",
+   "essential": true
+  },
+  {
+   "id": "hiking_pants",
+   "name": "Outdoor pantolon",
+   "category": "clothing",
+   "qty": {
+    "base": 1,
+    "perDay": 0.2,
+    "max": 3
+   }
+  },
+  {
+   "id": "shorts",
+   "name": "Şort",
+   "category": "clothing",
+   "when": {
+    "season": [
+     "summer"
+    ]
+   },
+   "qty": {
+    "base": 1,
+    "perDay": 0.3,
+    "max": 4
+   }
+  },
+  {
+   "id": "tshirts",
+   "name": "Tişört",
+   "category": "clothing",
+   "qty": {
+    "base": 0,
+    "perDay": 0.7,
+    "max": 7
+   }
+  },
+  {
+   "id": "socks",
+   "name": "Çorap (yün / outdoor)",
+   "category": "clothing",
+   "qty": {
+    "base": 1,
+    "perDay": 1,
+    "max": 8
+   }
+  },
+  {
+   "id": "underwear",
+   "name": "İç çamaşırı",
+   "category": "clothing",
+   "qty": {
+    "base": 0,
+    "perDay": 1,
+    "max": 8
+   }
+  },
+  {
+   "id": "hiking_boots",
+   "name": "Yürüyüş botu / ayakkabısı",
+   "category": "clothing",
+   "essential": true
+  },
+  {
+   "id": "camp_sandals",
+   "name": "Kamp terliği / sandalet",
+   "category": "clothing"
+  },
+  {
+   "id": "hat",
+   "name": "Şapka",
+   "category": "clothing"
+  },
+  {
+   "id": "beanie_gloves",
+   "name": "Bere ve eldiven",
+   "category": "clothing",
+   "when": {
+    "season": [
+     "winter",
+     "spring_autumn"
+    ]
+   }
+  },
+  {
+   "id": "buff",
+   "name": "Boyunluk / buff",
+   "category": "clothing"
+  },
+  {
+   "id": "swimsuit",
+   "name": "Mayo",
+   "category": "clothing",
+   "when": {
+    "season": [
+     "summer"
+    ]
+   }
+  },
+  {
+   "id": "gaiters",
+   "name": "Tozluk",
+   "category": "clothing",
+   "when": {
+    "season": [
+     "winter"
+    ]
+   }
+  },
+  {
+   "id": "sleep_clothes",
+   "name": "Uyku kıyafeti",
+   "category": "clothing"
+  },
+  {
+   "id": "headlamp",
+   "name": "Kafa lambası",
+   "category": "light",
+   "essential": true
+  },
+  {
+   "id": "lantern",
+   "name": "Kamp feneri",
+   "category": "light"
+  },
+  {
+   "id": "batteries",
+   "name": "Yedek pil",
+   "category": "light"
+  },
+  {
+   "id": "powerbank",
+   "name": "Powerbank (büyük kapasite)",
+   "category": "light",
+   "essential": true
+  },
+  {
+   "id": "solar_panel",
+   "name": "Güneş paneli / şarj",
+   "category": "light",
+   "when": {
+    "water": [
+     "no"
+    ]
+   }
+  },
+  {
+   "id": "car_inverter",
+   "name": "Araç invertörü",
+   "category": "light",
+   "when": {
+    "access": [
+     "car"
+    ]
+   }
+  },
+  {
+   "id": "string_lights",
+   "name": "Dekoratif ip ışık",
+   "category": "light",
+   "when": {
+    "access": [
+     "car"
+    ]
+   }
+  },
+  {
+   "id": "phone_charger",
+   "name": "Telefon şarj kablosu",
+   "category": "light"
+  },
+  {
+   "id": "knife",
+   "name": "Bıçak / çakı",
+   "category": "tools",
+   "essential": true
+  },
+  {
+   "id": "multitool",
+   "name": "Çok amaçlı alet",
+   "category": "tools"
+  },
+  {
+   "id": "axe_saw",
+   "name": "Balta / testere",
+   "category": "tools",
+   "when": {
+    "access": [
+     "car"
+    ],
+    "water": [
+     "no"
+    ]
+   }
+  },
+  {
+   "id": "shovel",
+   "name": "Katlanır kürek",
+   "category": "tools",
+   "when": {
+    "water": [
+     "no"
+    ]
+   }
+  },
+  {
+   "id": "duct_tape",
+   "name": "Koli bandı",
+   "category": "tools"
+  },
+  {
+   "id": "rope",
+   "name": "İp (10 m+)",
+   "category": "tools"
+  },
+  {
+   "id": "carabiners",
+   "name": "Karabina",
+   "category": "tools"
+  },
+  {
+   "id": "fire_starter",
+   "name": "Çakmak + kibrit + çakmaktaşı",
+   "category": "tools",
+   "essential": true
+  },
+  {
+   "id": "firewood",
+   "name": "Odun / kömür",
+   "category": "tools",
+   "when": {
+    "access": [
+     "car"
+    ]
+   }
+  },
+  {
+   "id": "trash_bags",
+   "name": "Çöp poşeti",
+   "category": "tools",
+   "essential": true
+  },
+  {
+   "id": "ziplock",
+   "name": "Kilitli poşet",
+   "category": "tools"
+  },
+  {
+   "id": "dry_bag",
+   "name": "Su geçirmez torba",
+   "category": "tools"
+  },
+  {
+   "id": "camp_chair",
+   "name": "Kamp sandalyesi",
+   "category": "tools",
+   "when": {
+    "access": [
+     "car"
+    ]
+   }
+  },
+  {
+   "id": "camp_table",
+   "name": "Kamp masası",
+   "category": "tools",
+   "when": {
+    "access": [
+     "car"
+    ]
+   }
+  },
+  {
+   "id": "cooler",
+   "name": "Buzluk",
+   "category": "tools",
+   "when": {
+    "access": [
+     "car"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "clothesline",
+   "name": "Çamaşır ipi / mandal",
+   "category": "tools"
+  },
+  {
+   "id": "sewing_kit",
+   "name": "Dikiş seti",
+   "category": "tools"
+  },
+  {
+   "id": "hammock",
+   "name": "Hamak",
+   "category": "tools",
+   "when": {
+    "access": [
+     "car"
+    ]
+   }
+  },
+  {
+   "id": "windbreak",
+   "name": "Rüzgarlık paravan",
+   "category": "tools",
+   "when": {
+    "access": [
+     "car"
+    ],
+    "campType": [
+     "tent"
+    ]
+   }
+  },
+  {
+   "id": "broom",
+   "name": "Küçük süpürge (çadır içi)",
+   "category": "tools",
+   "when": {
+    "campType": [
+     "tent"
+    ]
+   }
+  },
+  {
+   "id": "map_compass",
+   "name": "Harita ve pusula",
+   "category": "nav",
+   "when": {
+    "access": [
+     "hike"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "gps",
+   "name": "GPS / offline harita",
+   "category": "nav"
+  },
+  {
+   "id": "permit",
+   "name": "Kamp alanı rezervasyonu / izin",
+   "category": "nav",
+   "essential": true
+  },
+  {
+   "id": "id",
+   "name": "Kimlik",
+   "category": "nav",
+   "essential": true
+  },
+  {
+   "id": "cash",
+   "name": "Nakit para",
+   "category": "nav"
+  },
+  {
+   "id": "emergency_numbers",
+   "name": "Acil numaralar (jandarma, orman, AFAD)",
+   "category": "nav"
+  },
+  {
+   "id": "whistle",
+   "name": "Düdük",
+   "category": "nav",
+   "when": {
+    "access": [
+     "hike"
+    ]
+   }
+  },
+  {
+   "id": "car_docs",
+   "name": "Araç belgeleri",
+   "category": "nav",
+   "when": {
+    "access": [
+     "car"
+    ]
+   }
+  },
+  {
+   "id": "first_aid",
+   "name": "İlk yardım çantası",
+   "category": "hygiene",
+   "essential": true
+  },
+  {
+   "id": "meds",
+   "name": "Kişisel ilaçlar",
+   "category": "hygiene",
+   "essential": true
+  },
+  {
+   "id": "sunscreen",
+   "name": "Güneş kremi",
+   "category": "hygiene"
+  },
+  {
+   "id": "insect_repellent",
+   "name": "Böcek / kene kovucu",
+   "category": "hygiene",
+   "essential": true
+  },
+  {
+   "id": "tick_remover",
+   "name": "Kene çıkarıcı",
+   "category": "hygiene"
+  },
+  {
+   "id": "toothbrush",
+   "name": "Diş fırçası / macun",
+   "category": "hygiene"
+  },
+  {
+   "id": "biodegradable_soap",
+   "name": "Doğada çözünen sabun",
+   "category": "hygiene"
+  },
+  {
+   "id": "wet_wipes",
+   "name": "Islak mendil",
+   "category": "hygiene"
+  },
+  {
+   "id": "toilet_paper",
+   "name": "Tuvalet kağıdı",
+   "category": "hygiene",
+   "essential": true
+  },
+  {
+   "id": "trowel",
+   "name": "Tuvalet küreği",
+   "category": "hygiene",
+   "when": {
+    "water": [
+     "no"
+    ]
+   }
+  },
+  {
+   "id": "quick_towel",
+   "name": "Hızlı kuruyan havlu",
+   "category": "hygiene"
+  },
+  {
+   "id": "hand_sanitizer",
+   "name": "El dezenfektanı",
+   "category": "hygiene"
+  },
+  {
+   "id": "lip_balm",
+   "name": "Dudak koruyucu",
+   "category": "hygiene"
+  },
+  {
+   "id": "blister",
+   "name": "Su toplama bandı",
+   "category": "hygiene",
+   "when": {
+    "access": [
+     "hike"
+    ]
+   }
+  },
+  {
+   "id": "aloe",
+   "name": "Güneş sonrası / aloe jel",
+   "category": "hygiene",
+   "when": {
+    "season": [
+     "summer"
+    ]
+   }
+  },
+  {
+   "id": "hygiene_bag",
+   "name": "Kişisel bakım çantası",
+   "category": "hygiene"
+  },
+  {
+   "id": "kid_sleeping_bag",
+   "name": "Çocuk uyku tulumu",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "kid_headlamp",
+   "name": "Çocuk kafa lambası",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "kid_clothes",
+   "name": "Yedek çocuk kıyafeti (bol)",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   },
+   "qty": {
+    "base": 2,
+    "perDay": 1,
+    "max": 10
+   },
+   "unit": "takım"
+  },
+  {
+   "id": "kid_toys",
+   "name": "Oyuncak / kitap",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "kid_snacks",
+   "name": "Çocuk atıştırmalığı",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "kid_meds",
+   "name": "Çocuk ilaçları",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "kid_repellent",
+   "name": "Çocuk böcek kovucu",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "kid_carrier",
+   "name": "Çocuk taşıma sırt çantası",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ],
+    "access": [
+     "hike"
+    ]
+   }
+  },
+  {
+   "id": "kid_whistle",
+   "name": "Çocuk düdüğü / isim bilekliği",
+   "category": "kids",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "daypack",
+   "name": "Günlük sırt çantası",
+   "category": "fun"
+  },
+  {
+   "id": "trekking_poles",
+   "name": "Trekking batonu",
+   "category": "fun",
+   "when": {
+    "access": [
+     "hike"
+    ]
+   }
+  },
+  {
+   "id": "binoculars",
+   "name": "Dürbün",
+   "category": "fun"
+  },
+  {
+   "id": "camera",
+   "name": "Fotoğraf makinesi",
+   "category": "fun"
+  },
+  {
+   "id": "book_cards",
+   "name": "Kitap / kart oyunu",
+   "category": "fun"
+  },
+  {
+   "id": "fishing",
+   "name": "Olta takımı",
+   "category": "fun",
+   "when": {
+    "access": [
+     "car"
+    ]
+   }
+  },
+  {
+   "id": "ball",
+   "name": "Top / frizbi",
+   "category": "fun",
+   "when": {
+    "access": [
+     "car"
+    ]
+   }
+  },
+  {
+   "id": "speaker",
+   "name": "Hoparlör (düşük ses)",
+   "category": "fun",
+   "when": {
+    "access": [
+     "car"
+    ]
+   }
+  },
+  {
+   "id": "star_app",
+   "name": "Yıldız haritası uygulaması",
+   "category": "fun"
+  },
+  {
+   "id": "notebook",
+   "name": "Not defteri / kalem",
+   "category": "fun"
+  },
+  {
+   "id": "stove",
+   "name": "Kamp ocağı",
+   "category": "kitchen",
+   "essential": true
+  },
+  {
+   "id": "gas",
+   "name": "Gaz kartuşu / tüp",
+   "category": "kitchen",
+   "qty": {
+    "base": 1,
+    "perDay": 0.3,
+    "max": 4
+   },
+   "unit": "adet",
+   "essential": true
+  },
+  {
+   "id": "pot_pan",
+   "name": "Tencere ve tava",
+   "category": "kitchen"
+  },
+  {
+   "id": "kettle",
+   "name": "Çaydanlık / cezve",
+   "category": "kitchen"
+  },
+  {
+   "id": "cutlery",
+   "name": "Çatal kaşık bıçak",
+   "category": "kitchen"
+  },
+  {
+   "id": "plates_cups",
+   "name": "Tabak ve bardak",
+   "category": "kitchen"
+  },
+  {
+   "id": "cutting_board",
+   "name": "Kesme tahtası",
+   "category": "kitchen"
+  },
+  {
+   "id": "can_opener",
+   "name": "Konserve açacağı",
+   "category": "kitchen"
+  },
+  {
+   "id": "spatula",
+   "name": "Spatula / kepçe",
+   "category": "kitchen"
+  },
+  {
+   "id": "grill",
+   "name": "Mangal / ızgara teli",
+   "category": "kitchen",
+   "when": {
+    "access": [
+     "car"
+    ]
+   }
+  },
+  {
+   "id": "foil",
+   "name": "Folyo",
+   "category": "kitchen"
+  },
+  {
+   "id": "dish_kit",
+   "name": "Bulaşık deterjanı, sünger, bez",
+   "category": "kitchen"
+  },
+  {
+   "id": "water_container",
+   "name": "Su bidonu (10-20 L)",
+   "category": "kitchen",
+   "when": {
+    "access": [
+     "car"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "food_containers",
+   "name": "Saklama kabı",
+   "category": "kitchen"
+  },
+  {
+   "id": "thermos",
+   "name": "Termos",
+   "category": "kitchen"
+  },
+  {
+   "id": "lighter_kitchen",
+   "name": "Ocak çakmağı",
+   "category": "kitchen"
+  },
+  {
+   "id": "bear_bag",
+   "name": "Yiyecek asma torbası (hayvanlara karşı)",
+   "category": "kitchen",
+   "when": {
+    "water": [
+     "no"
+    ]
+   }
+  },
+  {
+   "id": "breakfast",
+   "name": "Kahvaltılık (peynir, zeytin, yumurta, reçel)",
+   "category": "foodstuff"
+  },
+  {
+   "id": "bread",
+   "name": "Ekmek / lavaş",
+   "category": "foodstuff",
+   "qty": {
+    "base": 1,
+    "perDay": 0.5,
+    "max": 6
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "pasta_rice",
+   "name": "Makarna / pirinç / bulgur",
+   "category": "foodstuff",
+   "qty": {
+    "base": 1,
+    "perDay": 0.3,
+    "max": 4
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "canned",
+   "name": "Konserve (ton, fasulye, mısır)",
+   "category": "foodstuff",
+   "qty": {
+    "base": 2,
+    "perDay": 1,
+    "max": 12
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "soup",
+   "name": "Hazır çorba",
+   "category": "foodstuff",
+   "when": {
+    "season": [
+     "winter",
+     "spring_autumn"
+    ]
+   },
+   "qty": {
+    "base": 1,
+    "perDay": 0.5,
+    "max": 6
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "meat_frozen",
+   "name": "Et / sucuk (dondurulmuş)",
+   "category": "foodstuff",
+   "when": {
+    "access": [
+     "car"
+    ]
+   }
+  },
+  {
+   "id": "veg",
+   "name": "Dayanıklı sebze (patates, soğan, domates)",
+   "category": "foodstuff"
+  },
+  {
+   "id": "fruit",
+   "name": "Meyve (elma, portakal)",
+   "category": "foodstuff"
+  },
+  {
+   "id": "nuts_dried",
+   "name": "Kuruyemiş / kuru meyve",
+   "category": "foodstuff",
+   "essential": true
+  },
+  {
+   "id": "energy_bars",
+   "name": "Enerji barı",
+   "category": "foodstuff",
+   "when": {
+    "access": [
+     "hike"
+    ]
+   },
+   "qty": {
+    "base": 2,
+    "perDay": 2,
+    "max": 20
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "chocolate",
+   "name": "Çikolata / bisküvi",
+   "category": "foodstuff"
+  },
+  {
+   "id": "oil_spices",
+   "name": "Yağ, tuz, baharat",
+   "category": "foodstuff",
+   "essential": true
+  },
+  {
+   "id": "tea_coffee",
+   "name": "Çay / kahve / şeker",
+   "category": "foodstuff"
+  },
+  {
+   "id": "milk_powder",
+   "name": "Süt tozu / UHT süt",
+   "category": "foodstuff"
+  },
+  {
+   "id": "oats",
+   "name": "Yulaf / granola",
+   "category": "foodstuff"
+  },
+  {
+   "id": "dehydrated",
+   "name": "Liyofilize kamp yemeği",
+   "category": "foodstuff",
+   "when": {
+    "access": [
+     "hike"
+    ]
+   }
+  },
+  {
+   "id": "marshmallow",
+   "name": "Marshmallow",
+   "category": "foodstuff",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "honey_jam",
+   "name": "Bal / reçel",
+   "category": "foodstuff"
+  },
+  {
+   "id": "water",
+   "name": "İçme suyu",
+   "category": "drinks",
+   "qty": {
+    "base": 0,
+    "perDay": 3,
+    "max": null
+   },
+   "unit": "L",
+   "essential": true
+  },
+  {
+   "id": "water_filter",
+   "name": "Su filtresi / arıtma tableti",
+   "category": "drinks",
+   "when": {
+    "water": [
+     "no"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "bottles",
+   "name": "Matara",
+   "category": "drinks",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "hydration_bladder",
+   "name": "Su torbası (hidrasyon)",
+   "category": "drinks",
+   "when": {
+    "access": [
+     "hike"
+    ]
+   }
+  },
+  {
+   "id": "juice_soda",
+   "name": "Meyve suyu / gazoz",
+   "category": "drinks",
+   "when": {
+    "access": [
+     "car"
+    ]
+   }
+  },
+  {
+   "id": "electrolyte",
+   "name": "Elektrolit / izotonik toz",
+   "category": "drinks",
+   "when": {
+    "season": [
+     "summer"
+    ]
+   }
+  },
+  {
+   "id": "prep_weather",
+   "name": "Hava durumunu kontrol et",
+   "category": "prepList",
+   "daysBefore": 1
+  },
+  {
+   "id": "prep_reservation",
+   "name": "Kamp alanı rezervasyonu / izin al",
+   "category": "prepList",
+   "daysBefore": 14
+  },
+  {
+   "id": "prep_test_tent",
+   "name": "Çadırı ve ekipmanı evde kur, test et",
+   "category": "prepList",
+   "when": {
+    "campType": [
+     "tent"
+    ]
+   },
+   "daysBefore": 5
+  },
+  {
+   "id": "prep_charge",
+   "name": "Powerbank, fener, telefon şarj et",
+   "category": "prepList",
+   "daysBefore": 0
+  },
+  {
+   "id": "prep_offline_map",
+   "name": "Offline harita indir",
+   "category": "prepList",
+   "daysBefore": 1
+  },
+  {
+   "id": "prep_food_prep",
+   "name": "Yemekleri hazırla / marine et / dondur",
+   "category": "prepList",
+   "daysBefore": 1
+  },
+  {
+   "id": "prep_inform",
+   "name": "Rotayı ve dönüş saatini birine bildir",
+   "category": "prepList",
+   "daysBefore": 0
+  },
+  {
+   "id": "prep_car_check",
+   "name": "Araç kontrolü (lastik, yakıt)",
+   "category": "prepList",
+   "when": {
+    "access": [
+     "car"
+    ]
+   },
+   "daysBefore": 2
+  },
+  {
+   "id": "prep_fire_rules",
+   "name": "Ateş yasağı / orman kurallarını öğren",
+   "category": "prepList",
+   "daysBefore": 3
+  },
+  {
+   "id": "prep_gas_check",
+   "name": "Gaz kartuşu / ocak çalışıyor mu kontrol et",
+   "category": "prepList",
+   "daysBefore": 3
+  },
+  {
+   "id": "prep_first_aid_check",
+   "name": "İlk yardım çantasını tamamla",
+   "category": "prepList",
+   "daysBefore": 3
+  }
+ ],
+ "preselect": true,
+ "quickAdd": false
+}

@@ -1,0 +1,1304 @@
+{
+ "id": "hastane",
+ "name": "Doğum Çantası",
+ "description": "Anne, bebek ve refakatçi için hastane çantası; doğum tipi ve mevsime göre.",
+ "icon": "child_friendly",
+ "color": "#D81B60",
+ "dateMode": "single",
+ "dateLabel": "Tahmini doğum tarihi",
+ "endDateLabel": null,
+ "textFields": [
+  {
+   "id": "hospital",
+   "label": "Hastane",
+   "hint": ""
+  }
+ ],
+ "filters": [
+  {
+   "id": "birthType",
+   "label": "Doğum Tipi",
+   "question": "Planlanan doğum şekli?",
+   "options": [
+    {
+     "id": "normal",
+     "label": "Normal doğum",
+     "icon": "favorite"
+    },
+    {
+     "id": "csection",
+     "label": "Sezaryen",
+     "icon": "medical_services"
+    },
+    {
+     "id": "unknown",
+     "label": "Belli değil",
+     "icon": "help_outline"
+    }
+   ],
+   "default": "unknown"
+  },
+  {
+   "id": "season",
+   "label": "Mevsim",
+   "question": "Bebek hangi mevsimde doğacak?",
+   "options": [
+    {
+     "id": "warm",
+     "label": "Yaz / ılık",
+     "icon": "wb_sunny"
+    },
+    {
+     "id": "cold",
+     "label": "Kış / soğuk",
+     "icon": "ac_unit"
+    }
+   ],
+   "default": "warm"
+  },
+  {
+   "id": "companion",
+   "label": "Refakatçi",
+   "question": "Hastanede refakatçi kalacak mı?",
+   "options": [
+    {
+     "id": "no",
+     "label": "Hayır"
+    },
+    {
+     "id": "yes",
+     "label": "Evet",
+     "icon": "people"
+    }
+   ],
+   "default": "yes"
+  },
+  {
+   "id": "feeding",
+   "label": "Beslenme",
+   "question": "Planlanan beslenme?",
+   "options": [
+    {
+     "id": "breast",
+     "label": "Emzirme",
+     "icon": "favorite"
+    },
+    {
+     "id": "formula",
+     "label": "Mama",
+     "icon": "baby_changing_station"
+    },
+    {
+     "id": "mixed",
+     "label": "Karışık",
+     "icon": "child_care"
+    }
+   ],
+   "default": "breast"
+  },
+  {
+   "id": "siblings",
+   "label": "Kardeş",
+   "question": "Evde başka çocuk var mı?",
+   "options": [
+    {
+     "id": "no",
+     "label": "Hayır"
+    },
+    {
+     "id": "yes",
+     "label": "Evet",
+     "icon": "child_care"
+    }
+   ],
+   "default": "no"
+  }
+ ],
+ "sections": [
+  {
+   "id": "mom",
+   "name": "Anne",
+   "icon": "pregnant_woman"
+  },
+  {
+   "id": "baby",
+   "name": "Bebek",
+   "icon": "child_care"
+  },
+  {
+   "id": "companion",
+   "name": "Refakatçi ve Ev",
+   "icon": "family_restroom"
+  }
+ ],
+ "categories": [
+  {
+   "id": "docs",
+   "name": "Belgeler",
+   "icon": "description",
+   "color": "#EF5350",
+   "section": "mom"
+  },
+  {
+   "id": "mom_clothes",
+   "name": "Anne Kıyafet",
+   "icon": "checkroom",
+   "color": "#EC407A",
+   "section": "mom"
+  },
+  {
+   "id": "mom_care",
+   "name": "Anne Hijyen ve Bakım",
+   "icon": "spa",
+   "color": "#AB47BC",
+   "section": "mom"
+  },
+  {
+   "id": "birth",
+   "name": "Doğum Sırasında",
+   "icon": "favorite",
+   "color": "#FF7043",
+   "section": "mom"
+  },
+  {
+   "id": "postpartum",
+   "name": "Doğum Sonrası",
+   "icon": "healing",
+   "color": "#26A69A",
+   "section": "mom"
+  },
+  {
+   "id": "mom_comfort",
+   "name": "Konfor ve Elektronik",
+   "icon": "devices",
+   "color": "#FFC107",
+   "section": "mom"
+  },
+  {
+   "id": "baby_clothes",
+   "name": "Bebek Kıyafet",
+   "icon": "child_care",
+   "color": "#29B6F6",
+   "section": "baby"
+  },
+  {
+   "id": "baby_care",
+   "name": "Bebek Bakım",
+   "icon": "baby_changing_station",
+   "color": "#26C6DA",
+   "section": "baby"
+  },
+  {
+   "id": "feeding",
+   "name": "Beslenme",
+   "icon": "restaurant",
+   "color": "#66BB6A",
+   "section": "baby"
+  },
+  {
+   "id": "going_home",
+   "name": "Eve Dönüş",
+   "icon": "directions_car",
+   "color": "#5C6BC0",
+   "section": "baby"
+  },
+  {
+   "id": "comp",
+   "name": "Refakatçi Çantası",
+   "icon": "people",
+   "color": "#448AFF",
+   "section": "companion"
+  },
+  {
+   "id": "home_prep",
+   "name": "Evde Hazır Olsun",
+   "icon": "home",
+   "color": "#8D6E63",
+   "section": "companion"
+  },
+  {
+   "id": "prep",
+   "name": "Doğum Öncesi Görevler",
+   "icon": "checklist",
+   "color": "#78909C",
+   "section": "companion"
+  }
+ ],
+ "items": [
+  {
+   "id": "id_card",
+   "name": "Kimlik kartı (anne ve baba)",
+   "category": "docs",
+   "essential": true
+  },
+  {
+   "id": "insurance_card",
+   "name": "Sigorta / SGK bilgileri",
+   "category": "docs",
+   "essential": true
+  },
+  {
+   "id": "hospital_file",
+   "name": "Gebelik takip dosyası, tahliller, ultrason raporları",
+   "category": "docs",
+   "essential": true
+  },
+  {
+   "id": "blood_type",
+   "name": "Kan grubu kartı",
+   "category": "docs"
+  },
+  {
+   "id": "birth_plan",
+   "name": "Doğum planı (varsa)",
+   "category": "docs"
+  },
+  {
+   "id": "marriage_cert",
+   "name": "Evlilik cüzdanı",
+   "category": "docs",
+   "note": "Doğum belgesi işlemleri için istenebilir."
+  },
+  {
+   "id": "hospital_contract",
+   "name": "Hastane anlaşması / doktor iletişim",
+   "category": "docs"
+  },
+  {
+   "id": "payment",
+   "name": "Kredi kartı / nakit",
+   "category": "docs",
+   "essential": true
+  },
+  {
+   "id": "phone_list",
+   "name": "Aranacaklar listesi",
+   "category": "docs"
+  },
+  {
+   "id": "nightgown",
+   "name": "Önden açılır gecelik",
+   "category": "mom_clothes",
+   "qty": {
+    "base": 3,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet",
+   "essential": true
+  },
+  {
+   "id": "robe",
+   "name": "Sabahlık",
+   "category": "mom_clothes",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   }
+  },
+  {
+   "id": "nursing_bra",
+   "name": "Emzirme sütyeni",
+   "category": "mom_clothes",
+   "when": {
+    "feeding": [
+     "breast",
+     "mixed"
+    ]
+   },
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "disposable_underwear",
+   "name": "Tek kullanımlık / bol pamuklu külot",
+   "category": "mom_clothes",
+   "qty": {
+    "base": 8,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet",
+   "essential": true
+  },
+  {
+   "id": "socks",
+   "name": "Çorap (kaymaz)",
+   "category": "mom_clothes",
+   "qty": {
+    "base": 3,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "çift"
+  },
+  {
+   "id": "slippers",
+   "name": "Terlik (kaymaz)",
+   "category": "mom_clothes",
+   "essential": true
+  },
+  {
+   "id": "shower_slippers",
+   "name": "Duş terliği",
+   "category": "mom_clothes"
+  },
+  {
+   "id": "going_home_outfit",
+   "name": "Eve dönüş kıyafeti (bol, rahat)",
+   "category": "mom_clothes",
+   "essential": true
+  },
+  {
+   "id": "cardigan",
+   "name": "Hırka / şal",
+   "category": "mom_clothes",
+   "when": {
+    "season": [
+     "cold"
+    ]
+   }
+  },
+  {
+   "id": "hairband",
+   "name": "Saç tokası / bandana",
+   "category": "mom_clothes"
+  },
+  {
+   "id": "high_waist_underwear",
+   "name": "Yüksek bel külot (dikişe değmeyen)",
+   "category": "mom_clothes",
+   "when": {
+    "birthType": [
+     "csection",
+     "unknown"
+    ]
+   },
+   "qty": {
+    "base": 4,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "compression_socks",
+   "name": "Varis çorabı",
+   "category": "mom_clothes",
+   "when": {
+    "birthType": [
+     "csection",
+     "unknown"
+    ]
+   },
+   "note": "Sezaryen sonrası doktor önerebilir."
+  },
+  {
+   "id": "maternity_pads",
+   "name": "Lohusa pedi",
+   "category": "mom_care",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket",
+   "essential": true
+  },
+  {
+   "id": "nursing_pads",
+   "name": "Göğüs pedi",
+   "category": "mom_care",
+   "when": {
+    "feeding": [
+     "breast",
+     "mixed"
+    ]
+   }
+  },
+  {
+   "id": "nipple_cream",
+   "name": "Göğüs ucu kremi (lanolin)",
+   "category": "mom_care",
+   "when": {
+    "feeding": [
+     "breast",
+     "mixed"
+    ]
+   }
+  },
+  {
+   "id": "toiletries",
+   "name": "Diş fırçası, macun, şampuan, duş jeli",
+   "category": "mom_care",
+   "essential": true
+  },
+  {
+   "id": "face_wipes",
+   "name": "Yüz temizleme mendili",
+   "category": "mom_care"
+  },
+  {
+   "id": "lip_balm",
+   "name": "Dudak nemlendirici",
+   "category": "mom_care"
+  },
+  {
+   "id": "hair_brush",
+   "name": "Tarak / saç kurutma",
+   "category": "mom_care"
+  },
+  {
+   "id": "deodorant",
+   "name": "Deodorant",
+   "category": "mom_care"
+  },
+  {
+   "id": "moisturizer",
+   "name": "Nemlendirici",
+   "category": "mom_care"
+  },
+  {
+   "id": "perineal_spray",
+   "name": "Perine soğutucu sprey / oturma banyosu",
+   "category": "mom_care",
+   "when": {
+    "birthType": [
+     "normal",
+     "unknown"
+    ]
+   }
+  },
+  {
+   "id": "towel",
+   "name": "Havlu (büyük + küçük)",
+   "category": "mom_care"
+  },
+  {
+   "id": "glasses_lens",
+   "name": "Gözlük / lens malzemesi",
+   "category": "mom_care"
+  },
+  {
+   "id": "light_makeup",
+   "name": "Hafif makyaj (fotoğraf için)",
+   "category": "mom_care"
+  },
+  {
+   "id": "wet_wipes_mom",
+   "name": "Islak mendil",
+   "category": "mom_care"
+  },
+  {
+   "id": "belly_band",
+   "name": "Karın korsesi",
+   "category": "mom_care",
+   "when": {
+    "birthType": [
+     "csection",
+     "unknown"
+    ]
+   }
+  },
+  {
+   "id": "birth_ball",
+   "name": "Pilates topu (hastane izin veriyorsa)",
+   "category": "birth",
+   "when": {
+    "birthType": [
+     "normal",
+     "unknown"
+    ]
+   }
+  },
+  {
+   "id": "massage_oil",
+   "name": "Masaj yağı",
+   "category": "birth",
+   "when": {
+    "birthType": [
+     "normal",
+     "unknown"
+    ]
+   }
+  },
+  {
+   "id": "hair_ties",
+   "name": "Saç lastiği",
+   "category": "birth"
+  },
+  {
+   "id": "lollipop",
+   "name": "Şekerleme / lolipop (enerji)",
+   "category": "birth",
+   "when": {
+    "birthType": [
+     "normal",
+     "unknown"
+    ]
+   }
+  },
+  {
+   "id": "water_bottle",
+   "name": "Pipetli su şişesi",
+   "category": "birth"
+  },
+  {
+   "id": "playlist",
+   "name": "Müzik listesi / kulaklık",
+   "category": "birth"
+  },
+  {
+   "id": "focus_object",
+   "name": "Odak nesnesi / afirmasyon kartları",
+   "category": "birth",
+   "when": {
+    "birthType": [
+     "normal",
+     "unknown"
+    ]
+   }
+  },
+  {
+   "id": "fan",
+   "name": "Mini vantilatör",
+   "category": "birth",
+   "when": {
+    "season": [
+     "warm"
+    ]
+   }
+  },
+  {
+   "id": "painkillers",
+   "name": "Doktorun onayladığı ağrı kesici",
+   "category": "postpartum"
+  },
+  {
+   "id": "stool_softener",
+   "name": "Kabızlık önleyici (doktora sor)",
+   "category": "postpartum",
+   "when": {
+    "birthType": [
+     "csection",
+     "unknown"
+    ]
+   }
+  },
+  {
+   "id": "donut_pillow",
+   "name": "Simit yastık",
+   "category": "postpartum",
+   "when": {
+    "birthType": [
+     "normal",
+     "unknown"
+    ]
+   }
+  },
+  {
+   "id": "nursing_pillow",
+   "name": "Emzirme yastığı",
+   "category": "postpartum",
+   "when": {
+    "feeding": [
+     "breast",
+     "mixed"
+    ]
+   }
+  },
+  {
+   "id": "breast_pump",
+   "name": "Süt pompası",
+   "category": "postpartum",
+   "when": {
+    "feeding": [
+     "breast",
+     "mixed"
+    ]
+   }
+  },
+  {
+   "id": "snacks",
+   "name": "Atıştırmalık (kuruyemiş, bar, hurma)",
+   "category": "postpartum"
+  },
+  {
+   "id": "herbal_tea",
+   "name": "Rezene / lohusa çayı",
+   "category": "postpartum",
+   "when": {
+    "feeding": [
+     "breast",
+     "mixed"
+    ]
+   }
+  },
+  {
+   "id": "water_big",
+   "name": "Büyük su şişeleri",
+   "category": "postpartum"
+  },
+  {
+   "id": "phone_charger",
+   "name": "Telefon şarj aleti (uzun kablo)",
+   "category": "mom_comfort",
+   "essential": true
+  },
+  {
+   "id": "powerbank",
+   "name": "Powerbank",
+   "category": "mom_comfort"
+  },
+  {
+   "id": "camera",
+   "name": "Fotoğraf makinesi / kamera",
+   "category": "mom_comfort"
+  },
+  {
+   "id": "pillow",
+   "name": "Kendi yastığın",
+   "category": "mom_comfort"
+  },
+  {
+   "id": "eye_mask",
+   "name": "Uyku maskesi / kulak tıkacı",
+   "category": "mom_comfort"
+  },
+  {
+   "id": "tablet_book",
+   "name": "Tablet / kitap",
+   "category": "mom_comfort"
+  },
+  {
+   "id": "earbuds",
+   "name": "Kulaklık",
+   "category": "mom_comfort"
+  },
+  {
+   "id": "extension_cord",
+   "name": "Uzatma kablosu",
+   "category": "mom_comfort"
+  },
+  {
+   "id": "blanket",
+   "name": "İnce battaniye",
+   "category": "mom_comfort",
+   "when": {
+    "season": [
+     "cold"
+    ]
+   }
+  },
+  {
+   "id": "notebook",
+   "name": "Not defteri (sorular, süt saatleri)",
+   "category": "mom_comfort"
+  },
+  {
+   "id": "bodysuit",
+   "name": "Zıbın / body",
+   "category": "baby_clothes",
+   "qty": {
+    "base": 5,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet",
+   "essential": true
+  },
+  {
+   "id": "onesie",
+   "name": "Tulum",
+   "category": "baby_clothes",
+   "qty": {
+    "base": 4,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "hat",
+   "name": "Bere / şapka",
+   "category": "baby_clothes",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet",
+   "essential": true
+  },
+  {
+   "id": "mittens",
+   "name": "Eldiven (tırnak için)",
+   "category": "baby_clothes",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "çift"
+  },
+  {
+   "id": "baby_socks",
+   "name": "Bebek çorabı",
+   "category": "baby_clothes",
+   "qty": {
+    "base": 3,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "çift"
+  },
+  {
+   "id": "vest",
+   "name": "Yelek / hırka",
+   "category": "baby_clothes",
+   "when": {
+    "season": [
+     "cold"
+    ]
+   },
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   }
+  },
+  {
+   "id": "swaddle",
+   "name": "Kundak / müslin örtü",
+   "category": "baby_clothes",
+   "qty": {
+    "base": 3,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "baby_blanket",
+   "name": "Bebek battaniyesi",
+   "category": "baby_clothes",
+   "essential": true
+  },
+  {
+   "id": "thick_blanket",
+   "name": "Kalın battaniye / tulum",
+   "category": "baby_clothes",
+   "when": {
+    "season": [
+     "cold"
+    ]
+   }
+  },
+  {
+   "id": "bib",
+   "name": "Ağız bezi / önlük",
+   "category": "baby_clothes",
+   "qty": {
+    "base": 5,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "hospital_outfit",
+   "name": "Hastane çıkış kıyafeti (özel)",
+   "category": "baby_clothes"
+  },
+  {
+   "id": "thin_cotton",
+   "name": "İnce pamuklu takım",
+   "category": "baby_clothes",
+   "when": {
+    "season": [
+     "warm"
+    ]
+   },
+   "qty": {
+    "base": 3,
+    "perDay": 0,
+    "max": null
+   }
+  },
+  {
+   "id": "diapers_nb",
+   "name": "Yenidoğan bebek bezi",
+   "category": "baby_care",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket",
+   "essential": true
+  },
+  {
+   "id": "wipes_baby",
+   "name": "Bebek ıslak mendili (kokusuz)",
+   "category": "baby_care",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "cotton_pads",
+   "name": "Pamuk",
+   "category": "baby_care"
+  },
+  {
+   "id": "diaper_cream",
+   "name": "Pişik kremi",
+   "category": "baby_care"
+  },
+  {
+   "id": "umbilical_care",
+   "name": "Göbek bakım malzemesi (hastaneye sor)",
+   "category": "baby_care"
+  },
+  {
+   "id": "baby_towel",
+   "name": "Bebek havlusu",
+   "category": "baby_care"
+  },
+  {
+   "id": "baby_shampoo",
+   "name": "Bebek şampuanı",
+   "category": "baby_care"
+  },
+  {
+   "id": "nail_file",
+   "name": "Bebek tırnak törpüsü",
+   "category": "baby_care"
+  },
+  {
+   "id": "changing_mat",
+   "name": "Alt açma örtüsü",
+   "category": "baby_care"
+  },
+  {
+   "id": "baby_bag",
+   "name": "Bebek çantası",
+   "category": "baby_care"
+  },
+  {
+   "id": "pacifier",
+   "name": "Emzik (kullanacaksanız)",
+   "category": "baby_care"
+  },
+  {
+   "id": "thermometer",
+   "name": "Termometre",
+   "category": "baby_care"
+  },
+  {
+   "id": "nasal_aspirator",
+   "name": "Burun aspiratörü",
+   "category": "baby_care"
+  },
+  {
+   "id": "baby_laundry_bag",
+   "name": "Kirli çamaşır torbası",
+   "category": "baby_care"
+  },
+  {
+   "id": "formula_nb",
+   "name": "Yenidoğan maması (hastaneye sor)",
+   "category": "feeding",
+   "when": {
+    "feeding": [
+     "formula",
+     "mixed"
+    ]
+   }
+  },
+  {
+   "id": "bottles",
+   "name": "Biberon (küçük, yenidoğan emzik)",
+   "category": "feeding",
+   "when": {
+    "feeding": [
+     "formula",
+     "mixed"
+    ]
+   },
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   }
+  },
+  {
+   "id": "sterilizer",
+   "name": "Sterilizasyon poşeti / solüsyon",
+   "category": "feeding",
+   "when": {
+    "feeding": [
+     "formula",
+     "mixed"
+    ]
+   }
+  },
+  {
+   "id": "thermos_water",
+   "name": "Termos (mama suyu)",
+   "category": "feeding",
+   "when": {
+    "feeding": [
+     "formula",
+     "mixed"
+    ]
+   }
+  },
+  {
+   "id": "burp_cloths",
+   "name": "Gaz çıkarma bezi",
+   "category": "feeding",
+   "qty": {
+    "base": 4,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "nursing_cover",
+   "name": "Emzirme örtüsü",
+   "category": "feeding",
+   "when": {
+    "feeding": [
+     "breast",
+     "mixed"
+    ]
+   }
+  },
+  {
+   "id": "milk_storage",
+   "name": "Süt saklama poşeti",
+   "category": "feeding",
+   "when": {
+    "feeding": [
+     "breast",
+     "mixed"
+    ]
+   }
+  },
+  {
+   "id": "feeding_log",
+   "name": "Beslenme takip kartı / uygulama",
+   "category": "feeding"
+  },
+  {
+   "id": "car_seat",
+   "name": "Ana kucağı (araç koltuğu) — kurulu",
+   "category": "going_home",
+   "essential": true,
+   "note": "Hastaneden çıkışta zorunlu; önceden araca takıp deneyin."
+  },
+  {
+   "id": "stroller",
+   "name": "Bebek arabası / port bebe",
+   "category": "going_home"
+  },
+  {
+   "id": "car_blanket",
+   "name": "Araç için örtü",
+   "category": "going_home",
+   "when": {
+    "season": [
+     "cold"
+    ]
+   }
+  },
+  {
+   "id": "sun_shade",
+   "name": "Araç güneşliği",
+   "category": "going_home",
+   "when": {
+    "season": [
+     "warm"
+    ]
+   }
+  },
+  {
+   "id": "baby_carrier",
+   "name": "Kanguru / sling",
+   "category": "going_home"
+  },
+  {
+   "id": "comp_clothes",
+   "name": "Yedek kıyafet (2-3 gün)",
+   "category": "comp",
+   "when": {
+    "companion": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "comp_toiletries",
+   "name": "Kişisel bakım malzemeleri",
+   "category": "comp",
+   "when": {
+    "companion": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "comp_snacks",
+   "name": "Atıştırmalık ve su",
+   "category": "comp",
+   "when": {
+    "companion": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "comp_charger",
+   "name": "Şarj aleti / powerbank",
+   "category": "comp",
+   "when": {
+    "companion": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "comp_pillow",
+   "name": "Yastık / battaniye (refakatçi koltuğu için)",
+   "category": "comp",
+   "when": {
+    "companion": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "comp_slippers",
+   "name": "Terlik",
+   "category": "comp",
+   "when": {
+    "companion": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "comp_cash",
+   "name": "Bozuk para / kart (otopark, kafeterya)",
+   "category": "comp",
+   "when": {
+    "companion": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "comp_meds",
+   "name": "Kendi ilaçları",
+   "category": "comp",
+   "when": {
+    "companion": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "comp_entertainment",
+   "name": "Kitap / kulaklık",
+   "category": "comp",
+   "when": {
+    "companion": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "comp_camera",
+   "name": "Kamera / video görevi",
+   "category": "comp",
+   "when": {
+    "companion": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "comp_car_docs",
+   "name": "Araç belgeleri, yakıt dolu",
+   "category": "comp",
+   "when": {
+    "companion": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "h_crib",
+   "name": "Beşik / yatak hazır ve kurulu",
+   "category": "home_prep",
+   "essential": true
+  },
+  {
+   "id": "h_diapers",
+   "name": "Bez stoğu (1-2 ay)",
+   "category": "home_prep"
+  },
+  {
+   "id": "h_clothes_washed",
+   "name": "Bebek kıyafetleri yıkanmış ve ütülü",
+   "category": "home_prep"
+  },
+  {
+   "id": "h_food",
+   "name": "Dondurulmuş hazır yemekler",
+   "category": "home_prep"
+  },
+  {
+   "id": "h_pharmacy",
+   "name": "Ev eczanesi (ateş düşürücü, gaz damlası, serum fizyolojik)",
+   "category": "home_prep",
+   "essential": true
+  },
+  {
+   "id": "h_changing_station",
+   "name": "Alt değiştirme alanı hazır",
+   "category": "home_prep"
+  },
+  {
+   "id": "h_bath",
+   "name": "Bebek küveti, havlu, termometre",
+   "category": "home_prep"
+  },
+  {
+   "id": "h_clean",
+   "name": "Ev temizliği yapılmış",
+   "category": "home_prep"
+  },
+  {
+   "id": "h_sibling_gift",
+   "name": "Kardeşe 'bebekten hediye'",
+   "category": "home_prep",
+   "when": {
+    "siblings": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "h_sibling_care",
+   "name": "Kardeş için bakıcı / büyükanne planı",
+   "category": "home_prep",
+   "when": {
+    "siblings": [
+     "yes"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "h_visitors",
+   "name": "Ziyaretçi kuralları belirlendi",
+   "category": "home_prep"
+  },
+  {
+   "id": "h_pet",
+   "name": "Evcil hayvan planı",
+   "category": "home_prep"
+  },
+  {
+   "id": "p_pack_bag",
+   "name": "Çantayı hazırla ve kapıya koy",
+   "category": "prep",
+   "essential": true,
+   "daysBefore": 28
+  },
+  {
+   "id": "p_car_seat_install",
+   "name": "Ana kucağını araca tak, dene",
+   "category": "prep",
+   "essential": true,
+   "daysBefore": 21
+  },
+  {
+   "id": "p_hospital_tour",
+   "name": "Hastane / doğumhane turu, giriş prosedürü",
+   "category": "prep",
+   "daysBefore": 30
+  },
+  {
+   "id": "p_route",
+   "name": "Hastane rotası ve alternatif (trafik saatleri)",
+   "category": "prep",
+   "daysBefore": 21
+  },
+  {
+   "id": "p_pediatrician",
+   "name": "Çocuk doktoru seç",
+   "category": "prep",
+   "daysBefore": 30
+  },
+  {
+   "id": "p_phone_charged",
+   "name": "Telefonlar sürekli şarjda",
+   "category": "prep",
+   "daysBefore": 14
+  },
+  {
+   "id": "p_emergency_contacts",
+   "name": "Acil durumda arayacak kişi planı",
+   "category": "prep",
+   "daysBefore": 14
+  },
+  {
+   "id": "p_sibling_plan",
+   "name": "Kardeş bakım planını netleştir",
+   "category": "prep",
+   "when": {
+    "siblings": [
+     "yes"
+    ]
+   },
+   "daysBefore": 21
+  },
+  {
+   "id": "p_freezer_meals",
+   "name": "Dondurucuya yemek hazırla",
+   "category": "prep",
+   "daysBefore": 14
+  },
+  {
+   "id": "p_paperwork",
+   "name": "Doğum izni / SGK evrakları",
+   "category": "prep",
+   "daysBefore": 30
+  },
+  {
+   "id": "p_name",
+   "name": "İsim kararı",
+   "category": "prep",
+   "daysBefore": 14
+  },
+  {
+   "id": "p_fuel",
+   "name": "Araç deposu dolu",
+   "category": "prep",
+   "daysBefore": 7
+  }
+ ],
+ "kind": "checklist"
+}

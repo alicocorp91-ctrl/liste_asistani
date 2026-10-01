@@ -1,0 +1,1313 @@
+{
+ "id": "tasinma",
+ "name": "Taşınma",
+ "description": "8 hafta öncesinden ilk haftaya: görevler, paketleme malzemeleri ve adres değişiklikleri.",
+ "icon": "local_shipping",
+ "color": "#6D4C41",
+ "dateMode": "single",
+ "dateLabel": "Taşınma günü",
+ "endDateLabel": null,
+ "textFields": [
+  {
+   "id": "from",
+   "label": "Eski adres (semt)",
+   "hint": ""
+  },
+  {
+   "id": "to",
+   "label": "Yeni adres (semt)",
+   "hint": ""
+  }
+ ],
+ "filters": [
+  {
+   "id": "distance",
+   "label": "Mesafe",
+   "question": "Nereye taşınıyorsunuz?",
+   "options": [
+    {
+     "id": "same_city",
+     "label": "Aynı şehir",
+     "icon": "location_city"
+    },
+    {
+     "id": "other_city",
+     "label": "Başka şehir",
+     "icon": "map"
+    },
+    {
+     "id": "abroad",
+     "label": "Yurt dışı",
+     "icon": "public"
+    }
+   ],
+   "default": "same_city"
+  },
+  {
+   "id": "home",
+   "label": "Konut",
+   "question": "Kiralık mı, kendi eviniz mi?",
+   "options": [
+    {
+     "id": "rent",
+     "label": "Kiracı",
+     "icon": "key"
+    },
+    {
+     "id": "own",
+     "label": "Ev sahibi",
+     "icon": "home"
+    }
+   ],
+   "default": "rent"
+  },
+  {
+   "id": "kids",
+   "label": "Çocuk",
+   "question": "Okul çağında çocuk var mı?",
+   "options": [
+    {
+     "id": "no",
+     "label": "Hayır"
+    },
+    {
+     "id": "yes",
+     "label": "Evet",
+     "icon": "school"
+    }
+   ],
+   "default": "no"
+  },
+  {
+   "id": "mover",
+   "label": "Nakliye",
+   "question": "Taşımayı kim yapacak?",
+   "options": [
+    {
+     "id": "company",
+     "label": "Nakliye firması",
+     "icon": "local_shipping"
+    },
+    {
+     "id": "self",
+     "label": "Kendim / arkadaşlar",
+     "icon": "groups"
+    }
+   ],
+   "default": "company"
+  }
+ ],
+ "sections": [
+  {
+   "id": "tasks",
+   "name": "Görevler",
+   "icon": "checklist"
+  },
+  {
+   "id": "supplies",
+   "name": "Malzemeler",
+   "icon": "inventory_2"
+  },
+  {
+   "id": "address",
+   "name": "Adres ve Abonelikler",
+   "icon": "badge"
+  }
+ ],
+ "categories": [
+  {
+   "id": "t8w",
+   "name": "8-4 Hafta Önce",
+   "icon": "calendar_month",
+   "color": "#5C6BC0",
+   "section": "tasks"
+  },
+  {
+   "id": "t2w",
+   "name": "2 Hafta Önce",
+   "icon": "today",
+   "color": "#448AFF",
+   "section": "tasks"
+  },
+  {
+   "id": "t1w",
+   "name": "Son Hafta",
+   "icon": "event_note",
+   "color": "#26C6DA",
+   "section": "tasks"
+  },
+  {
+   "id": "t1d",
+   "name": "Bir Gün Önce",
+   "icon": "nightlight",
+   "color": "#FFC107",
+   "section": "tasks"
+  },
+  {
+   "id": "tday",
+   "name": "Taşınma Günü",
+   "icon": "local_shipping",
+   "color": "#EF5350",
+   "section": "tasks"
+  },
+  {
+   "id": "after",
+   "name": "Yeni Evde İlk Hafta",
+   "icon": "home_work",
+   "color": "#66BB6A",
+   "section": "tasks"
+  },
+  {
+   "id": "pack",
+   "name": "Paketleme",
+   "icon": "inventory_2",
+   "color": "#FF9800",
+   "section": "supplies"
+  },
+  {
+   "id": "clean",
+   "name": "Temizlik",
+   "icon": "cleaning_services",
+   "color": "#26A69A",
+   "section": "supplies"
+  },
+  {
+   "id": "tools",
+   "name": "Alet ve Kurulum",
+   "icon": "construction",
+   "color": "#FF7043",
+   "section": "supplies"
+  },
+  {
+   "id": "firstnight",
+   "name": "İlk Gece Kutusu",
+   "icon": "bed",
+   "color": "#AB47BC",
+   "section": "supplies"
+  },
+  {
+   "id": "utilities",
+   "name": "Abonelikler",
+   "icon": "subscriptions",
+   "color": "#29B6F6",
+   "section": "address"
+  },
+  {
+   "id": "official",
+   "name": "Resmi Adres Değişikliği",
+   "icon": "badge",
+   "color": "#EF5350",
+   "section": "address"
+  },
+  {
+   "id": "services",
+   "name": "Hizmetler ve Üyelikler",
+   "icon": "receipt_long",
+   "color": "#78909C",
+   "section": "address"
+  }
+ ],
+ "items": [
+  {
+   "id": "notice_landlord",
+   "name": "Ev sahibine yazılı çıkış bildirimi yap",
+   "category": "t8w",
+   "when": {
+    "home": [
+     "rent"
+    ]
+   },
+   "essential": true,
+   "note": "Sözleşmedeki bildirim süresine bakın (genelde 15-30 gün).",
+   "daysBefore": 45
+  },
+  {
+   "id": "get_quotes",
+   "name": "Nakliye firmalarından teklif al",
+   "category": "t8w",
+   "when": {
+    "mover": [
+     "company"
+    ]
+   },
+   "daysBefore": 40
+  },
+  {
+   "id": "book_mover",
+   "name": "Nakliye firmasını ayarla / sözleşme yap",
+   "category": "t8w",
+   "when": {
+    "mover": [
+     "company"
+    ]
+   },
+   "essential": true,
+   "daysBefore": 30
+  },
+  {
+   "id": "rent_van",
+   "name": "Kamyonet / araç kirala",
+   "category": "t8w",
+   "when": {
+    "mover": [
+     "self"
+    ]
+   },
+   "essential": true,
+   "daysBefore": 21
+  },
+  {
+   "id": "declutter",
+   "name": "Eşyaları ayıkla: sat / bağışla / at",
+   "category": "t8w",
+   "daysBefore": 35
+  },
+  {
+   "id": "inventory",
+   "name": "Eşya envanteri çıkar (fotoğraflı)",
+   "category": "t8w",
+   "daysBefore": 30
+  },
+  {
+   "id": "school_transfer",
+   "name": "Okul nakil işlemlerini başlat",
+   "category": "t8w",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   },
+   "essential": true,
+   "daysBefore": 45
+  },
+  {
+   "id": "job_notice",
+   "name": "İşyerine taşınma iznini bildir",
+   "category": "t8w",
+   "daysBefore": 30
+  },
+  {
+   "id": "budget",
+   "name": "Taşınma bütçesi belirle",
+   "category": "t8w",
+   "daysBefore": 40
+  },
+  {
+   "id": "new_home_measure",
+   "name": "Yeni evin ölçülerini al (mobilya sığacak mı?)",
+   "category": "t8w",
+   "daysBefore": 30
+  },
+  {
+   "id": "visa_docs",
+   "name": "Vize / oturma izni belgelerini hazırla",
+   "category": "t8w",
+   "when": {
+    "distance": [
+     "abroad"
+    ]
+   },
+   "essential": true,
+   "daysBefore": 60
+  },
+  {
+   "id": "intl_shipping",
+   "name": "Uluslararası nakliye / gümrük evraklarını araştır",
+   "category": "t8w",
+   "when": {
+    "distance": [
+     "abroad"
+    ]
+   },
+   "daysBefore": 50
+  },
+  {
+   "id": "start_packing",
+   "name": "Az kullanılan eşyaları paketlemeye başla",
+   "category": "t2w",
+   "daysBefore": 14
+  },
+  {
+   "id": "label_system",
+   "name": "Kutu etiketleme sistemi belirle (oda + numara)",
+   "category": "t2w",
+   "daysBefore": 14
+  },
+  {
+   "id": "utilities_transfer",
+   "name": "Elektrik / su / doğalgaz / internet nakil başvurusu",
+   "category": "t2w",
+   "essential": true,
+   "daysBefore": 14
+  },
+  {
+   "id": "internet_new",
+   "name": "Yeni ev için internet başvurusu yap",
+   "category": "t2w",
+   "note": "Kurulum randevuları 1-2 hafta sürebilir.",
+   "daysBefore": 14
+  },
+  {
+   "id": "elevator_booking",
+   "name": "Asansör / bina yönetimine bildirim",
+   "category": "t2w",
+   "daysBefore": 10
+  },
+  {
+   "id": "parking_permit",
+   "name": "Nakliye aracı için park yeri ayarla",
+   "category": "t2w",
+   "daysBefore": 7
+  },
+  {
+   "id": "new_home_clean",
+   "name": "Yeni evin temizliğini ayarla",
+   "category": "t2w",
+   "daysBefore": 7
+  },
+  {
+   "id": "new_home_repairs",
+   "name": "Yeni evde boya / tadilat / böcek ilaçlama",
+   "category": "t2w",
+   "when": {
+    "home": [
+     "own"
+    ]
+   },
+   "daysBefore": 14
+  },
+  {
+   "id": "insurance",
+   "name": "Konut / eşya sigortasını güncelle",
+   "category": "t2w",
+   "daysBefore": 10
+  },
+  {
+   "id": "doctor_records",
+   "name": "Doktor / diş hekimi kayıtlarını al",
+   "category": "t2w",
+   "when": {
+    "distance": [
+     "other_city",
+     "abroad"
+    ]
+   },
+   "daysBefore": 14
+  },
+  {
+   "id": "pharmacy",
+   "name": "Reçeteli ilaçları yenile",
+   "category": "t2w",
+   "when": {
+    "distance": [
+     "other_city",
+     "abroad"
+    ]
+   },
+   "daysBefore": 7
+  },
+  {
+   "id": "bank_notice",
+   "name": "Bankaya adres güncelleme",
+   "category": "t2w",
+   "daysBefore": 10
+  },
+  {
+   "id": "pack_most",
+   "name": "Günlük kullanılmayan her şeyi paketle",
+   "category": "t1w",
+   "daysBefore": 5
+  },
+  {
+   "id": "first_night_box",
+   "name": "İlk gece kutusunu hazırla",
+   "category": "t1w",
+   "essential": true,
+   "daysBefore": 3
+  },
+  {
+   "id": "confirm_mover",
+   "name": "Nakliye firmasıyla saat ve adresi teyit et",
+   "category": "t1w",
+   "when": {
+    "mover": [
+     "company"
+    ]
+   },
+   "essential": true,
+   "daysBefore": 2
+  },
+  {
+   "id": "confirm_helpers",
+   "name": "Yardım edecek arkadaşları teyit et",
+   "category": "t1w",
+   "when": {
+    "mover": [
+     "self"
+    ]
+   },
+   "daysBefore": 3
+  },
+  {
+   "id": "empty_fridge",
+   "name": "Buzdolabını boşalt, buzluğu çöz",
+   "category": "t1w",
+   "daysBefore": 2
+  },
+  {
+   "id": "disassemble",
+   "name": "Mobilyaları sök (vidaları poşetle, etiketle)",
+   "category": "t1w",
+   "daysBefore": 2
+  },
+  {
+   "id": "valuables",
+   "name": "Değerli eşya ve belgeleri ayrı çantaya al",
+   "category": "t1w",
+   "essential": true,
+   "daysBefore": 3
+  },
+  {
+   "id": "cash",
+   "name": "Nakit para hazırla (bahşiş, beklenmedik masraf)",
+   "category": "t1w",
+   "daysBefore": 2
+  },
+  {
+   "id": "backup",
+   "name": "Bilgisayar / telefon yedeği al",
+   "category": "t1w",
+   "daysBefore": 3
+  },
+  {
+   "id": "appliance_prep",
+   "name": "Çamaşır makinesi nakliye vidalarını tak, su boşalt",
+   "category": "t1w",
+   "daysBefore": 1
+  },
+  {
+   "id": "kids_bag",
+   "name": "Çocuk için özel çanta (oyuncak, atıştırmalık, kıyafet)",
+   "category": "t1w",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   },
+   "daysBefore": 2
+  },
+  {
+   "id": "photo_old",
+   "name": "Eski evin fotoğraflarını çek (depozito için)",
+   "category": "t1w",
+   "when": {
+    "home": [
+     "rent"
+    ]
+   },
+   "daysBefore": 1
+  },
+  {
+   "id": "meter_reading_old",
+   "name": "Eski ev sayaç değerlerini oku ve fotoğrafla",
+   "category": "t1w",
+   "essential": true,
+   "daysBefore": 1
+  },
+  {
+   "id": "charge_devices",
+   "name": "Telefon ve powerbank şarj et",
+   "category": "t1d",
+   "daysBefore": 1
+  },
+  {
+   "id": "final_walkthrough_prep",
+   "name": "Dolap, çekmece, balkon, kiler son kontrol",
+   "category": "t1d",
+   "daysBefore": 1
+  },
+  {
+   "id": "keys_ready",
+   "name": "Yeni evin anahtarlarını teslim al",
+   "category": "t1d",
+   "essential": true,
+   "daysBefore": 1
+  },
+  {
+   "id": "route_plan",
+   "name": "Rota ve park planı",
+   "category": "t1d",
+   "daysBefore": 1
+  },
+  {
+   "id": "snacks_water",
+   "name": "Taşınma günü için su ve atıştırmalık",
+   "category": "t1d",
+   "daysBefore": 1
+  },
+  {
+   "id": "sleep_early",
+   "name": "Erken yat",
+   "category": "t1d",
+   "daysBefore": 1
+  },
+  {
+   "id": "protect_floors",
+   "name": "Zemin ve kapı korumaları ser",
+   "category": "tday",
+   "daysBefore": 0
+  },
+  {
+   "id": "supervise",
+   "name": "Yüklemeyi denetle, kırılacakları belirt",
+   "category": "tday",
+   "when": {
+    "mover": [
+     "company"
+    ]
+   },
+   "daysBefore": 0
+  },
+  {
+   "id": "inventory_check",
+   "name": "Kutu sayımını yap (yükleme ve boşaltmada)",
+   "category": "tday",
+   "essential": true,
+   "daysBefore": 0
+  },
+  {
+   "id": "final_walkthrough",
+   "name": "Eski evde son tur: pencere, musluk, ışık, kapı",
+   "category": "tday",
+   "essential": true,
+   "daysBefore": 0
+  },
+  {
+   "id": "hand_keys",
+   "name": "Eski ev anahtarlarını teslim et",
+   "category": "tday",
+   "when": {
+    "home": [
+     "rent"
+    ]
+   },
+   "daysBefore": 0
+  },
+  {
+   "id": "new_meter_reading",
+   "name": "Yeni ev sayaçlarını oku ve fotoğrafla",
+   "category": "tday",
+   "essential": true,
+   "daysBefore": 0
+  },
+  {
+   "id": "check_damage",
+   "name": "Yeni evde hasar kontrolü, fotoğrafla",
+   "category": "tday",
+   "daysBefore": 0
+  },
+  {
+   "id": "setup_beds",
+   "name": "Önce yatakları kur",
+   "category": "tday",
+   "daysBefore": 0
+  },
+  {
+   "id": "bathroom_first",
+   "name": "Banyo ve tuvaleti kullanılır hale getir",
+   "category": "tday",
+   "daysBefore": 0
+  },
+  {
+   "id": "pay_mover",
+   "name": "Nakliye ödemesi ve teslim tutanağı",
+   "category": "tday",
+   "when": {
+    "mover": [
+     "company"
+    ]
+   },
+   "daysBefore": 0
+  },
+  {
+   "id": "unpack_kitchen",
+   "name": "Mutfağı yerleştir",
+   "category": "after",
+   "daysBefore": -2
+  },
+  {
+   "id": "locks",
+   "name": "Kilitleri değiştir",
+   "category": "after",
+   "essential": true,
+   "daysBefore": -1
+  },
+  {
+   "id": "smoke_detector",
+   "name": "Duman dedektörü / yangın tüpü kontrol",
+   "category": "after",
+   "daysBefore": -3
+  },
+  {
+   "id": "register_address",
+   "name": "Adres kaydını güncelle (e-Devlet / Nüfus)",
+   "category": "after",
+   "essential": true,
+   "daysBefore": -7
+  },
+  {
+   "id": "meet_neighbors",
+   "name": "Komşular ve site yönetimiyle tanış",
+   "category": "after",
+   "daysBefore": -5
+  },
+  {
+   "id": "find_essentials",
+   "name": "En yakın market, eczane, hastane, ulaşım",
+   "category": "after",
+   "daysBefore": -3
+  },
+  {
+   "id": "kids_school_start",
+   "name": "Çocuğun yeni okul kaydını tamamla",
+   "category": "after",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   },
+   "daysBefore": -3
+  },
+  {
+   "id": "deposit",
+   "name": "Depozito iadesini takip et",
+   "category": "after",
+   "when": {
+    "home": [
+     "rent"
+    ]
+   },
+   "daysBefore": -14
+  },
+  {
+   "id": "recycle_boxes",
+   "name": "Kutuları geri dönüştür / sat",
+   "category": "after",
+   "daysBefore": -14
+  },
+  {
+   "id": "thank_helpers",
+   "name": "Yardım edenlere teşekkür et",
+   "category": "after",
+   "when": {
+    "mover": [
+     "self"
+    ]
+   },
+   "daysBefore": -2
+  },
+  {
+   "id": "home_insurance_new",
+   "name": "Yeni ev için konut sigortası / DASK",
+   "category": "after",
+   "essential": true,
+   "daysBefore": -7
+  },
+  {
+   "id": "boxes_small",
+   "name": "Küçük kutu (kitap, ağır eşya)",
+   "category": "pack",
+   "qty": {
+    "base": 10,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "boxes_medium",
+   "name": "Orta kutu",
+   "category": "pack",
+   "qty": {
+    "base": 15,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "boxes_large",
+   "name": "Büyük kutu (hafif eşya)",
+   "category": "pack",
+   "qty": {
+    "base": 10,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "wardrobe_box",
+   "name": "Askılı kıyafet kutusu",
+   "category": "pack",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "tape",
+   "name": "Koli bandı",
+   "category": "pack",
+   "qty": {
+    "base": 6,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet",
+   "essential": true
+  },
+  {
+   "id": "tape_dispenser",
+   "name": "Bant kesici",
+   "category": "pack",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   }
+  },
+  {
+   "id": "bubble_wrap",
+   "name": "Balonlu naylon",
+   "category": "pack",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "rulo"
+  },
+  {
+   "id": "packing_paper",
+   "name": "Ambalaj kağıdı / gazete",
+   "category": "pack",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "stretch_film",
+   "name": "Streç film (mobilya için)",
+   "category": "pack",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "rulo"
+  },
+  {
+   "id": "markers",
+   "name": "Kalın keçeli kalem",
+   "category": "pack",
+   "qty": {
+    "base": 3,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet",
+   "essential": true
+  },
+  {
+   "id": "labels",
+   "name": "Renkli etiket / bant (oda kodu)",
+   "category": "pack",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "ziplock",
+   "name": "Kilitli poşet (vida, kablo)",
+   "category": "pack",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "blankets",
+   "name": "Battaniye / koruyucu örtü",
+   "category": "pack",
+   "qty": {
+    "base": 4,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "garbage_bags",
+   "name": "Büyük çöp poşeti (yastık, yorgan)",
+   "category": "pack",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "rulo"
+  },
+  {
+   "id": "cable_ties",
+   "name": "Kablo bağı",
+   "category": "pack",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "box_cutter",
+   "name": "Maket bıçağı",
+   "category": "pack",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "mattress_bag",
+   "name": "Yatak kılıfı",
+   "category": "pack",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   }
+  },
+  {
+   "id": "tv_box",
+   "name": "TV kutusu / koruyucu",
+   "category": "pack",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   }
+  },
+  {
+   "id": "all_purpose",
+   "name": "Çok amaçlı temizleyici",
+   "category": "clean"
+  },
+  {
+   "id": "sponges",
+   "name": "Sünger ve bez",
+   "category": "clean"
+  },
+  {
+   "id": "mop_bucket",
+   "name": "Paspas ve kova",
+   "category": "clean"
+  },
+  {
+   "id": "broom",
+   "name": "Süpürge / faraş",
+   "category": "clean"
+  },
+  {
+   "id": "gloves",
+   "name": "Eldiven",
+   "category": "clean"
+  },
+  {
+   "id": "trash_bags_clean",
+   "name": "Çöp poşeti",
+   "category": "clean"
+  },
+  {
+   "id": "glass_cleaner",
+   "name": "Cam temizleyici",
+   "category": "clean"
+  },
+  {
+   "id": "bathroom_cleaner",
+   "name": "Banyo temizleyici",
+   "category": "clean"
+  },
+  {
+   "id": "vacuum",
+   "name": "Elektrikli süpürge (ulaşılabilir yerde)",
+   "category": "clean"
+  },
+  {
+   "id": "paper_towels",
+   "name": "Kağıt havlu",
+   "category": "clean"
+  },
+  {
+   "id": "screwdriver_set",
+   "name": "Tornavida seti",
+   "category": "tools",
+   "essential": true
+  },
+  {
+   "id": "allen_keys",
+   "name": "Alyan seti",
+   "category": "tools"
+  },
+  {
+   "id": "drill",
+   "name": "Matkap ve uçlar",
+   "category": "tools"
+  },
+  {
+   "id": "hammer",
+   "name": "Çekiç",
+   "category": "tools"
+  },
+  {
+   "id": "measuring_tape",
+   "name": "Şerit metre",
+   "category": "tools",
+   "essential": true
+  },
+  {
+   "id": "level",
+   "name": "Su terazisi",
+   "category": "tools"
+  },
+  {
+   "id": "wall_plugs",
+   "name": "Dübel ve vida",
+   "category": "tools"
+  },
+  {
+   "id": "pliers",
+   "name": "Pense",
+   "category": "tools"
+  },
+  {
+   "id": "furniture_sliders",
+   "name": "Mobilya kaydırıcı",
+   "category": "tools",
+   "when": {
+    "mover": [
+     "self"
+    ]
+   }
+  },
+  {
+   "id": "dolly",
+   "name": "Taşıma arabası / el arabası",
+   "category": "tools",
+   "when": {
+    "mover": [
+     "self"
+    ]
+   }
+  },
+  {
+   "id": "moving_straps",
+   "name": "Taşıma kayışı",
+   "category": "tools",
+   "when": {
+    "mover": [
+     "self"
+    ]
+   }
+  },
+  {
+   "id": "work_gloves",
+   "name": "İş eldiveni",
+   "category": "tools",
+   "when": {
+    "mover": [
+     "self"
+    ]
+   }
+  },
+  {
+   "id": "extension_cord",
+   "name": "Uzatma kablosu / çoklu priz",
+   "category": "tools"
+  },
+  {
+   "id": "flashlight",
+   "name": "El feneri",
+   "category": "tools"
+  },
+  {
+   "id": "step_ladder",
+   "name": "Merdiven",
+   "category": "tools"
+  },
+  {
+   "id": "picture_hooks",
+   "name": "Tablo askısı / çivi",
+   "category": "tools"
+  },
+  {
+   "id": "fn_bedding",
+   "name": "Çarşaf, yastık, yorgan",
+   "category": "firstnight",
+   "essential": true
+  },
+  {
+   "id": "fn_towels",
+   "name": "Havlu",
+   "category": "firstnight"
+  },
+  {
+   "id": "fn_toiletries",
+   "name": "Diş fırçası, sabun, şampuan, tuvalet kağıdı",
+   "category": "firstnight",
+   "essential": true
+  },
+  {
+   "id": "fn_clothes",
+   "name": "2 günlük kıyafet",
+   "category": "firstnight"
+  },
+  {
+   "id": "fn_chargers",
+   "name": "Şarj aletleri",
+   "category": "firstnight",
+   "essential": true
+  },
+  {
+   "id": "fn_meds",
+   "name": "İlaçlar",
+   "category": "firstnight",
+   "essential": true
+  },
+  {
+   "id": "fn_kettle",
+   "name": "Su ısıtıcı, bardak, çay / kahve",
+   "category": "firstnight"
+  },
+  {
+   "id": "fn_snacks",
+   "name": "Atıştırmalık ve su",
+   "category": "firstnight"
+  },
+  {
+   "id": "fn_paper_plates",
+   "name": "Kağıt tabak, plastik çatal",
+   "category": "firstnight"
+  },
+  {
+   "id": "fn_documents",
+   "name": "Önemli belgeler (kimlik, sözleşme, tapu)",
+   "category": "firstnight",
+   "essential": true
+  },
+  {
+   "id": "fn_tools",
+   "name": "Temel aletler (tornavida, maket bıçağı)",
+   "category": "firstnight"
+  },
+  {
+   "id": "fn_light",
+   "name": "Ampul / fener",
+   "category": "firstnight"
+  },
+  {
+   "id": "fn_kids",
+   "name": "Çocuğun sevdiği oyuncak, battaniye",
+   "category": "firstnight",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "fn_curtains",
+   "name": "Geçici perde / çarşaf",
+   "category": "firstnight"
+  },
+  {
+   "id": "fn_trash",
+   "name": "Çöp poşeti",
+   "category": "firstnight"
+  },
+  {
+   "id": "u_electric",
+   "name": "Elektrik",
+   "category": "utilities",
+   "essential": true
+  },
+  {
+   "id": "u_water",
+   "name": "Su",
+   "category": "utilities",
+   "essential": true
+  },
+  {
+   "id": "u_gas",
+   "name": "Doğalgaz",
+   "category": "utilities",
+   "essential": true
+  },
+  {
+   "id": "u_internet",
+   "name": "İnternet",
+   "category": "utilities",
+   "essential": true
+  },
+  {
+   "id": "u_tv",
+   "name": "TV / dijital yayın",
+   "category": "utilities"
+  },
+  {
+   "id": "u_phone",
+   "name": "Sabit telefon",
+   "category": "utilities"
+  },
+  {
+   "id": "u_dues",
+   "name": "Site aidatı / yönetim kaydı",
+   "category": "utilities"
+  },
+  {
+   "id": "u_dask",
+   "name": "DASK / konut sigortası",
+   "category": "utilities",
+   "essential": true
+  },
+  {
+   "id": "o_edevlet",
+   "name": "e-Devlet / Nüfus adres beyanı",
+   "category": "official",
+   "essential": true,
+   "note": "Taşındıktan sonra 20 iş günü içinde."
+  },
+  {
+   "id": "o_bank",
+   "name": "Banka(lar)",
+   "category": "official"
+  },
+  {
+   "id": "o_tax",
+   "name": "Vergi dairesi",
+   "category": "official",
+   "when": {
+    "home": [
+     "own"
+    ]
+   }
+  },
+  {
+   "id": "o_vehicle",
+   "name": "Araç ruhsatı / ehliyet adresi",
+   "category": "official"
+  },
+  {
+   "id": "o_employer",
+   "name": "İşveren / SGK",
+   "category": "official"
+  },
+  {
+   "id": "o_school",
+   "name": "Okul / kreş",
+   "category": "official",
+   "when": {
+    "kids": [
+     "yes"
+    ]
+   }
+  },
+  {
+   "id": "o_health",
+   "name": "Aile hekimi kaydı",
+   "category": "official"
+  },
+  {
+   "id": "o_embassy",
+   "name": "Konsolosluk / göç idaresi kaydı",
+   "category": "official",
+   "when": {
+    "distance": [
+     "abroad"
+    ]
+   },
+   "essential": true
+  },
+  {
+   "id": "o_voting",
+   "name": "Seçmen kaydı",
+   "category": "official"
+  },
+  {
+   "id": "s_ecommerce",
+   "name": "Online alışveriş siteleri adresleri",
+   "category": "services"
+  },
+  {
+   "id": "s_subscriptions",
+   "name": "Dergi / kutu abonelikleri",
+   "category": "services"
+  },
+  {
+   "id": "s_gym",
+   "name": "Spor salonu üyeliği",
+   "category": "services"
+  },
+  {
+   "id": "s_delivery",
+   "name": "Yemek / market uygulamaları",
+   "category": "services"
+  },
+  {
+   "id": "s_courier",
+   "name": "Kargo firmaları adres defteri",
+   "category": "services"
+  },
+  {
+   "id": "s_insurance",
+   "name": "Sağlık / araç sigortası",
+   "category": "services"
+  },
+  {
+   "id": "s_streaming",
+   "name": "Kart bağlı abonelikler (fatura adresi)",
+   "category": "services"
+  },
+  {
+   "id": "s_mail_forward",
+   "name": "PTT adres yönlendirme",
+   "category": "services"
+  },
+  {
+   "id": "s_cleaner",
+   "name": "Temizlikçi / bakıcı bilgilendirme",
+   "category": "services"
+  },
+  {
+   "id": "s_friends",
+   "name": "Aile ve arkadaşlara yeni adres",
+   "category": "services"
+  }
+ ],
+ "kind": "checklist",
+ "preselect": true,
+ "quickAdd": false
+}
