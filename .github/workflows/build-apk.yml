@@ -15,6 +15,13 @@ jobs:
     name: Analiz + Test + Release APK
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    # steps.if, secrets bağlamını KULLANAMAZ (GitHub dokümanı) — bu yüzden
+    # secret'lar job env'e alınır, koşul env üzerinden değerlendirilir.
+    env:
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
     steps:
       - name: Kaynak kodu indir
@@ -49,16 +56,14 @@ jobs:
       # KEY_ALIAS, KEY_PASSWORD tanımlıysa release anahtarıyla imzalanır;
       # tanımlı değilse debug anahtarıyla imzalanır (yine kurulabilir).
       - name: Release keystore hazırla (varsa)
-        if: ${{ secrets.KEYSTORE_BASE64 != '' }}
-        env:
-          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        if: ${{ env.KEYSTORE_BASE64 != '' }}
         run: |
           echo "$KEYSTORE_BASE64" | base64 -d > android/app/release.keystore
           cat > android/key.properties <<PROPS
           storeFile=release.keystore
-          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
-          keyAlias=${{ secrets.KEY_ALIAS }}
-          keyPassword=${{ secrets.KEY_PASSWORD }}
+          storePassword=$KEYSTORE_PASSWORD
+          keyAlias=$KEY_ALIAS
+          keyPassword=$KEY_PASSWORD
           PROPS
 
       - name: Release APK oluştur
