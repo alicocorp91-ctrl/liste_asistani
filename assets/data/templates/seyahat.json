@@ -1128,6 +1128,11 @@
    "category": "personalCare"
   },
   {
+   "id": "hair_gel",
+   "name": "Saç jölesi",
+   "category": "personalCare"
+  },
+  {
    "id": "nailclipper",
    "name": "Tırnak makası",
    "category": "personalCare"
@@ -1976,6 +1981,11 @@
    }
   },
   {
+   "id": "fancy_clothes",
+   "name": "Fantezi giyim",
+   "category": "intimate"
+  },
+  {
    "id": "neckpillow",
    "name": "Boyun yastığı",
    "category": "transport"
@@ -2053,6 +2063,11 @@
   {
    "id": "snacks",
    "name": "Atıştırmalık",
+   "category": "transport"
+  },
+  {
+   "id": "candy_gum",
+   "name": "Şeker-sakız",
    "category": "transport"
   },
   {

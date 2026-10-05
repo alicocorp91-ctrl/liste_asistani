@@ -7,6 +7,7 @@ import '../models/user_list.dart';
 import '../providers/catalog_provider.dart';
 import '../providers/lists_provider.dart';
 import '../widgets/common.dart';
+import '../widgets/ui.dart';
 import 'list_detail_screen.dart';
 
 /// Önerilen kalemleri onaylama (oluşturma modu) veya katalogdan ekleme (ekleme modu).
@@ -135,82 +136,95 @@ class _SelectionScreenState extends State<SelectionScreen> {
   @override
   Widget build(BuildContext context) {
     final color = colorFromHex(t.color);
+    final scheme = Theme.of(context).colorScheme;
     final hasTabs = sections.length > 1;
     final body = hasTabs
         ? TabBarView(children: [for (final s in sections) _sectionList(s.id)])
         : _sectionList(sections.first.id);
 
-    final scaffold = Scaffold(
-      appBar: AppBar(
-        title:
-            Text(widget.isAddMode ? 'Katalogdan ekle' : 'Listeni gözden geçir'),
-        actions: [
-          if (!widget.isAddMode)
-            IconButton(
-              tooltip: _showAll ? 'Sadece önerilenler' : 'Tüm kataloğu göster',
-              icon: Icon(
-                  _showAll ? Icons.filter_alt : Icons.filter_alt_off_outlined),
-              onPressed: () => setState(() => _showAll = !_showAll),
-            ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(hasTabs ? 104 : 56),
-          child: Column(
+    final scaffold = AppBackground(
+      accent: color,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(widget.isAddMode
+                  ? 'Katalogdan ekle'
+                  : 'Listeni gözden geçir'),
+              if (!widget.isAddMode)
+                Text(widget.name,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(color: scheme.onSurfaceVariant),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis),
+            ],
+          ),
+          actions: [
+            if (!widget.isAddMode)
               Padding(
-                padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Ara…',
-                    prefixIcon: const Icon(Icons.search),
-                    isDense: true,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                    suffixIcon: _query.isEmpty
-                        ? null
-                        : IconButton(
-                            icon: const Icon(Icons.clear),
-                            onPressed: () => setState(() => _query = '')),
-                  ),
-                  onChanged: (v) => setState(() => _query = v),
+                padding: const EdgeInsets.only(right: 8),
+                child: Pill(
+                  label: _showAll ? 'Tüm katalog' : 'Önerilenler',
+                  icon: _showAll ? Icons.grid_view_rounded : Icons.auto_awesome,
+                  color: color,
+                  filled: _showAll,
+                  onTap: () => setState(() => _showAll = !_showAll),
                 ),
               ),
-              if (hasTabs)
-                TabBar(
-                  isScrollable: true,
-                  tabAlignment: TabAlignment.start,
-                  tabs: [
-                    for (final s in sections)
-                      Tab(text: '${s.name} (${_countSelectedInSection(s.id)})'),
-                  ],
+          ],
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(hasTabs ? 108 : 60),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Kalem ara…',
+                      prefixIcon: const Icon(Icons.search_rounded),
+                      isDense: true,
+                      contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                      suffixIcon: _query.isEmpty
+                          ? null
+                          : IconButton(
+                              icon: const Icon(Icons.clear_rounded),
+                              onPressed: () => setState(() => _query = '')),
+                    ),
+                    onChanged: (v) => setState(() => _query = v),
+                  ),
                 ),
-            ],
+                if (hasTabs)
+                  TabBar(
+                    isScrollable: true,
+                    tabAlignment: TabAlignment.start,
+                    labelColor: color,
+                    indicatorColor: color,
+                    tabs: [
+                      for (final s in sections)
+                        Tab(
+                            text:
+                                '${s.name} (${_countSelectedInSection(s.id)})'),
+                    ],
+                  ),
+              ],
+            ),
           ),
         ),
-      ),
-      body: body,
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  _selected.isEmpty && !t.preselect && !widget.isAddMode
-                      ? 'İstediklerini işaretle (boş da oluşturabilirsin)'
-                      : '${_selected.length} kalem seçili',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-              ),
-              FilledButton.icon(
-                style: FilledButton.styleFrom(
-                    backgroundColor: color, foregroundColor: Colors.white),
-                onPressed:
-                    _selected.isEmpty && widget.isAddMode ? null : _confirm,
-                icon: Icon(widget.isAddMode ? Icons.playlist_add : Icons.check),
-                label: Text(widget.isAddMode ? 'Ekle' : 'Listeyi Oluştur'),
-              ),
-            ],
-          ),
+        body: body,
+        bottomNavigationBar: _BottomBar(
+          color: color,
+          text: _selected.isEmpty && !t.preselect && !widget.isAddMode
+              ? 'İstediklerini işaretle (boş da oluşturabilirsin)'
+              : '${_selected.length} kalem seçili',
+          label: widget.isAddMode ? 'Ekle' : 'Listeyi Oluştur',
+          icon: widget.isAddMode
+              ? Icons.playlist_add_rounded
+              : Icons.check_rounded,
+          onPressed: _selected.isEmpty && widget.isAddMode ? null : _confirm,
         ),
       ),
     );
@@ -251,28 +265,18 @@ class _SelectionScreenState extends State<SelectionScreen> {
         trailing: Icon(allSel ? Icons.remove_done : Icons.done_all,
             size: 20, color: colorFromHex(c.color)),
       ));
+      final tiles = <Widget>[];
       for (final i in items) {
         final suggested = _suggestedIds.contains(i.id);
-        children.add(CheckboxListTile(
-          value: _selected.contains(i.id),
-          onChanged: (v) => setState(
-              () => v == true ? _selected.add(i.id) : _selected.remove(i.id)),
-          controlAffinity: ListTileControlAffinity.leading,
-          dense: true,
-          title: Row(
-            children: [
-              Expanded(
-                child: Text(i.name,
-                    style: TextStyle(
-                        color: suggested
-                            ? null
-                            : Theme.of(context).colorScheme.outline)),
-              ),
-              if (i.isEssential)
-                const Icon(Icons.star, size: 16, color: Colors.amber),
-            ],
-          ),
-          secondary: i.quantity == null
+        tiles.add(_PickTile(
+          item: i,
+          color: colorFromHex(c.color),
+          selected: _selected.contains(i.id),
+          dimmed: !suggested,
+          onTap: () => setState(() => _selected.contains(i.id)
+              ? _selected.remove(i.id)
+              : _selected.add(i.id)),
+          trailing: i.quantity == null
               ? null
               : _QtyStepper(
                   label: i.quantityLabel,
@@ -281,6 +285,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
                 ),
         ));
       }
+      children.add(GroupCard(children: tiles));
     }
     if (children.isEmpty) {
       return EmptyView(
@@ -294,7 +299,7 @@ class _SelectionScreenState extends State<SelectionScreen> {
       );
     }
     return ListView(
-        padding: const EdgeInsets.only(bottom: 24), children: children);
+        padding: const EdgeInsets.only(bottom: 24, top: 4), children: children);
   }
 
   Future<void> _confirm() async {
@@ -345,6 +350,114 @@ class _SelectionScreenState extends State<SelectionScreen> {
         context,
         MaterialPageRoute(
             builder: (_) => ListDetailScreen(listId: created.id)));
+  }
+}
+
+/// Öneri satırı: animasyonlu onay + ad + (adet)
+class _PickTile extends StatelessWidget {
+  const _PickTile(
+      {required this.item,
+      required this.color,
+      required this.selected,
+      required this.dimmed,
+      required this.onTap,
+      this.trailing});
+  final ListItem item;
+  final Color color;
+  final bool selected;
+  final bool dimmed;
+  final VoidCallback onTap;
+  final Widget? trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(14, 6, 8, 6),
+        child: Row(
+          children: [
+            AnimatedCheck(
+                checked: selected, color: color, round: false, size: 24),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Row(
+                children: [
+                  Flexible(
+                    child: Text(item.name,
+                        style: TextStyle(
+                            fontSize: 14.5,
+                            fontWeight:
+                                selected ? FontWeight.w700 : FontWeight.w500,
+                            color: dimmed && !selected
+                                ? scheme.onSurfaceVariant
+                                : scheme.onSurface)),
+                  ),
+                  if (item.isEssential) ...[
+                    const SizedBox(width: 4),
+                    const Icon(Icons.star_rounded,
+                        size: 15, color: Colors.amber),
+                  ],
+                ],
+              ),
+            ),
+            if (trailing != null) trailing!,
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Alt çubuk: açıklama + gradyanlı buton
+class _BottomBar extends StatelessWidget {
+  const _BottomBar(
+      {required this.color,
+      required this.text,
+      required this.label,
+      required this.icon,
+      required this.onPressed});
+  final Color color;
+  final String text;
+  final String label;
+  final IconData icon;
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Container(
+      decoration: BoxDecoration(
+        color: scheme.surface,
+        border: Border(
+            top:
+                BorderSide(color: scheme.outlineVariant.withValues(alpha: .5))),
+      ),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 10, 16, 12),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(text,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(fontWeight: FontWeight.w600)),
+              ),
+              const SizedBox(width: 10),
+              GradientButton(
+                  label: label,
+                  icon: icon,
+                  color: color,
+                  height: 48,
+                  onPressed: onPressed),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 

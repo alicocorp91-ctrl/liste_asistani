@@ -290,6 +290,10 @@ NEW = [
     item("prep_seat", "Koltuk seçimi yap", "prepTravel", when={"transport": ["plane", "bus", "train"]}, daysBefore=3),
     item("prep_currency_check", "Gidilecek ülkenin para birimi / kur bilgisi", "prepFinance", when={"tripType": ["international"]}, daysBefore=5),
     item("prep_haircut_kids", "Çocuğun kıyafet / ihtiyaç listesini gözden geçir", "prepHome", when={"kids": ["yes"]}, daysBefore=3),
+    # Ek eşyalar (kullanıcı isteği, v2.4.1)
+    item("candy_gum", "Şeker-sakız", "transport"),
+    item("hair_gel", "Saç jölesi", "personalCare"),
+    item("fancy_clothes", "Fantezi giyim", "intimate"),
 ]
 items += NEW
 

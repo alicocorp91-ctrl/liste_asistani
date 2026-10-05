@@ -462,7 +462,10 @@ class ListsProvider extends ChangeNotifier {
   /// yoksa 'other' (ya da ilk) kategoriye serbest kalem ekler.
   /// Listede aynı adlı kalem zaten varsa onu işaretsiz yapar ve döndürür.
   Future<ListItem?> quickAdd(String listId, String text,
-      {ListTemplate? template, CatalogItem? catalogItem}) async {
+      {ListTemplate? template,
+      CatalogItem? catalogItem,
+      int? quantity,
+      String? unit}) async {
     final l = byId(listId);
     final name = text.trim();
     if (l == null || name.isEmpty) return null;
@@ -470,11 +473,16 @@ class ListsProvider extends ChangeNotifier {
     final existing =
         l.items.firstWhereOrNull((i) => normalizeTr(i.name) == key);
     if (existing != null) {
-      if (existing.isChecked || (l.isInventory && existing.inStock)) {
+      final needsReset =
+          existing.isChecked || (l.isInventory && existing.inStock);
+      if (needsReset || quantity != null) {
         await updateItem(
             listId,
             existing.copyWith(
-                isChecked: false, stockQty: l.isInventory ? 0 : null));
+                isChecked: needsReset ? false : existing.isChecked,
+                stockQty: needsReset && l.isInventory ? 0 : null,
+                quantity: quantity ?? existing.quantity,
+                unit: unit ?? existing.unit));
       }
       return byId(listId)!.items.firstWhere((i) => i.id == existing.id);
     }
@@ -496,6 +504,15 @@ class ListsProvider extends ChangeNotifier {
         unit: c?.unit,
         isCustom: true,
       );
+    }
+    // Sesle/elle verilen adet ve birim katalog varsayılanını ezer.
+    // "adet" birimini boş bırakırız; arayüz "×2" şeklinde gösterir.
+    if (quantity != null) {
+      item = item.copyWith(
+          quantity: quantity,
+          unit: (unit == null || unit == 'adet') ? item.unit : unit);
+    } else if (unit != null && unit != 'adet') {
+      item = item.copyWith(unit: unit);
     }
     await _update(l.copyWith(items: [...l.items, item]));
     return item;

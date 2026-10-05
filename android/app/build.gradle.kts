@@ -3,7 +3,8 @@ import java.io.FileInputStream
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    // Flutter Gradle eklentisi Kotlin eklentisini kendisi uygular;
+    // Android ve Kotlin eklentilerinden SONRA gelmelidir.
     id("dev.flutter.flutter-gradle-plugin")
 }
 
@@ -27,25 +28,12 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    // Güncel compilerOptions DSL yapısı (kotlinOptions hatasını önler)
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
-        }
-    }
-
     defaultConfig {
         applicationId = "com.alico.liste_asistani"
         minSdk = maxOf(flutter.minSdkVersion, 23)
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        
-        // resourceConfigurations yerine güncel androidResources.localeFilters kullanıldı
-        androidResources {
-            localeFilters.addAll(listOf("tr", "en"))
-        }
-        
         multiDexEnabled = true
     }
 
@@ -69,8 +57,15 @@ android {
                 "proguard-rules.pro",
             )
             signingConfig = if (hasKeystore) signingConfigs.getByName("release")
-                    else signingConfigs.getByName("debug")
+                            else signingConfigs.getByName("debug")
         }
+    }
+}
+
+// Kotlin 2.x: kotlinOptions yerine compilerOptions DSL
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
     }
 }
 

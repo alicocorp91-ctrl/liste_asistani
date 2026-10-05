@@ -1,14 +1,25 @@
 # Liste Asistanı
 
-Seyahat, market, piknik, kamp, taşınma, doğum çantası… ve kendi tanımladığınız her türlü liste için
-**şablon tabanlı, akıllı kontrol listesi uygulaması** (Flutter / Android).
+Seyahat, market, piknik, mangal, kamp, plaj, taşınma… ve kendi tanımladığınız her türlü liste için
+**şablon tabanlı, akıllı kontrol listesi uygulaması** (Flutter / Android + Windows).
 
 Bu proje, eski **Seyahat Asistanı** uygulamasının sıfırdan yeniden tasarlanmış halidir:
 seyahat artık yalnızca liste tiplerinden biridir; aynı motor tüm liste tiplerini çalıştırır.
 
 ---
 
+## Tasarım (v2.3)
+
+- **Manrope** yazı tipi (assets/fonts, çevrimdışı), Material 3 renk şeması; açık + koyu tema özenli.
+- Her liste tipi için **illüstrasyon** (`assets/art/*.jpg`, şablon seçici kartları, ana sayfa küçük resimleri, detay başlığı filigranı); özel tiplerde gradyanlı ikon.
+- Ana sayfa: selamlama + özet sayılar (aktif liste / eksik / yaklaşan), favoriler bölümü, renk tonlu kartlar, animasyonlu ilerleme.
+- Detay: şablon renginde gradyan başlık (halka ilerleme, rozetler, sekmeler), kategori kartları, sıçrayan onay animasyonu, **tamamlanınca konfeti**.
+- Oluşturma / öneri ekranları: başlık kartı, seçenek hapları, gradyan butonlar, kart gruplu kalemler.
+- Tasarım önizlemesi (PNG): `flutter test tools/shots/shots_test.dart --update-goldens` → `tools/shots/out/`.
+
 ## Özellikler
+
+- **Sesle ekleme:** hızlı ekleme çubuğundaki mikrofon düğmesiyle "zeytin, iki ekmek, bir kilo domates" deyin; adet ve birimler algılanır.
 
 ### Liste tipleri
 | Tip | Bölümler | Filtreler | Tarih | Kalem |
@@ -25,7 +36,7 @@ seyahat artık yalnızca liste tiplerinden biridir; aynı motor tüm liste tiple
 **Market, Piknik, Mangal ve Kamp** stok listesidir (aşağıya bakın); özel tiplerde stok takibi açılabilir.
 Bebek / evcil hayvan soruları ve kalemleri bilinçli olarak yoktur (kişisel kullanım).
 
-Toplam **1.043 hazır kalem**, her biri ikon/kategori/bölüm bilgisiyle.
+Toplam **1.046 hazır kalem**, her biri ikon/kategori/bölüm bilgisiyle.
 
 ### Akıllı liste oluşturma
 - **Filtreli öneri**: seçtiğiniz cevaplara göre (ör. "uçak + iş + kış + 5 gün + çocuklu") sadece ilgili kalemler önerilir.

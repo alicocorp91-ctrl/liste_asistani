@@ -70,7 +70,9 @@ void main() {
     // Ara ve iki kalem seç; birinin adedini artır
     await tester.enterText(find.byType(TextField).first, 'süt');
     await tester.pumpAndSettle();
-    final sutTile = find.widgetWithText(CheckboxListTile, 'Süt').first;
+    final sutTile = find
+        .ancestor(of: find.text('Süt'), matching: find.byType(InkWell))
+        .first;
     expect(sutTile, findsOneWidget);
     await tester.tap(sutTile);
     await tester.pumpAndSettle();
@@ -83,7 +85,7 @@ void main() {
 
     await tester.enterText(find.byType(TextField).first, 'ekmek');
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(CheckboxListTile, 'Ekmek').first);
+    await tester.tap(find.text('Ekmek').first);
     await tester.pumpAndSettle();
     expect(find.text('2 kalem seçili'), findsOneWidget);
 

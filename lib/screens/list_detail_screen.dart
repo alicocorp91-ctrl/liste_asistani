@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import '../core/app_icons.dart';
@@ -7,8 +8,11 @@ import '../models/template.dart';
 import '../models/user_list.dart';
 import '../providers/catalog_provider.dart';
 import '../providers/lists_provider.dart';
+import '../core/theme.dart';
 import '../widgets/common.dart';
+import '../widgets/ui.dart';
 import 'selection_screen.dart';
+import '../widgets/voice_sheet.dart';
 
 class ListDetailScreen extends StatefulWidget {
   const ListDetailScreen({super.key, required this.listId});
@@ -22,6 +26,29 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
   /// Kontrol listesinde: sadece işaretlenmemişler. Stok listesinde: sadece eksikler.
   bool _onlyRemaining = false;
 
+  /// Tamamlanma kutlaması
+  bool? _wasDone;
+  bool _confetti = false;
+
+  bool _isDone(UserList l) =>
+      l.isInventory ? l.missingCount == 0 && l.totalCount > 0 : l.isComplete;
+
+  void _trackCompletion(UserList l) {
+    final done = _isDone(l);
+    if (_wasDone == false && done) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        setState(() => _confetti = true);
+        showSnack(
+            context,
+            l.isInventory
+                ? 'Her şey stokta, eksik yok! 🎉'
+                : 'Liste tamamlandı, her şey hazır! 🎉');
+      });
+    }
+    _wasDone = done;
+  }
+
   @override
   Widget build(BuildContext context) {
     final lists = context.watch<ListsProvider>();
@@ -33,178 +60,256 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
             const EmptyView(icon: Icons.search_off, title: 'Liste bulunamadı'),
       );
     }
+    _trackCompletion(list);
     final color = colorFromHex(list.color);
     final hasTabs = list.hasSections;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final scaffold = Scaffold(
-      appBar: AppBar(
-        title: Text(list.name, maxLines: 1, overflow: TextOverflow.ellipsis),
-        actions: [
-          IconButton(
-            tooltip: _onlyRemaining
-                ? 'Tümünü göster'
-                : (list.isInventory ? 'Sadece eksikler' : 'Sadece kalanlar'),
-            icon: Icon(_onlyRemaining
-                ? Icons.filter_alt_off_outlined
-                : (list.isInventory
-                    ? Icons.production_quantity_limits
-                    : Icons.rule)),
-            onPressed: () => setState(() => _onlyRemaining = !_onlyRemaining),
-          ),
-          IconButton(
-            tooltip: list.isFavorite ? 'Favoriden çıkar' : 'Favorilere ekle',
-            icon: Icon(list.isFavorite ? Icons.star : Icons.star_border,
-                color: list.isFavorite ? Colors.amber : null),
-            onPressed: () => lists.setFavorite(list.id, !list.isFavorite),
-          ),
-          PopupMenuButton<String>(
-            onSelected: (v) => _menuAction(v, list),
-            itemBuilder: (_) => [
-              if (list.isInventory) ...[
-                PopupMenuItem(
-                    value: 'transfer',
-                    enabled: list.missingCount > 0,
-                    child: ListTile(
-                        leading: const Icon(Icons.move_to_inbox_outlined),
-                        title: const Text('Eksikleri markete aktar'),
-                        subtitle: Text(list.missingCount == 0
-                            ? 'Eksik yok'
-                            : '${list.missingCount} kalem'))),
-                PopupMenuItem(
-                    value: 'shareMissing',
-                    enabled: list.missingCount > 0,
-                    child: const ListTile(
-                        leading: Icon(Icons.send_outlined),
-                        title: Text('Eksikleri paylaş'))),
-                const PopupMenuItem(
-                    value: 'stockAll',
-                    child: ListTile(
-                        leading: Icon(Icons.inventory_2_outlined),
-                        title: Text('Hepsini stokta işaretle'))),
-                const PopupMenuItem(
-                    value: 'stockNone',
-                    child: ListTile(
-                        leading: Icon(Icons.remove_shopping_cart_outlined),
-                        title: Text('Stokları sıfırla'))),
-                const PopupMenuDivider(),
-              ],
-              const PopupMenuItem(
-                  value: 'addCatalog',
-                  child: ListTile(
-                      leading: Icon(Icons.library_add_outlined),
-                      title: Text('Katalogdan ekle'))),
-              const PopupMenuItem(
-                  value: 'rename',
-                  child: ListTile(
-                      leading: Icon(Icons.edit_outlined),
-                      title: Text('Yeniden adlandır'))),
-              const PopupMenuItem(
-                  value: 'dates',
-                  child: ListTile(
-                      leading: Icon(Icons.event_outlined),
-                      title: Text('Tarihleri düzenle'))),
-              const PopupMenuItem(
-                  value: 'share',
-                  child: ListTile(
-                      leading: Icon(Icons.share_outlined),
-                      title: Text('Paylaş'))),
-              const PopupMenuItem(
-                  value: 'shareRemaining',
-                  child: ListTile(
-                      leading: Icon(Icons.send_outlined),
-                      title: Text('Kalanları paylaş'))),
-              const PopupMenuItem(
-                  value: 'duplicate',
-                  child: ListTile(
-                      leading: Icon(Icons.copy_outlined),
-                      title: Text('Kopyala'))),
-              const PopupMenuItem(
-                  value: 'reset',
-                  child: ListTile(
-                      leading: Icon(Icons.restart_alt),
-                      title: Text('İşaretleri sıfırla'))),
-              if (list.items.any((i) => i.reminderAt != null))
-                PopupMenuItem(
-                  value:
-                      lists.pendingReminderCount(list) > 0 ? 'remOff' : 'remOn',
-                  child: ListTile(
-                    leading: Icon(lists.pendingReminderCount(list) > 0
-                        ? Icons.notifications_off_outlined
-                        : Icons.notifications_active_outlined),
-                    title: Text(lists.pendingReminderCount(list) > 0
-                        ? 'Hatırlatıcıları kapat'
-                        : 'Hatırlatıcıları aç'),
-                  ),
-                ),
-              PopupMenuItem(
-                value: 'archive',
-                child: ListTile(
-                  leading: Icon(list.isArchived
-                      ? Icons.unarchive_outlined
-                      : Icons.archive_outlined),
-                  title: Text(list.isArchived ? 'Arşivden çıkar' : 'Arşivle'),
-                ),
+    final scaffold = AppBackground(
+      accent: color,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        floatingActionButton: list.quickAdd
+            ? null
+            : FloatingActionButton(
+                backgroundColor: color,
+                foregroundColor: Colors.white,
+                onPressed: () => _addItemDialog(list),
+                child: const Icon(Icons.add_rounded),
               ),
-              const PopupMenuDivider(),
-              PopupMenuItem(
-                value: 'delete',
-                child: ListTile(
-                  leading: Icon(Icons.delete_outline,
-                      color: Theme.of(context).colorScheme.error),
-                  title: Text('Sil',
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.error)),
-                ),
-              ),
-            ],
-          ),
-        ],
-        bottom: hasTabs
-            ? TabBar(
-                isScrollable: true,
-                tabAlignment: TabAlignment.start,
-                tabs: [
-                  for (final s in list.sections)
-                    Tab(
-                        text:
-                            '${s.name} ${list.checkedInSection(s.id)}/${list.itemsOfSection(s.id).length}'),
-                ],
+        bottomNavigationBar: list.quickAdd
+            ? _QuickAddBar(
+                list: list,
+                template: context
+                    .read<CatalogProvider>()
+                    .templateById(list.templateId),
+                onDetailed: () => _addItemDialog(list),
               )
             : null,
-      ),
-      floatingActionButton: list.quickAdd
-          ? null
-          : FloatingActionButton(
-              onPressed: () => _addItemDialog(list),
-              child: const Icon(Icons.add),
+        body: Stack(
+          children: [
+            Column(
+              children: [
+                // Gradyanlı üst alan: araç çubuğu + özet + sekmeler
+                AnnotatedRegion<SystemUiOverlayStyle>(
+                  value: SystemUiOverlayStyle.light,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.vertical(
+                        bottom: Radius.circular(28)),
+                    child: HeroBackdrop(
+                      color: color,
+                      templateId: list.templateId,
+                      icon: list.icon,
+                      artOpacity: isDark ? 0.18 : 0.26,
+                      child: SafeArea(
+                        bottom: false,
+                        child: IconTheme(
+                          data: const IconThemeData(color: Colors.white),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  const SizedBox(width: 4),
+                                  const BackButton(color: Colors.white),
+                                  Expanded(
+                                    child: Text(list.name,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge
+                                            ?.copyWith(color: Colors.white)),
+                                  ),
+                                  ..._actions(context, list, lists),
+                                  const SizedBox(width: 4),
+                                ],
+                              ),
+                              _Header(
+                                  list: list,
+                                  color: color,
+                                  pendingReminders:
+                                      lists.pendingReminderCount(list)),
+                              if (hasTabs)
+                                TabBar(
+                                  isScrollable: true,
+                                  tabAlignment: TabAlignment.start,
+                                  labelColor: Colors.white,
+                                  unselectedLabelColor:
+                                      Colors.white.withValues(alpha: .65),
+                                  indicatorColor: Colors.white,
+                                  indicatorWeight: 3,
+                                  tabs: [
+                                    for (final s in list.sections)
+                                      Tab(
+                                          text:
+                                              '${s.name} ${list.checkedInSection(s.id)}/${list.itemsOfSection(s.id).length}'),
+                                  ],
+                                )
+                              else
+                                const SizedBox(height: 10),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: hasTabs
+                      ? TabBarView(children: [
+                          for (final s in list.sections)
+                            _sectionBody(list, s.id)
+                        ])
+                      : _sectionBody(list, list.sections.first.id),
+                ),
+              ],
             ),
-      bottomNavigationBar: list.quickAdd
-          ? _QuickAddBar(
-              list: list,
-              template:
-                  context.read<CatalogProvider>().templateById(list.templateId),
-              onDetailed: () => _addItemDialog(list),
-            )
-          : null,
-      body: Column(
-        children: [
-          _Header(
-              list: list,
-              color: color,
-              pendingReminders: lists.pendingReminderCount(list)),
-          Expanded(
-            child: hasTabs
-                ? TabBarView(children: [
-                    for (final s in list.sections) _sectionBody(list, s.id)
-                  ])
-                : _sectionBody(list, list.sections.first.id),
-          ),
-        ],
+            if (_confetti)
+              Positioned.fill(
+                child: ConfettiBurst(
+                  colors: [
+                    color,
+                    color.lighten(.2),
+                    Colors.amber,
+                    Colors.pinkAccent,
+                    Colors.lightBlueAccent,
+                    Colors.greenAccent,
+                  ],
+                  onDone: () {
+                    if (mounted) setState(() => _confetti = false);
+                  },
+                ),
+              ),
+          ],
+        ),
       ),
     );
     return hasTabs
         ? DefaultTabController(length: list.sections.length, child: scaffold)
         : scaffold;
+  }
+
+  List<Widget> _actions(
+      BuildContext context, UserList list, ListsProvider lists) {
+    return [
+      IconButton(
+        tooltip: _onlyRemaining
+            ? 'Tümünü göster'
+            : (list.isInventory ? 'Sadece eksikler' : 'Sadece kalanlar'),
+        color: Colors.white,
+        icon: Icon(_onlyRemaining
+            ? Icons.filter_alt_off_outlined
+            : (list.isInventory
+                ? Icons.production_quantity_limits
+                : Icons.rule)),
+        onPressed: () => setState(() => _onlyRemaining = !_onlyRemaining),
+      ),
+      IconButton(
+        tooltip: list.isFavorite ? 'Favoriden çıkar' : 'Favorilere ekle',
+        icon: Icon(
+            list.isFavorite ? Icons.star_rounded : Icons.star_border_rounded,
+            color: list.isFavorite ? Colors.amber : Colors.white),
+        onPressed: () => lists.setFavorite(list.id, !list.isFavorite),
+      ),
+      PopupMenuButton<String>(
+        iconColor: Colors.white,
+        onSelected: (v) => _menuAction(v, list),
+        itemBuilder: (menuCtx) => [
+          if (list.isInventory) ...[
+            PopupMenuItem(
+                value: 'transfer',
+                enabled: list.missingCount > 0,
+                child: ListTile(
+                    leading: const Icon(Icons.move_to_inbox_outlined),
+                    title: const Text('Eksikleri markete aktar'),
+                    subtitle: Text(list.missingCount == 0
+                        ? 'Eksik yok'
+                        : '${list.missingCount} kalem'))),
+            PopupMenuItem(
+                value: 'shareMissing',
+                enabled: list.missingCount > 0,
+                child: const ListTile(
+                    leading: Icon(Icons.send_outlined),
+                    title: Text('Eksikleri paylaş'))),
+            const PopupMenuItem(
+                value: 'stockAll',
+                child: ListTile(
+                    leading: Icon(Icons.inventory_2_outlined),
+                    title: Text('Hepsini stokta işaretle'))),
+            const PopupMenuItem(
+                value: 'stockNone',
+                child: ListTile(
+                    leading: Icon(Icons.remove_shopping_cart_outlined),
+                    title: Text('Stokları sıfırla'))),
+            const PopupMenuDivider(),
+          ],
+          const PopupMenuItem(
+              value: 'addCatalog',
+              child: ListTile(
+                  leading: Icon(Icons.library_add_outlined),
+                  title: Text('Katalogdan ekle'))),
+          const PopupMenuItem(
+              value: 'rename',
+              child: ListTile(
+                  leading: Icon(Icons.edit_outlined),
+                  title: Text('Yeniden adlandır'))),
+          const PopupMenuItem(
+              value: 'dates',
+              child: ListTile(
+                  leading: Icon(Icons.event_outlined),
+                  title: Text('Tarihleri düzenle'))),
+          const PopupMenuItem(
+              value: 'share',
+              child: ListTile(
+                  leading: Icon(Icons.share_outlined), title: Text('Paylaş'))),
+          const PopupMenuItem(
+              value: 'shareRemaining',
+              child: ListTile(
+                  leading: Icon(Icons.send_outlined),
+                  title: Text('Kalanları paylaş'))),
+          const PopupMenuItem(
+              value: 'duplicate',
+              child: ListTile(
+                  leading: Icon(Icons.copy_outlined), title: Text('Kopyala'))),
+          const PopupMenuItem(
+              value: 'reset',
+              child: ListTile(
+                  leading: Icon(Icons.restart_alt),
+                  title: Text('İşaretleri sıfırla'))),
+          if (list.items.any((i) => i.reminderAt != null))
+            PopupMenuItem(
+              value: lists.pendingReminderCount(list) > 0 ? 'remOff' : 'remOn',
+              child: ListTile(
+                leading: Icon(lists.pendingReminderCount(list) > 0
+                    ? Icons.notifications_off_outlined
+                    : Icons.notifications_active_outlined),
+                title: Text(lists.pendingReminderCount(list) > 0
+                    ? 'Hatırlatıcıları kapat'
+                    : 'Hatırlatıcıları aç'),
+              ),
+            ),
+          PopupMenuItem(
+            value: 'archive',
+            child: ListTile(
+              leading: Icon(list.isArchived
+                  ? Icons.unarchive_outlined
+                  : Icons.archive_outlined),
+              title: Text(list.isArchived ? 'Arşivden çıkar' : 'Arşivle'),
+            ),
+          ),
+          const PopupMenuDivider(),
+          PopupMenuItem(
+            value: 'delete',
+            child: ListTile(
+              leading: Icon(Icons.delete_outline,
+                  color: Theme.of(context).colorScheme.error),
+              title: Text('Sil',
+                  style: TextStyle(color: Theme.of(context).colorScheme.error)),
+            ),
+          ),
+        ],
+      ),
+    ];
   }
 
   Widget _sectionBody(UserList list, String sectionId) {
@@ -237,8 +342,9 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
         total: total,
         onTap: () => _categoryMenu(list, c),
       ));
+      final tiles = <Widget>[];
       for (final i in items) {
-        children.add(_ItemTile(
+        tiles.add(_ItemTile(
           item: i,
           color: colorFromHex(c.color),
           inventory: list.isInventory,
@@ -252,6 +358,7 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
           onStockToggle: () => _stockSheet(list, i),
         ));
       }
+      children.add(GroupCard(children: tiles));
     }
     if (children.isEmpty) {
       return EmptyView(
@@ -267,7 +374,7 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
       );
     }
     return ListView(
-        padding: const EdgeInsets.only(bottom: 96), children: children);
+        padding: const EdgeInsets.only(bottom: 96, top: 6), children: children);
   }
 
   // ── Menü aksiyonları ──────────────────────────────────────────────────────
@@ -697,6 +804,30 @@ class _QuickAddBarState extends State<_QuickAddBar> {
     return [...starts, ...contains].take(6);
   }
 
+  Future<void> _voiceAdd() async {
+    final color = colorFromHex(widget.list.color);
+    final entries = await showVoiceSheet(context, color: color);
+    if (entries == null || entries.isEmpty || !mounted) return;
+    final lists = context.read<ListsProvider>();
+    var added = 0;
+    for (final e in entries) {
+      final r = await lists.quickAdd(widget.list.id, e.name,
+          template: widget.template,
+          quantity: e.quantity,
+          unit: e.unit == 'adet' ? null : e.unit);
+      if (r != null) added++;
+    }
+    if (!mounted) return;
+    _ctrl.clear();
+    ScaffoldMessenger.of(context)
+      ..clearSnackBars()
+      ..showSnackBar(SnackBar(
+        content: Text('$added kalem sesle eklendi'),
+        duration: const Duration(milliseconds: 1400),
+        behavior: SnackBarBehavior.floating,
+      ));
+  }
+
   Future<void> _submit(String text, {CatalogItem? pick}) async {
     final name = pick?.name ?? text;
     if (name.trim().isEmpty) return;
@@ -720,9 +851,14 @@ class _QuickAddBarState extends State<_QuickAddBar> {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return Material(
-      color: scheme.surfaceContainer,
-      elevation: 6,
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      decoration: BoxDecoration(
+        color: isDark ? scheme.surfaceContainer : Colors.white,
+        border: Border(
+            top:
+                BorderSide(color: scheme.outlineVariant.withValues(alpha: .5))),
+      ),
       child: SafeArea(
         top: false,
         child: Padding(
@@ -746,13 +882,18 @@ class _QuickAddBarState extends State<_QuickAddBar> {
                     textInputAction: TextInputAction.done,
                     decoration: InputDecoration(
                       hintText: 'Hızlı ekle: süt, ekmek…',
-                      prefixIcon: const Icon(Icons.add_shopping_cart),
+                      prefixIcon: const Icon(Icons.add_shopping_cart_rounded),
                       isDense: true,
                       filled: true,
-                      fillColor: scheme.surface,
-                      border: OutlineInputBorder(
+                      fillColor: isDark
+                          ? scheme.surfaceContainerHigh
+                          : scheme.surfaceContainerLow,
+                      border: OutlinedBorderless.r24,
+                      enabledBorder: OutlinedBorderless.r24,
+                      focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(24),
-                          borderSide: BorderSide.none),
+                          borderSide:
+                              BorderSide(color: scheme.primary, width: 1.6)),
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 14, vertical: 10),
                     ),
@@ -799,9 +940,15 @@ class _QuickAddBarState extends State<_QuickAddBar> {
                   },
                 ),
               ),
-              IconButton(
+              if (voiceInputSupported)
+                IconButton.filledTonal(
+                  tooltip: 'Sesle ekle ("iki ekmek")',
+                  icon: const Icon(Icons.mic_rounded),
+                  onPressed: _voiceAdd,
+                ),
+              IconButton.filledTonal(
                 tooltip: 'Ayrıntılı ekle (kategori, miktar, not)',
-                icon: const Icon(Icons.playlist_add),
+                icon: const Icon(Icons.playlist_add_rounded),
                 onPressed: widget.onDetailed,
               ),
             ],
@@ -824,25 +971,49 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Container(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-      color: scheme.surfaceContainerLow,
+    final done = list.isInventory
+        ? list.missingCount == 0 && list.totalCount > 0
+        : list.isComplete;
+    final progress = list.isInventory
+        ? (list.totalCount == 0 ? 0.0 : list.inStockCount / list.totalCount)
+        : list.progress;
+    final white = Colors.white.withValues(alpha: .92);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 6, 20, 14),
       child: Row(
         children: [
-          ProgressRing(
-              progress: list.isInventory
-                  ? (list.totalCount == 0
-                      ? 0
-                      : list.inStockCount / list.totalCount)
-                  : list.progress,
-              size: 60,
-              color: (list.isInventory
-                      ? list.missingCount == 0 && list.totalCount > 0
-                      : list.isComplete)
-                  ? Colors.green
-                  : color),
-          const SizedBox(width: 14),
+          TweenAnimationBuilder<double>(
+            tween: Tween(begin: 0, end: progress),
+            duration: const Duration(milliseconds: 700),
+            curve: Curves.easeOutCubic,
+            builder: (_, v, __) => SizedBox(
+              width: 64,
+              height: 64,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  CircularProgressIndicator(
+                    value: v,
+                    strokeWidth: 6,
+                    strokeCap: StrokeCap.round,
+                    backgroundColor: Colors.white.withValues(alpha: .25),
+                    color: Colors.white,
+                  ),
+                  Center(
+                    child: done
+                        ? const Icon(Icons.check_rounded,
+                            color: Colors.white, size: 30)
+                        : Text('${(v * 100).round()}%',
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                                fontSize: 15)),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -851,76 +1022,44 @@ class _Header extends StatelessWidget {
                     list.isInventory
                         ? '${list.inStockCount} / ${list.totalCount} stokta'
                         : '${list.checkedCount} / ${list.totalCount} tamamlandı',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall
-                        ?.copyWith(fontWeight: FontWeight.bold)),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 16)),
                 if (list.subtitle.isNotEmpty)
-                  Text(list.subtitle,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(color: scheme.outline)),
-                const SizedBox(height: 6),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 1),
+                    child: Text(list.subtitle,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            color: white,
+                            fontSize: 12.5,
+                            fontWeight: FontWeight.w600)),
+                  ),
+                const SizedBox(height: 8),
                 Wrap(
                   spacing: 6,
                   runSpacing: 4,
                   children: [
                     if (list.startDate != null)
-                      CountdownChip(
-                          start: list.startDate!,
-                          end: list.endDate,
-                          color: color),
+                      _GlassPill(
+                          icon: Icons.schedule_rounded,
+                          label: countdownText(list.startDate!,
+                              end: list.endDate)),
                     if (list.isInventory)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 4),
-                        decoration: BoxDecoration(
-                            color: (list.missingCount > 0
-                                    ? scheme.error
-                                    : Colors.green)
-                                .withValues(alpha: 0.15),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Row(mainAxisSize: MainAxisSize.min, children: [
-                          Icon(
-                              list.missingCount > 0
-                                  ? Icons.remove_shopping_cart_outlined
-                                  : Icons.check_circle_outline,
-                              size: 14,
-                              color: list.missingCount > 0
-                                  ? scheme.error
-                                  : Colors.green),
-                          const SizedBox(width: 4),
-                          Text(
-                              list.missingCount > 0
-                                  ? '${list.missingCount} eksik'
-                                  : 'Eksik yok',
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: list.missingCount > 0
-                                      ? scheme.error
-                                      : Colors.green,
-                                  fontWeight: FontWeight.w600)),
-                        ]),
-                      ),
+                      _GlassPill(
+                          icon: list.missingCount > 0
+                              ? Icons.remove_shopping_cart_outlined
+                              : Icons.check_circle_outline_rounded,
+                          label: list.missingCount > 0
+                              ? '${list.missingCount} eksik'
+                              : 'Eksik yok',
+                          strong: list.missingCount > 0),
                     if (pendingReminders > 0)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 4),
-                        decoration: BoxDecoration(
-                            color: scheme.tertiary.withValues(alpha: 0.15),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Row(mainAxisSize: MainAxisSize.min, children: [
-                          Icon(Icons.notifications_active,
-                              size: 14, color: scheme.tertiary),
-                          const SizedBox(width: 4),
-                          Text('$pendingReminders hatırlatıcı',
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: scheme.tertiary,
-                                  fontWeight: FontWeight.w600)),
-                        ]),
-                      ),
+                      _GlassPill(
+                          icon: Icons.notifications_active_rounded,
+                          label: '$pendingReminders hatırlatıcı'),
                   ],
                 ),
               ],
@@ -930,6 +1069,38 @@ class _Header extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Gradyan üstünde yarı saydam rozet
+class _GlassPill extends StatelessWidget {
+  const _GlassPill(
+      {required this.icon, required this.label, this.strong = false});
+  final IconData icon;
+  final String label;
+  final bool strong;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: strong ? .92 : .2),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon,
+                size: 13,
+                color: strong ? const Color(0xFFC62828) : Colors.white),
+            const SizedBox(width: 4),
+            Text(label,
+                style: TextStyle(
+                    fontSize: 11.5,
+                    fontWeight: FontWeight.w800,
+                    color: strong ? const Color(0xFFC62828) : Colors.white)),
+          ],
+        ),
+      );
 }
 
 // ── Kalem satırı ────────────────────────────────────────────────────────────
@@ -963,23 +1134,11 @@ class _ItemTile extends StatelessWidget {
       onTap: onToggle,
       onLongPress: onLongPress,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 4, 8, 4),
+        padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
         child: Row(
           children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 150),
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                color: checked ? color : Colors.transparent,
-                border: Border.all(
-                    color: checked ? color : scheme.outline, width: 2),
-                borderRadius: BorderRadius.circular(7),
-              ),
-              child: checked
-                  ? const Icon(Icons.check, size: 16, color: Colors.white)
-                  : null,
-            ),
+            AnimatedCheck(
+                checked: checked, color: color, round: !inventory, size: 25),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -988,14 +1147,19 @@ class _ItemTile extends StatelessWidget {
                   Row(
                     children: [
                       Flexible(
-                        child: Text(
-                          item.name,
+                        child: AnimatedDefaultTextStyle(
+                          duration: const Duration(milliseconds: 220),
                           style: TextStyle(
+                            fontFamily: AppTheme.fontFamily,
                             fontSize: 15,
+                            fontWeight:
+                                checked ? FontWeight.w500 : FontWeight.w600,
                             decoration:
                                 checked ? TextDecoration.lineThrough : null,
-                            color: checked ? scheme.outline : null,
+                            decorationColor: scheme.outline,
+                            color: checked ? scheme.outline : scheme.onSurface,
                           ),
+                          child: Text(item.name),
                         ),
                       ),
                       if (item.isEssential && !checked) ...[
@@ -1480,4 +1644,10 @@ class _ItemFormState extends State<_ItemForm> {
       ),
     );
   }
+}
+
+/// Kenarlıksız, 24 yarıçaplı giriş çerçevesi
+class OutlinedBorderless {
+  static final r24 = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(24), borderSide: BorderSide.none);
 }

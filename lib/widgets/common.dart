@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../core/app_icons.dart';
+import '../core/theme.dart';
 import '../core/utils.dart';
 
 /// Renkli yuvarlak ikon rozeti
@@ -16,15 +17,19 @@ class IconBadge extends StatelessWidget {
   final double? iconSize;
 
   @override
-  Widget build(BuildContext context) => Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-            color: color.withValues(alpha: 0.18),
-            borderRadius: BorderRadius.circular(size * 0.3)),
-        child: Icon(AppIcons.get(icon),
-            color: color, size: iconSize ?? size * 0.55),
-      );
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+          color: color.withValues(alpha: isDark ? 0.24 : 0.14),
+          borderRadius: BorderRadius.circular(size * 0.3)),
+      child: Icon(AppIcons.get(icon),
+          color: isDark ? color.lighten(.12) : color,
+          size: iconSize ?? size * 0.55),
+    );
+  }
 }
 
 /// Halka ilerleme göstergesi + yüzde
@@ -185,37 +190,54 @@ class CategoryHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = colorFromHex(colorHex);
+    final scheme = Theme.of(context).colorScheme;
     final done = count != null && total != null && total! > 0 && count == total;
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 14, 8, 6),
-        child: Row(
-          children: [
-            IconBadge(icon: icon, color: c, size: 30),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Text(name,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall
-                      ?.copyWith(fontWeight: FontWeight.bold, color: c)),
-            ),
-            if (count != null && total != null)
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                decoration: BoxDecoration(
-                  color: (done ? Colors.green : c).withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text('$count/$total',
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: done ? Colors.green : c)),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 6),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(4, 4, 4, 4),
+          child: Row(
+            children: [
+              IconBadge(icon: icon, color: c, size: 30, iconSize: 17),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(name,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall
+                        ?.copyWith(color: scheme.onSurface, fontSize: 14.5)),
               ),
-            if (trailing != null) trailing!,
-          ],
+              if (count != null && total != null)
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 250),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 9, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: (done ? Colors.green : c).withValues(alpha: 0.14),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (done) ...[
+                        const Icon(Icons.check_rounded,
+                            size: 13, color: Colors.green),
+                        const SizedBox(width: 3),
+                      ],
+                      Text('$count/$total',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w800,
+                              color: done ? Colors.green : c)),
+                    ],
+                  ),
+                ),
+              if (trailing != null) ...[const SizedBox(width: 4), trailing!],
+            ],
+          ),
         ),
       ),
     );

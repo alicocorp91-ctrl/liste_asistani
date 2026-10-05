@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../core/theme.dart';
 import '../data/storage.dart';
 
 enum AppAccent {
@@ -44,28 +45,5 @@ class SettingsProvider extends ChangeNotifier {
     await _storage.setInt(Storage.keyBrightness, m.index);
   }
 
-  ThemeData theme(Brightness b) {
-    final scheme = ColorScheme.fromSeed(seedColor: _accent.seed, brightness: b);
-    final base =
-        ThemeData(colorScheme: scheme, useMaterial3: true, brightness: b);
-    return base.copyWith(
-      appBarTheme: const AppBarTheme(centerTitle: false),
-      cardTheme: CardThemeData(
-        elevation: 0,
-        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        color: scheme.surfaceContainerLow,
-      ),
-      chipTheme: base.chipTheme.copyWith(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      ),
-      inputDecorationTheme: InputDecorationTheme(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-        filled: true,
-      ),
-      snackBarTheme:
-          const SnackBarThemeData(behavior: SnackBarBehavior.floating),
-      listTileTheme: const ListTileThemeData(dense: true),
-    );
-  }
+  ThemeData theme(Brightness b) => AppTheme.build(_accent.seed, b);
 }

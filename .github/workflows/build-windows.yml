@@ -1,0 +1,40 @@
+name: Windows uygulaması oluştur
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+    paths-ignore: ['**.md']
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    name: Windows release (.exe + zip)
+    runs-on: windows-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Kaynak kodu indir
+        uses: actions/checkout@v4
+
+      - name: Flutter kur
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Bağımlılıkları yükle
+        run: flutter pub get
+
+      - name: Windows release derle
+        run: flutter build windows --release
+
+      - name: Çıktıyı yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: liste-asistani-windows
+          path: build/windows/x64/runner/Release/
+          if-no-files-found: error
+          retention-days: 30
