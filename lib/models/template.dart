@@ -18,6 +18,9 @@ class ListTemplate {
 
   /// true: liste ekranının altında hızlı ekleme çubuğu gösterilir.
   final bool quickAdd;
+
+  /// true: kalemlere tarih+saat (dueAt) eklenebilir (iş/gündelik görev listeleri).
+  final bool dueDates;
   final DateMode dateMode;
   final String dateLabel;
   final String? endDateLabel;
@@ -37,6 +40,7 @@ class ListTemplate {
     this.kind = ListKind.checklist,
     this.preselect = true,
     this.quickAdd = false,
+    this.dueDates = false,
     this.dateMode = DateMode.none,
     this.dateLabel = 'Tarih',
     this.endDateLabel,
@@ -120,6 +124,7 @@ class ListTemplate {
         'kind': kind.name,
         'preselect': preselect,
         'quickAdd': quickAdd,
+        'dueDates': dueDates,
         'dateMode': dateMode.name,
         'dateLabel': dateLabel,
         'endDateLabel': endDateLabel,
@@ -140,6 +145,7 @@ class ListTemplate {
         kind: ListKind.parse(j['kind']?.toString()),
         preselect: j['preselect'] as bool? ?? true,
         quickAdd: j['quickAdd'] as bool? ?? false,
+        dueDates: j['dueDates'] as bool? ?? false,
         dateMode: DateMode.parse(j['dateMode']?.toString()),
         dateLabel: j['dateLabel']?.toString() ?? 'Tarih',
         endDateLabel: j['endDateLabel']?.toString(),

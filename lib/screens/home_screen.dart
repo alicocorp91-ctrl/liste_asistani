@@ -60,6 +60,19 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: catalog.reload, child: const Text('Tekrar Dene')),
       );
     } else {
+      // Yaklaşan saatli görevler: gecikmiş + önümüzdeki 7 gün (tüm listeler)
+      final now = DateTime.now();
+      final horizon = now.add(const Duration(days: 7));
+      final upcoming = <(UserList, ListItem)>[];
+      for (final l in active) {
+        for (final i in l.items) {
+          final d = i.dueAt;
+          if (d == null || i.isChecked) continue;
+          if (d.isBefore(horizon)) upcoming.add((l, i));
+        }
+      }
+      upcoming.sort((a, b) => a.$2.dueAt!.compareTo(b.$2.dueAt!));
+
       final favorites = active.where((l) => l.isFavorite).toList();
       final others = active.where((l) => !l.isFavorite).toList();
       var idx = 0;
@@ -82,6 +95,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(color: scheme.onSurfaceVariant)),
                 ),
               ),
+            if (upcoming.isNotEmpty)
+              SliverToBoxAdapter(
+                  child: _UpcomingCard(upcoming: upcoming)),
             if (favorites.isNotEmpty) ...[
               const SliverToBoxAdapter(child: SectionTitle('Favoriler')),
               SliverList.list(children: [
@@ -347,6 +363,120 @@ class _EmptyHome extends StatelessWidget {
               icon: const Icon(Icons.add_rounded),
               label: const Text('İlk listeni oluştur'),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Ana ekran "Yaklaşanlar" kartı: gecikmiş + önümüzdeki 7 günün saatli işleri,
+/// zaman sırasıyla. İş ve gündelik listeleri kendi renk/adıyla görünür.
+class _UpcomingCard extends StatelessWidget {
+  const _UpcomingCard({required this.upcoming});
+  final List<(UserList, ListItem)> upcoming;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final shown = upcoming.take(6).toList();
+    final rest = upcoming.length - shown.length;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 14, 16, 4),
+      child: SoftCard(
+        tint: scheme.primary,
+        padding: const EdgeInsets.fromLTRB(14, 12, 14, 6),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                      color: scheme.primary.withValues(alpha: .14),
+                      borderRadius: BorderRadius.circular(10)),
+                  child:
+                      Icon(Icons.schedule, size: 18, color: scheme.primary),
+                ),
+                const SizedBox(width: 10),
+                Text('Yaklaşanlar',
+                    style: Theme.of(context).textTheme.titleSmall),
+                const SizedBox(width: 8),
+                Pill(label: '${upcoming.length}', color: scheme.primary),
+                const Spacer(),
+                Text('7 gün',
+                    style: TextStyle(
+                        fontSize: 11, color: scheme.onSurfaceVariant)),
+              ],
+            ),
+            const SizedBox(height: 4),
+            for (final (l, i) in shown) _UpcomingRow(list: l, item: i),
+            if (rest > 0)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8, top: 2),
+                child: Text(
+                  '+$rest iş daha …',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 12, color: scheme.onSurfaceVariant),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _UpcomingRow extends StatelessWidget {
+  const _UpcomingRow({required this.list, required this.item});
+  final UserList list;
+  final ListItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final c = colorFromHex(list.color);
+    final dc = dueColor(item.dueAt!, checked: false, scheme: scheme);
+    return InkWell(
+      borderRadius: BorderRadius.circular(12),
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => ListDetailScreen(listId: list.id))),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 6),
+        child: Row(
+          children: [
+            Container(
+                width: 10,
+                height: 10,
+                decoration: BoxDecoration(color: dc, shape: BoxShape.circle)),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(item.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 14)),
+                  Text(list.name,
+                      style: TextStyle(
+                          fontSize: 11,
+                          color: c,
+                          fontWeight: FontWeight.w600)),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(dueLabel(item.dueAt!),
+                style: TextStyle(
+                    fontSize: 11.5,
+                    fontWeight: FontWeight.w800,
+                    color: dc)),
           ],
         ),
       ),

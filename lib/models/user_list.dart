@@ -248,6 +248,9 @@ class ListItem {
   final bool isEssential;
   final bool isCustom;
 
+  /// Saatli görev: bu kalem için hedef tarih/saat (iş & gündelik listeleri).
+  final DateTime? dueAt;
+
   /// Stok listelerinde eldeki miktar (gereken miktar = [quantity] ?? 1).
   final int stockQty;
 
@@ -264,6 +267,7 @@ class ListItem {
     this.reminderEnabled = false,
     this.isEssential = false,
     this.isCustom = false,
+    this.dueAt,
     this.stockQty = 0,
   });
 
@@ -271,6 +275,11 @@ class ListItem {
     if (quantity == null) return '';
     return unit == null || unit!.isEmpty ? '$quantity' : '$quantity $unit';
   }
+
+  // ── Saatli görev ──────────────────────────────────────────────────────────
+  bool get hasDue => dueAt != null;
+  bool get isOverdue =>
+      dueAt != null && !isChecked && dueAt!.isBefore(DateTime.now());
 
   // ── Stok (inventory) ──────────────────────────────────────────────────────
   /// Gereken miktar; miktar tanımsızsa 1 kabul edilir.
@@ -305,6 +314,8 @@ class ListItem {
     bool clearReminder = false,
     bool? reminderEnabled,
     bool? isEssential,
+    DateTime? dueAt,
+    bool clearDueAt = false,
     int? stockQty,
   }) =>
       ListItem(
@@ -321,6 +332,7 @@ class ListItem {
             clearReminder ? false : (reminderEnabled ?? this.reminderEnabled),
         isEssential: isEssential ?? this.isEssential,
         isCustom: isCustom,
+        dueAt: clearDueAt ? null : (dueAt ?? this.dueAt),
         stockQty: stockQty ?? this.stockQty,
       );
 
@@ -337,6 +349,7 @@ class ListItem {
         'reminderEnabled': reminderEnabled,
         'isEssential': isEssential,
         'isCustom': isCustom,
+        'dueAt': dueAt?.toIso8601String(),
         'stockQty': stockQty,
       };
 
@@ -353,6 +366,7 @@ class ListItem {
         reminderEnabled: j['reminderEnabled'] as bool? ?? false,
         isEssential: j['isEssential'] as bool? ?? false,
         isCustom: j['isCustom'] as bool? ?? false,
+        dueAt: parseDate(j['dueAt']),
         stockQty: (j['stockQty'] as num?)?.toInt() ?? 0,
       );
 }

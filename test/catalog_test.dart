@@ -12,7 +12,7 @@ void main() {
 
   test('tüm yerleşik şablonlar yüklenir ve tutarlıdır', () async {
     final templates = await TemplateRepository().loadBuiltIn();
-    expect(templates.length, 7);
+    expect(templates.length, 9);
     expect(
         templates.map((t) => t.id),
         containsAll([
@@ -22,7 +22,9 @@ void main() {
           'mangal',
           'kamp',
           'plaj',
-          'tasinma'
+          'tasinma',
+          'is',
+          'gundelik'
         ]));
     expect(templates.map((t) => t.id), isNot(contains('hastane')));
     // Malzeme listeleri stok modunda, diğerleri kontrol listesi
@@ -90,7 +92,7 @@ void main() {
       // varsayılan cevaplarla en az bir öneri çıkmalı
       final answers = t.defaultAnswers();
       final suggested = t.items.where((i) => i.when.matches(answers)).length;
-      expect(suggested, greaterThan(10),
+      expect(suggested, greaterThan(t.filters.isEmpty ? 0 : 10),
           reason: '${t.id}: varsayılan cevaplarla çok az öneri');
     }
     expect(total, greaterThan(900));

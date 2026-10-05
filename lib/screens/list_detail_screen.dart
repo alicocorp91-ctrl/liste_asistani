@@ -1,3 +1,6 @@
+import 'dart:io' show Platform;
+
+import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -333,6 +336,17 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
           ...items.where((i) => i.inStock),
         ];
       }
+      // Saatli görevler (dueAt) tamamlanmamış olarak zamana göre en üste
+      if (!list.isInventory &&
+          items.any((i) => i.dueAt != null && !i.isChecked)) {
+        final due = items
+            .where((i) => i.dueAt != null && !i.isChecked)
+            .toList()
+              ..sort((a, b) => a.dueAt!.compareTo(b.dueAt!));
+        final rest =
+            items.where((i) => !(i.dueAt != null && !i.isChecked)).toList();
+        items = [...due, ...rest];
+      }
       if (items.isEmpty) continue;
       children.add(CategoryHeader(
         name: c.name,
@@ -622,6 +636,7 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
         quantity: result.quantity,
         unit: result.unit,
         note: result.note,
+        dueAt: result.dueAt,
         stockQty: result.stockQty);
   }
 
@@ -754,6 +769,8 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
         reminderAt: result.reminderAt,
         clearReminder: result.reminderAt == null,
         reminderEnabled: result.reminderEnabled,
+        dueAt: result.dueAt,
+        clearDueAt: result.dueAt == null,
         stockQty: result.stockQty,
       ),
     );
@@ -1130,6 +1147,10 @@ class _ItemTile extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final checked = item.isChecked;
     final hasReminder = item.reminderAt != null;
+    final hasDue = item.dueAt != null;
+    final dueC = hasDue
+        ? dueColor(item.dueAt!, checked: checked, scheme: scheme)
+        : scheme.primary;
     return InkWell(
       onTap: onToggle,
       onLongPress: onLongPress,
@@ -1168,11 +1189,27 @@ class _ItemTile extends StatelessWidget {
                       ],
                     ],
                   ),
-                  if (item.note != null && item.note!.isNotEmpty || hasReminder)
+                  if (item.note != null && item.note!.isNotEmpty ||
+                      hasReminder ||
+                      hasDue)
                     Padding(
                       padding: const EdgeInsets.only(top: 2),
                       child: Row(
                         children: [
+                          if (hasDue) ...[
+                            Icon(Icons.schedule,
+                                size: 12, color: dueC),
+                            const SizedBox(width: 3),
+                            Text(
+                                item.isChecked
+                                    ? fmtDateTime(item.dueAt!)
+                                    : dueLabel(item.dueAt!),
+                                style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w700,
+                                    color: dueC)),
+                            const SizedBox(width: 8),
+                          ],
                           if (hasReminder) ...[
                             Icon(
                                 item.reminderEnabled
@@ -1382,6 +1419,7 @@ class _ItemFormResult {
     this.note,
     this.reminderAt,
     this.reminderEnabled = false,
+    this.dueAt,
     this.delete = false,
     this.stockQty = 0,
   });
@@ -1392,6 +1430,7 @@ class _ItemFormResult {
   final String? note;
   final DateTime? reminderAt;
   final bool reminderEnabled;
+  final DateTime? dueAt;
   final bool delete;
   final int stockQty;
 }
@@ -1419,8 +1458,11 @@ class _ItemFormState extends State<_ItemForm> {
   late String _categoryId;
   DateTime? _reminderAt;
   bool _reminderEnabled = false;
+  DateTime? _dueAt;
+  bool _dueSupported = false;
 
   bool get isEdit => widget.item != null;
+  bool get _calendarSupported => Platform.isAndroid || Platform.isIOS;
 
   @override
   void initState() {
@@ -1435,6 +1477,12 @@ class _ItemFormState extends State<_ItemForm> {
     }
     _reminderAt = widget.item?.reminderAt;
     _reminderEnabled = widget.item?.reminderEnabled ?? false;
+    _dueAt = widget.item?.dueAt;
+    _dueSupported = context
+            .read<CatalogProvider>()
+            .templateById(widget.list.templateId)
+            ?.dueDates ??
+        false;
   }
 
   @override
@@ -1565,6 +1613,35 @@ class _ItemFormState extends State<_ItemForm> {
                   label: const Text('Hatırlatıcıyı kaldır'),
                 ),
               ),
+            if (_dueSupported) ...[
+              const SizedBox(height: 4),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.schedule),
+                title: Text(_dueAt == null
+                    ? 'Tarih & saat yok'
+                    : fmtDateTime(_dueAt!)),
+                subtitle: Text(_dueAt == null
+                    ? 'Saatli görev — seçmek için dokun'
+                    : 'Zamanı gelince bildirim gönderilir'),
+                onTap: _pickDue,
+                trailing: _dueAt == null
+                    ? const Icon(Icons.chevron_right)
+                    : IconButton(
+                        tooltip: 'Tarihi kaldır',
+                        icon: const Icon(Icons.close, size: 18),
+                        onPressed: () => setState(() => _dueAt = null)),
+              ),
+              if (isEdit && _dueAt != null && _calendarSupported)
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton.icon(
+                    onPressed: () => _exportToCalendar(_dueAt!),
+                    icon: const Icon(Icons.calendar_month, size: 18),
+                    label: const Text('Telefon takvimine ekle'),
+                  ),
+                ),
+            ],
             const SizedBox(height: 8),
             Row(
               children: [
@@ -1620,6 +1697,39 @@ class _ItemFormState extends State<_ItemForm> {
     }
   }
 
+  Future<void> _pickDue() async {
+    final now = DateTime.now();
+    final d = await showDatePicker(
+      context: context,
+      initialDate: _dueAt ?? now,
+      firstDate: DateTime(now.year - 1),
+      lastDate: DateTime(now.year + 5),
+      locale: const Locale('tr', 'TR'),
+    );
+    if (d == null || !mounted) return;
+    final t = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(
+          _dueAt ?? DateTime(now.year, now.month, now.day, 10)),
+    );
+    if (t == null) return;
+    setState(() => _dueAt = DateTime(d.year, d.month, d.day, t.hour, t.minute));
+  }
+
+  Future<void> _exportToCalendar(DateTime at) async {
+    try {
+      final name = _name.text.trim();
+      await Add2Calendar.addEvent2Cal(Event(
+        title: name.isEmpty ? widget.list.name : name,
+        description: 'Liste Asistanı · ${widget.list.name}',
+        startDate: at,
+        endDate: at.add(const Duration(minutes: 30)),
+      ));
+    } catch (e) {
+      if (mounted) showSnack(context, 'Takvim açılamadı: $e');
+    }
+  }
+
   void _save() {
     final name = _name.text.trim();
     if (name.isEmpty) {
@@ -1641,6 +1751,7 @@ class _ItemFormState extends State<_ItemForm> {
         note: note.isEmpty ? null : note,
         reminderAt: _reminderAt,
         reminderEnabled: _reminderEnabled && _reminderAt != null,
+        dueAt: _dueAt,
       ),
     );
   }

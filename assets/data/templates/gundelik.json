@@ -1,0 +1,125 @@
+{
+ "id": "gundelik",
+ "name": "Gündelik",
+ "description": "Ev, fatura, alışveriş, randevu ve günlük hayat işleri; saatli görevlerle.",
+ "icon": "home",
+ "color": "#6A1B9A",
+ "kind": "checklist",
+ "preselect": false,
+ "quickAdd": true,
+ "dueDates": true,
+ "dateMode": "none",
+ "dateLabel": "Tarih",
+ "endDateLabel": null,
+ "textFields": [],
+ "filters": [],
+ "sections": [
+  {
+   "id": "g",
+   "name": "Gündelik",
+   "icon": "home"
+  }
+ ],
+ "categories": [
+  {
+   "id": "chores",
+   "name": "Ev & Temizlik",
+   "icon": "cleaning_services",
+   "color": "#AB47BC",
+   "section": "g"
+  },
+  {
+   "id": "bills",
+   "name": "Fatura & Ödeme",
+   "icon": "paid",
+   "color": "#8E24AA",
+   "section": "g"
+  },
+  {
+   "id": "shop_g",
+   "name": "Alışveriş",
+   "icon": "shopping_bag",
+   "color": "#CE93D8",
+   "section": "g"
+  },
+  {
+   "id": "appointments",
+   "name": "Randevu & Bakım",
+   "icon": "event_note",
+   "color": "#26A69A",
+   "section": "g"
+  },
+  {
+   "id": "veh_g",
+   "name": "Araç",
+   "icon": "directions_car",
+   "color": "#66BB6A",
+   "section": "g"
+  },
+  {
+   "id": "social",
+   "name": "Sosyal & İletişim",
+   "icon": "people",
+   "color": "#FFA726",
+   "section": "g"
+  },
+  {
+   "id": "genOther",
+   "name": "Diğer",
+   "icon": "category",
+   "color": "#90A4AE",
+   "section": "g"
+  }
+ ],
+ "items": [
+  {
+   "id": "laundry",
+   "name": "Çamaşır / bulaşık",
+   "category": "chores",
+   "essential": true
+  },
+  {
+   "id": "home_clean",
+   "name": "Ev temizliği (oda rutini)",
+   "category": "chores"
+  },
+  {
+   "id": "bill_check",
+   "name": "Fatura son tarihi kontrolü",
+   "category": "bills",
+   "essential": true
+  },
+  {
+   "id": "auto_pay",
+   "name": "Otomatik ödemeleri gözden geçir",
+   "category": "bills"
+  },
+  {
+   "id": "grocery",
+   "name": "Market / ihtiyaç alışverişi",
+   "category": "shop_g",
+   "essential": true
+  },
+  {
+   "id": "appt",
+   "name": "Randevu / kuaför / diş kontrolü",
+   "category": "appointments"
+  },
+  {
+   "id": "car_care",
+   "name": "Araç bakımı / yakıt",
+   "category": "veh_g"
+  },
+  {
+   "id": "reach_out",
+   "name": "Aileye / arkadaşa ulaş",
+   "category": "social"
+  },
+  {
+   "id": "plan_day",
+   "name": "Yarını planla",
+   "category": "genOther",
+   "essential": true
+  }
+ ]
+}

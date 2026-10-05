@@ -20,6 +20,10 @@ seyahat artık yalnızca liste tiplerinden biridir; aynı motor tüm liste tiple
 ## Özellikler
 
 - **Sesle ekleme:** hızlı ekleme çubuğundaki mikrofon düğmesiyle "zeytin, iki ekmek, bir kilo domates" deyin; adet ve birimler algılanır.
+- **İş & Gündelik görev listeleri:** "İş" ve "Gündelik" şablonlarıyla gündelik ve iş hayatı ayrı tutulur; her göreve **tarih + saat** (saatli görev) eklenebilir.
+- **Yaklaşanlar kartı:** ana ekranda gecikmiş + önümüzdeki 7 günün saatli işleri zaman sırasıyla; İş (indigo) ve Gündelik (mor) renk/etiketle ayrılır, dokununca listeye gider.
+- **Saatli görev bildirimi:** görevin saati gelince tam zamanlı (exact) bildirim; tamamlayınca otomatik iptal.
+- **Telefon takvimine ekle:** tarihli görevden tek dokunuşla takvim etkinliği (izin gerektirmez).
 
 ### Liste tipleri
 | Tip | Bölümler | Filtreler | Tarih | Kalem |
@@ -36,7 +40,7 @@ seyahat artık yalnızca liste tiplerinden biridir; aynı motor tüm liste tiple
 **Market, Piknik, Mangal ve Kamp** stok listesidir (aşağıya bakın); özel tiplerde stok takibi açılabilir.
 Bebek / evcil hayvan soruları ve kalemleri bilinçli olarak yoktur (kişisel kullanım).
 
-Toplam **1.046 hazır kalem**, her biri ikon/kategori/bölüm bilgisiyle.
+Toplam **1.064 hazır kalem**, her biri ikon/kategori/bölüm bilgisiyle.
 
 ### Akıllı liste oluşturma
 - **Filtreli öneri**: seçtiğiniz cevaplara göre (ör. "uçak + iş + kış + 5 gün + çocuklu") sadece ilgili kalemler önerilir.
@@ -99,7 +103,7 @@ liste_asistani/
 │                                     # list_detail, settings, manage_catalog, template_editor
 ├── assets/
 │   ├── icon.png                      # Uygulama ikonu kaynağı
-│   └── data/templates/               # 7 yerleşik şablon (JSON) + index.json
+│   └── data/templates/               # 9 yerleşik şablon (JSON) + index.json
 ├── tools/catalog/                    # Şablon JSON'larını üreten Python kaynakları
 ├── test/                             # Birim + widget testleri (22 test)
 ├── android/                          # Android projesi (minSdk 23, imzalama desteği)

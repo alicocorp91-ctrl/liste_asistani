@@ -1,0 +1,125 @@
+{
+ "id": "is",
+ "name": "İş",
+ "description": "Toplantı, teslim, proje ve takip işleri; saatli görevler ve yaklaşan uyarılarıyla.",
+ "icon": "task",
+ "color": "#3F51B5",
+ "kind": "checklist",
+ "preselect": false,
+ "quickAdd": true,
+ "dueDates": true,
+ "dateMode": "none",
+ "dateLabel": "Tarih",
+ "endDateLabel": null,
+ "textFields": [],
+ "filters": [],
+ "sections": [
+  {
+   "id": "is",
+   "name": "İş",
+   "icon": "task"
+  }
+ ],
+ "categories": [
+  {
+   "id": "meetings",
+   "name": "Toplantılar",
+   "icon": "event",
+   "color": "#5C6BC0",
+   "section": "is"
+  },
+  {
+   "id": "deliverables",
+   "name": "Teslim & Evrak",
+   "icon": "fact_check",
+   "color": "#7986CB",
+   "section": "is"
+  },
+  {
+   "id": "projects",
+   "name": "Projeler",
+   "icon": "flag",
+   "color": "#3949AB",
+   "section": "is"
+  },
+  {
+   "id": "followup",
+   "name": "Takip & Arama",
+   "icon": "smartphone",
+   "color": "#1E88E5",
+   "section": "is"
+  },
+  {
+   "id": "office",
+   "name": "Ofis",
+   "icon": "business_center",
+   "color": "#42A5F5",
+   "section": "is"
+  },
+  {
+   "id": "development",
+   "name": "Gelişim",
+   "icon": "school",
+   "color": "#7E57C2",
+   "section": "is"
+  },
+  {
+   "id": "isOther",
+   "name": "Diğer",
+   "icon": "category",
+   "color": "#90A4AE",
+   "section": "is"
+  }
+ ],
+ "items": [
+  {
+   "id": "meet_prep",
+   "name": "Toplantı hazırlığı ve notlar",
+   "category": "meetings",
+   "essential": true
+  },
+  {
+   "id": "weekly_report",
+   "name": "Haftalık rapor / teslim takibi",
+   "category": "deliverables",
+   "essential": true
+  },
+  {
+   "id": "doc_sign",
+   "name": "Evrak imza / onay",
+   "category": "deliverables"
+  },
+  {
+   "id": "proj_step",
+   "name": "Proje adımını güncelle",
+   "category": "projects"
+  },
+  {
+   "id": "calls",
+   "name": "Müşteri / iş arkadaşı aramaları",
+   "category": "followup"
+  },
+  {
+   "id": "email_reply",
+   "name": "E-postalara yanıt ver",
+   "category": "followup",
+   "essential": true
+  },
+  {
+   "id": "supply_order",
+   "name": "Ofis sarf / kırtasiye siparişi",
+   "category": "office"
+  },
+  {
+   "id": "training",
+   "name": "Kurs / eğitim (30 dk)",
+   "category": "development"
+  },
+  {
+   "id": "plan_tomorrow",
+   "name": "Yarınki işleri planla",
+   "category": "isOther",
+   "essential": true
+  }
+ ]
+}

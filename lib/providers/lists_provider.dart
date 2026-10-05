@@ -422,6 +422,7 @@ class ListsProvider extends ChangeNotifier {
     final l = byId(listId);
     if (l == null) return;
     await _notifications.cancel(_notifId(listId, itemId));
+    await _notifications.cancel(_notifId(listId, '$itemId|due'));
     await _update(
         l.copyWith(items: l.items.where((i) => i.id != itemId).toList()));
   }
@@ -431,6 +432,7 @@ class ListsProvider extends ChangeNotifier {
     if (l == null) return;
     for (final id in itemIds) {
       await _notifications.cancel(_notifId(listId, id));
+      await _notifications.cancel(_notifId(listId, '$id|due'));
     }
     await _update(l.copyWith(
         items: l.items.where((i) => !itemIds.contains(i.id)).toList()));
@@ -442,6 +444,7 @@ class ListsProvider extends ChangeNotifier {
       int? quantity,
       String? unit,
       String? note,
+      DateTime? dueAt,
       int stockQty = 0}) async {
     final l = byId(listId)!;
     final item = ListItem(
@@ -451,10 +454,12 @@ class ListsProvider extends ChangeNotifier {
       quantity: quantity,
       unit: unit,
       note: note,
+      dueAt: dueAt,
       isCustom: true,
       stockQty: stockQty,
     );
     await _update(l.copyWith(items: [...l.items, item]));
+    await _syncReminder(l.id, l.name, item);
     return item;
   }
 
@@ -589,11 +594,27 @@ class ListsProvider extends ChangeNotifier {
     } else {
       await _notifications.cancel(id);
     }
+    // Saatli görev bildirimi (dueAt): açık, tamamlanmamış ve gelecekteyse.
+    final dueId = _notifId(listId, '${i.id}|due');
+    if (i.dueAt != null &&
+        !i.isChecked &&
+        i.dueAt!.isAfter(DateTime.now())) {
+      await _notifications.schedule(
+        id: dueId,
+        title: listName,
+        body: '${fmtTime(i.dueAt!)} · ${i.name}',
+        at: i.dueAt!,
+        payload: listId,
+      );
+    } else {
+      await _notifications.cancel(dueId);
+    }
   }
 
   Future<void> _cancelAllReminders(UserList l) async {
     for (final i in l.items) {
       await _notifications.cancel(_notifId(l.id, i.id));
+      await _notifications.cancel(_notifId(l.id, '${i.id}|due'));
     }
   }
 

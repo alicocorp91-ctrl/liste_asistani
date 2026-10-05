@@ -25,11 +25,39 @@ final DateFormat _dfLong = DateFormat('d MMMM yyyy', 'tr_TR');
 final DateFormat _dfShort = DateFormat('d MMM', 'tr_TR');
 final DateFormat _dfDateTime = DateFormat('d MMM yyyy HH:mm', 'tr_TR');
 final DateFormat _dfWeekday = DateFormat('EEEE', 'tr_TR');
+final DateFormat _dfTime = DateFormat('HH:mm', 'tr_TR');
 
 String fmtDate(DateTime d) => _dfLong.format(d);
 String fmtDateShort(DateTime d) => _dfShort.format(d);
 String fmtDateTime(DateTime d) => _dfDateTime.format(d);
 String fmtWeekday(DateTime d) => _dfWeekday.format(d);
+String fmtTime(DateTime d) => _dfTime.format(d);
+
+/// Saatli görev etiketi: "Gecikti · 4 Eki" / "Bugün 14:30" / "Yarın 09:00"
+/// / "5 Eki 15:00"
+String dueLabel(DateTime d) {
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  final day = DateTime(d.year, d.month, d.day);
+  final diff = day.difference(today).inDays;
+  if (diff < 0) return 'Gecikti · ${_dfShort.format(d)}';
+  if (diff == 0) return 'Bugün ${_dfTime.format(d)}';
+  if (diff == 1) return 'Yarın ${_dfTime.format(d)}';
+  return '${_dfShort.format(d)} ${_dfTime.format(d)}';
+}
+
+/// Görev etiketi rengi: tamamlandı → gri, gecikmiş → kırmızı,
+/// bugün → turuncu, otherwise vurgu rengi.
+Color dueColor(DateTime d,
+    {required bool checked, required ColorScheme scheme}) {
+  if (checked) return scheme.outline;
+  final now = DateTime.now();
+  if (d.isBefore(now)) return scheme.error;
+  if (d.year == now.year && d.month == now.month && d.day == now.day) {
+    return const Color(0xFFEF6C00);
+  }
+  return scheme.primary;
+}
 
 /// "12 Eyl – 19 Eyl 2026" tarzı aralık metni
 String fmtRange(DateTime? start, DateTime? end) {

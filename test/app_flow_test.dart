@@ -43,7 +43,7 @@ void main() {
     addTearDown(tester.view.reset);
 
     final (catalog, lists, app) = await buildApp();
-    expect(catalog.templates.length, 7);
+    expect(catalog.templates.length, 9);
 
     await tester.pumpWidget(app);
     await tester.pumpAndSettle();
