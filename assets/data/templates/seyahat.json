@@ -149,24 +149,6 @@
     }
    ],
    "default": "leisure"
-  },
-  {
-   "id": "kids",
-   "label": "Çocuk",
-   "question": "Yanınızda çocuk var mı?",
-   "options": [
-    {
-     "id": "no",
-     "label": "Hayır",
-     "icon": "person"
-    },
-    {
-     "id": "yes",
-     "label": "Evet",
-     "icon": "child_care"
-    }
-   ],
-   "default": "no"
   }
  ],
  "sections": [
@@ -276,13 +258,6 @@
    "name": "Sağlık ve İlaç",
    "icon": "medical_services",
    "color": "#26A69A",
-   "section": "valiz"
-  },
-  {
-   "id": "kids",
-   "name": "Çocuk",
-   "icon": "child_care",
-   "color": "#EC407A",
    "section": "valiz"
   },
   {
@@ -2573,34 +2548,6 @@
    }
   },
   {
-   "id": "kid_id",
-   "name": "Çocuk kimliği",
-   "category": "documents",
-   "when": {
-    "kids": [
-     "yes"
-    ],
-    "tripType": [
-     "domestic"
-    ]
-   },
-   "essential": true
-  },
-  {
-   "id": "kid_passport",
-   "name": "Çocuk pasaportu",
-   "category": "documentsIntl",
-   "when": {
-    "kids": [
-     "yes"
-    ],
-    "tripType": [
-     "international"
-    ]
-   },
-   "essential": true
-  },
-  {
    "id": "esim",
    "name": "eSIM / yurt dışı hat",
    "category": "documentsIntl",
@@ -2633,16 +2580,6 @@
     "purpose": [
      "business",
      "leisure"
-    ]
-   }
-  },
-  {
-   "id": "kids_headphones",
-   "name": "Çocuk kulaklığı",
-   "category": "electronics",
-   "when": {
-    "kids": [
-     "yes"
     ]
    }
   },
@@ -3052,143 +2989,6 @@
    "category": "health"
   },
   {
-   "id": "formula",
-   "name": "Mama / biberon",
-   "category": "kids",
-   "when": {
-    "kids": [
-     "yes"
-    ]
-   }
-  },
-  {
-   "id": "kid_clothes",
-   "name": "Çocuk kıyafetleri",
-   "category": "kids",
-   "when": {
-    "kids": [
-     "yes"
-    ]
-   },
-   "qty": {
-    "base": 1,
-    "perDay": 1.5,
-    "max": 12
-   },
-   "unit": "takım"
-  },
-  {
-   "id": "toys",
-   "name": "Oyuncaklar",
-   "category": "kids",
-   "when": {
-    "kids": [
-     "yes"
-    ]
-   }
-  },
-  {
-   "id": "kid_meds",
-   "name": "Çocuk ilaçları / ateş düşürücü",
-   "category": "kids",
-   "when": {
-    "kids": [
-     "yes"
-    ]
-   },
-   "essential": true
-  },
-  {
-   "id": "car_seat",
-   "name": "Çocuk oto koltuğu",
-   "category": "kids",
-   "when": {
-    "kids": [
-     "yes"
-    ],
-    "transport": [
-     "car"
-    ]
-   },
-   "essential": true
-  },
-  {
-   "id": "changing_mat",
-   "name": "Alt açma örtüsü",
-   "category": "kids",
-   "when": {
-    "kids": [
-     "yes"
-    ]
-   }
-  },
-  {
-   "id": "kid_snacks",
-   "name": "Çocuk atıştırmalıkları",
-   "category": "kids",
-   "when": {
-    "kids": [
-     "yes"
-    ]
-   }
-  },
-  {
-   "id": "coloring_book",
-   "name": "Boyama kitabı / kalemler",
-   "category": "kids",
-   "when": {
-    "kids": [
-     "yes"
-    ]
-   }
-  },
-  {
-   "id": "kid_tablet",
-   "name": "Çocuk tableti / indirilmiş çizgi filmler",
-   "category": "kids",
-   "when": {
-    "kids": [
-     "yes"
-    ]
-   }
-  },
-  {
-   "id": "arm_floats",
-   "name": "Yüzme kolluğu / can yeleği",
-   "category": "kids",
-   "when": [
-    {
-     "kids": [
-      "yes"
-     ],
-     "season": [
-      "summer"
-     ]
-    },
-    {
-     "kids": [
-      "yes"
-     ],
-     "purpose": [
-      "beach"
-     ]
-    }
-   ]
-  },
-  {
-   "id": "potty",
-   "name": "Lazımlık / klozet adaptörü",
-   "category": "kids",
-   "when": {
-    "kids": [
-     "yes"
-    ],
-    "transport": [
-     "car"
-    ]
-   }
-  },
-  {
    "id": "liquids_bag",
    "name": "Sıvı poşeti (100 ml şişeler)",
    "category": "transport",
@@ -3218,21 +3018,6 @@
     ],
     "tripType": [
      "international"
-    ]
-   }
-  },
-  {
-   "id": "travel_pillow_kids",
-   "name": "Çocuk boyun yastığı",
-   "category": "transport",
-   "when": {
-    "kids": [
-     "yes"
-    ],
-    "transport": [
-     "plane",
-     "bus",
-     "train"
     ]
    }
   },
@@ -3565,17 +3350,6 @@
    "daysBefore": 30
   },
   {
-   "id": "prep_id_kids",
-   "name": "Çocuk kimlik / pasaport geçerliliğini kontrol et",
-   "category": "prepDocs",
-   "when": {
-    "kids": [
-     "yes"
-    ]
-   },
-   "daysBefore": 30
-  },
-  {
    "id": "prep_bank_notice",
    "name": "Bankaya yurt dışı kullanım bildirimi yap",
    "category": "prepFinance",
@@ -3711,17 +3485,6 @@
     ]
    },
    "daysBefore": 5
-  },
-  {
-   "id": "prep_haircut_kids",
-   "name": "Çocuğun kıyafet / ihtiyaç listesini gözden geçir",
-   "category": "prepHome",
-   "when": {
-    "kids": [
-     "yes"
-    ]
-   },
-   "daysBefore": 3
   }
  ],
  "kind": "checklist",

@@ -219,7 +219,8 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
         onSelected: (v) => _menuAction(v, list),
         itemBuilder: (menuCtx) => [
           if (list.isInventory) ...[
-            PopupMenuItem(
+            if (list.templateId != 'market')
+              PopupMenuItem(
                 value: 'transfer',
                 enabled: list.missingCount > 0,
                 child: ListTile(
@@ -336,6 +337,10 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
           ...items.where((i) => i.inStock),
         ];
       }
+      // Stok listelerinde tamamlanan (üzeri çizilen) kalemler gizlenir
+      if (list.isInventory) {
+        items = items.where((i) => !i.isChecked).toList();
+      }
       // Saatli görevler (dueAt) tamamlanmamış olarak zamana göre en üste
       if (!list.isInventory &&
           items.any((i) => i.dueAt != null && !i.isChecked)) {
@@ -362,7 +367,22 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
           item: i,
           color: colorFromHex(c.color),
           inventory: list.isInventory,
-          onToggle: () => lists.toggleItem(list.id, i.id),
+          onToggle: () async {
+            final wasChecked = i.isChecked;
+            await lists.toggleItem(list.id, i.id);
+            if (!mounted || !list.isInventory || wasChecked) return;
+            final messenger = ScaffoldMessenger.of(context);
+            messenger.clearSnackBars();
+            messenger.showSnackBar(SnackBar(
+              content: Text('"${i.name}" gizlendi'),
+              duration: const Duration(milliseconds: 2600),
+              behavior: SnackBarBehavior.floating,
+              action: SnackBarAction(
+                label: 'Geri al',
+                onPressed: () => lists.toggleItem(list.id, i.id),
+              ),
+            ));
+          },
           onLongPress: () => _itemSheet(list, i),
           onQty: i.quantity == null
               ? null
@@ -826,12 +846,13 @@ class _QuickAddBarState extends State<_QuickAddBar> {
     final entries = await showVoiceSheet(context, color: color);
     if (entries == null || entries.isEmpty || !mounted) return;
     final lists = context.read<ListsProvider>();
+    final taskMode = widget.template?.dueDates ?? false;
     var added = 0;
     for (final e in entries) {
       final r = await lists.quickAdd(widget.list.id, e.name,
           template: widget.template,
-          quantity: e.quantity,
-          unit: e.unit == 'adet' ? null : e.unit);
+          quantity: taskMode ? null : e.quantity,
+          unit: taskMode || e.unit == 'adet' ? null : e.unit);
       if (r != null) added++;
     }
     if (!mounted) return;
@@ -1537,11 +1558,12 @@ class _ItemFormState extends State<_ItemForm> {
               onChanged: (v) => setState(() => _categoryId = v ?? _categoryId),
             ),
             const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _qty,
+            if (!_dueSupported)
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _qty,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         labelText: widget.list.isInventory
@@ -1745,9 +1767,9 @@ class _ItemFormState extends State<_ItemForm> {
       _ItemFormResult(
         name: name,
         categoryId: _categoryId,
-        quantity: qty,
+        quantity: _dueSupported ? null : qty,
         stockQty: stock,
-        unit: unit.isEmpty ? null : unit,
+        unit: _dueSupported || unit.isEmpty ? null : unit,
         note: note.isEmpty ? null : note,
         reminderAt: _reminderAt,
         reminderEnabled: _reminderEnabled && _reminderAt != null,

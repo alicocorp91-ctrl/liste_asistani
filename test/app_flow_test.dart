@@ -159,8 +159,7 @@ void main() {
       template: t,
       answers: {
         ...t.defaultAnswers(),
-        'tripType': 'international',
-        'kids': 'yes'
+        'tripType': 'international'
       },
       days: 7,
       isDisabled: (_) => false,
@@ -168,8 +167,6 @@ void main() {
     );
     final socks = items.firstWhere((i) => i.catalogId == 'socks');
     expect(socks.quantity, 7);
-    final kidClothes = items.firstWhere((i) => i.catalogId == 'kid_clothes');
-    expect(kidClothes.quantity, (1 + 1.5 * 7).ceil().clamp(1, 12));
     final visa = items.firstWhere((i) => i.catalogId == 'prep_visa');
     expect(visa.reminderAt, isNotNull,
         reason: 'daysBefore olan hazırlıklara tarih önerilir');
@@ -182,8 +179,7 @@ void main() {
       fields: {'from': 'İstanbul', 'to': 'Roma'},
       answers: {
         ...t.defaultAnswers(),
-        'tripType': 'international',
-        'kids': 'yes'
+        'tripType': 'international'
       },
       startDate: DateTime.now().add(const Duration(days: 30)),
       endDate: DateTime.now().add(const Duration(days: 36)),

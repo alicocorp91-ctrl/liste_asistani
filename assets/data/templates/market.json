@@ -1758,6 +1758,1436 @@
     "max": null
    },
    "unit": "paket"
+  },
+  {
+   "id": "mandalina",
+   "name": "Mandalina",
+   "category": "produce",
+   "qty": {
+    "base": 6,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "greyfurt",
+   "name": "Greyfurt",
+   "category": "produce",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "kivi",
+   "name": "Kivi",
+   "category": "produce",
+   "qty": {
+    "base": 4,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "armut",
+   "name": "Armut",
+   "category": "produce",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "seftali",
+   "name": "Şeftali",
+   "category": "produce",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "kayisi",
+   "name": "Kayısı",
+   "category": "produce",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "nektarin",
+   "name": "Nektarin",
+   "category": "produce",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "kavun",
+   "name": "Kavun",
+   "category": "produce",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "roka",
+   "name": "Roka",
+   "category": "produce",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "demet"
+  },
+  {
+   "id": "semizotu",
+   "name": "Semizotu",
+   "category": "produce",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "demet"
+  },
+  {
+   "id": "kereviz",
+   "name": "Kereviz",
+   "category": "produce",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "pirasa",
+   "name": "Pırasa",
+   "category": "produce",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "brokoli",
+   "name": "Brokoli",
+   "category": "produce",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "lahana",
+   "name": "Lahana",
+   "category": "produce",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "civri_biber",
+   "name": "Sivri biber",
+   "category": "produce",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "carliston",
+   "name": "Çarliston biber",
+   "category": "produce",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "dolmalik_biber",
+   "name": "Dolmalık biber",
+   "category": "produce",
+   "qty": {
+    "base": 4,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "yesil_sogan",
+   "name": "Yeşil soğan",
+   "category": "produce",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "demet"
+  },
+  {
+   "id": "enginar",
+   "name": "Enginar",
+   "category": "produce",
+   "qty": {
+    "base": 4,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "bezelye",
+   "name": "Bezelye",
+   "category": "produce",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "misir_kozalak",
+   "name": "Taze mısır",
+   "category": "produce",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "kabak_cekirdegi",
+   "name": "Kabak çekirdeği",
+   "category": "produce",
+   "qty": {
+    "base": 200,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "yaprak_sarma",
+   "name": "Yaprak sarma (taze)",
+   "category": "produce",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "bonfile",
+   "name": "Bonfile",
+   "category": "meat",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "pirzola",
+   "name": "Pirzola",
+   "category": "meat",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "kanat",
+   "name": "Tavuk kanadı",
+   "category": "meat",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "hindi_eti",
+   "name": "Hindi eti",
+   "category": "meat",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "sucuk_dilim",
+   "name": "Dilim sucuk",
+   "category": "meat",
+   "qty": {
+    "base": 300,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "taze_balik",
+   "name": "Taze balık (levrek/çipura)",
+   "category": "meat",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "karides",
+   "name": "Karides",
+   "category": "meat",
+   "qty": {
+    "base": 250,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "labne",
+   "name": "Labne",
+   "category": "dairy",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kavanoz"
+  },
+  {
+   "id": "krema",
+   "name": "Krema (şanti)",
+   "category": "dairy",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kutu"
+  },
+  {
+   "id": "suzme_peynir",
+   "name": "Süzme peynir",
+   "category": "dairy",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kavanoz"
+  },
+  {
+   "id": "lor_peynir",
+   "name": "Lor peyniri",
+   "category": "dairy",
+   "qty": {
+    "base": 250,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "mozzarella",
+   "name": "Mozzarella",
+   "category": "dairy",
+   "qty": {
+    "base": 250,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "cheddar",
+   "name": "Çedar peyniri",
+   "category": "dairy",
+   "qty": {
+    "base": 200,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "sosis",
+   "name": "Sosis",
+   "category": "dairy",
+   "qty": {
+    "base": 400,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "salam",
+   "name": "Salam",
+   "category": "dairy",
+   "qty": {
+    "base": 300,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "zeytin_siyah",
+   "name": "Siyah zeytin",
+   "category": "dairy",
+   "qty": {
+    "base": 0.5,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "zeytin_kirma",
+   "name": "Kırma zeytin",
+   "category": "dairy",
+   "qty": {
+    "base": 0.5,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "tahin",
+   "name": "Tahin",
+   "category": "dairy",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kavanoz"
+  },
+  {
+   "id": "pekmez",
+   "name": "Pekmez",
+   "category": "dairy",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kavanoz"
+  },
+  {
+   "id": "pogaca",
+   "name": "Poğaça",
+   "category": "bakery",
+   "qty": {
+    "base": 4,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "corek",
+   "name": "Çörek",
+   "category": "bakery",
+   "qty": {
+    "base": 4,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "sandvic_ekmegi",
+   "name": "Sandviç ekmeği",
+   "category": "bakery",
+   "qty": {
+    "base": 4,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "bazlama",
+   "name": "Bazlama",
+   "category": "bakery",
+   "qty": {
+    "base": 4,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "beyaz_fasulye",
+   "name": "Beyaz fasulye",
+   "category": "pantry",
+   "qty": {
+    "base": 500,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "manti",
+   "name": "Mantı",
+   "category": "pantry",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "sehriye",
+   "name": "Şehriye",
+   "category": "pantry",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "eriste",
+   "name": "Erişte",
+   "category": "pantry",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "spagetti",
+   "name": "Spagetti",
+   "category": "pantry",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "burgu_makarna",
+   "name": "Burgu makarna",
+   "category": "pantry",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "kalem_makarna",
+   "name": "Kalem makarna",
+   "category": "pantry",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "un",
+   "name": "Un (buğday)",
+   "category": "pantry",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "misir_unu",
+   "name": "Mısır unu",
+   "category": "pantry",
+   "qty": {
+    "base": 500,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "nisasta",
+   "name": "Nişasta",
+   "category": "pantry",
+   "qty": {
+    "base": 200,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "galeta",
+   "name": "Galeta unu",
+   "category": "pantry",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "misir_gevreki",
+   "name": "Mısır gevreği",
+   "category": "pantry",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "musli",
+   "name": "Müsli / granola",
+   "category": "pantry",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "sardalya_konserve",
+   "name": "Sardalya (konserve)",
+   "category": "canned",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kutu"
+  },
+  {
+   "id": "konserve_bezelye",
+   "name": "Konserve bezelye",
+   "category": "canned",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kutu"
+  },
+  {
+   "id": "salca",
+   "name": "Domates salçası",
+   "category": "canned",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kavanoz"
+  },
+  {
+   "id": "biber_salca",
+   "name": "Biber salçası",
+   "category": "canned",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kavanoz"
+  },
+  {
+   "id": "kornişon",
+   "name": "Kornişon",
+   "category": "canned",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kavanoz"
+  },
+  {
+   "id": "konserve_fasulye",
+   "name": "Konserve fasulye",
+   "category": "canned",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kutu"
+  },
+  {
+   "id": "zeytin_konserve",
+   "name": "Konserve zeytin",
+   "category": "canned",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kutu"
+  },
+  {
+   "id": "barbeku_sos",
+   "name": "Barbekü sos",
+   "category": "canned",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kavanoz"
+  },
+  {
+   "id": "aci_sos",
+   "name": "Acı sos",
+   "category": "canned",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kavanoz"
+  },
+  {
+   "id": "sirke",
+   "name": "Sirke (üzüm/beyaz)",
+   "category": "spices",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "L"
+  },
+  {
+   "id": "toz_seker",
+   "name": "Toz şeker",
+   "category": "spices",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kg"
+  },
+  {
+   "id": "vanilin",
+   "name": "Vanilin",
+   "category": "spices",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "kabartma_tozu",
+   "name": "Kabartma tozu",
+   "category": "spices",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "zerdecal",
+   "name": "Zerdeçal",
+   "category": "spices",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "kirmizi_toz_biber",
+   "name": "Toz kırmızı biber",
+   "category": "spices",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "karbonat",
+   "name": "Karbonat",
+   "category": "spices",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "defne_yaprak",
+   "name": "Defne yaprağı",
+   "category": "spices",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "ceretz",
+   "name": "Karışık çerez",
+   "category": "snacks",
+   "qty": {
+    "base": 300,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "kuru_uzum",
+   "name": "Kuru üzüm",
+   "category": "snacks",
+   "qty": {
+    "base": 250,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "ceviz_ici",
+   "name": "Ceviz içi",
+   "category": "snacks",
+   "qty": {
+    "base": 250,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "findik",
+   "name": "Fındık",
+   "category": "snacks",
+   "qty": {
+    "base": 250,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "antep_fistigi",
+   "name": "Antep fıstığı",
+   "category": "snacks",
+   "qty": {
+    "base": 200,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "badem",
+   "name": "Badem",
+   "category": "snacks",
+   "qty": {
+    "base": 250,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "leblebi",
+   "name": "Leblebi",
+   "category": "snacks",
+   "qty": {
+    "base": 250,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "g"
+  },
+  {
+   "id": "cubuk_kraker",
+   "name": "Çubuk kraker",
+   "category": "snacks",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "sakiz",
+   "name": "Sakız",
+   "category": "snacks",
+   "qty": {
+    "base": 3,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "gevrek_cubuk",
+   "name": "Gevrek çubuk",
+   "category": "snacks",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "kola",
+   "name": "Kola",
+   "category": "drinks",
+   "qty": {
+    "base": 6,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "gazoz",
+   "name": "Gazoz",
+   "category": "drinks",
+   "qty": {
+    "base": 6,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "tonik",
+   "name": "Tonik",
+   "category": "drinks",
+   "qty": {
+    "base": 4,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "siyah_cay",
+   "name": "Siyah çay",
+   "category": "drinks",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "yesil_cay",
+   "name": "Yeşil çay",
+   "category": "drinks",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "neskafe",
+   "name": "Neskafe",
+   "category": "drinks",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kutu"
+  },
+  {
+   "id": "portakal_suyu",
+   "name": "Portakal suyu",
+   "category": "drinks",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "L"
+  },
+  {
+   "id": "elma_suyu",
+   "name": "Elma suyu",
+   "category": "drinks",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "L"
+  },
+  {
+   "id": "limonata",
+   "name": "Limonata",
+   "category": "drinks",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "L"
+  },
+  {
+   "id": "enerji_icecegi",
+   "name": "Enerji içeceği",
+   "category": "drinks",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "icme_suyu",
+   "name": "İçme suyu (damacana)",
+   "category": "drinks",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "donuk_patates",
+   "name": "Donuk patates kızartma",
+   "category": "frozen",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "donuk_sebze",
+   "name": "Donuk sebze karışımı",
+   "category": "frozen",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "donuk_meyve",
+   "name": "Donuk meyve",
+   "category": "frozen",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "donuk_pizza",
+   "name": "Donuk pizza",
+   "category": "frozen",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "donuk_borek",
+   "name": "Donuk börek",
+   "category": "frozen",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "donuk_ispanak",
+   "name": "Donuk ıspanak",
+   "category": "frozen",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "cok_amacli",
+   "name": "Çok amaçlı temizleyici",
+   "category": "cleaning",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "L"
+  },
+  {
+   "id": "kirec_cozucu",
+   "name": "Kireç çözücü",
+   "category": "cleaning",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "L"
+  },
+  {
+   "id": "lavabo_acici",
+   "name": "Lavabo açıcı",
+   "category": "cleaning",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "L"
+  },
+  {
+   "id": "klozet_temizleyici",
+   "name": "Klozet temizleyici",
+   "category": "cleaning",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "L"
+  },
+  {
+   "id": "firin_temizleyici",
+   "name": "Fırın temizleyici",
+   "category": "cleaning",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "L"
+  },
+  {
+   "id": "mikrofiber_bez",
+   "name": "Mikrofiber bez",
+   "category": "cleaning",
+   "qty": {
+    "base": 3,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "sunger",
+   "name": "Bulaşık süngeri",
+   "category": "cleaning",
+   "qty": {
+    "base": 3,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "temizlik_eldiveni",
+   "name": "Temizlik eldiveni",
+   "category": "cleaning",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "leke_cikarici",
+   "name": "Leke çıkarıcı",
+   "category": "cleaning",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "L"
+  },
+  {
+   "id": "kagit_pecete",
+   "name": "Kağıt peçete",
+   "category": "paper",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "firin_kagidi",
+   "name": "Fırın kağıdı",
+   "category": "paper",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "rulo"
+  },
+  {
+   "id": "yagli_kagidi",
+   "name": "Yağlı kağıt",
+   "category": "paper",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "rulo"
+  },
+  {
+   "id": "mendil_kutu",
+   "name": "Burun mendili (kutu)",
+   "category": "paper",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "kutu"
+  },
+  {
+   "id": "agiz_bakim",
+   "name": "Ağız bakım suyu",
+   "category": "personal",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "L"
+  },
+  {
+   "id": "tiras_kopugu",
+   "name": "Tıraş köpüğü",
+   "category": "personal",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "pamuk",
+   "name": "Pamuk",
+   "category": "personal",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "pamuk_disk",
+   "name": "Makyaj pamuğu",
+   "category": "personal",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "dis_ipi",
+   "name": "Diş ipi",
+   "category": "personal",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "vucut_losyonu",
+   "name": "Vücut losyonu",
+   "category": "personal",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "L"
+  },
+  {
+   "id": "sac_kremi",
+   "name": "Saç kremi",
+   "category": "personal",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "L"
+  },
+  {
+   "id": "kilitli_poset",
+   "name": "Kilitli poşet",
+   "category": "other",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "karton_bardak",
+   "name": "Karton bardak",
+   "category": "other",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "plastik_tabak",
+   "name": "Plastik tabak",
+   "category": "other",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "disli_catal",
+   "name": "Çatal-kaşık-bıçak (plastik)",
+   "category": "other",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "paket"
+  },
+  {
+   "id": "dikis_seti",
+   "name": "Dikiş seti",
+   "category": "other",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "yapistirici_bant",
+   "name": "Yapıştırıcı bant",
+   "category": "other",
+   "qty": {
+    "base": 2,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
+  },
+  {
+   "id": "el_feneri",
+   "name": "El feneri",
+   "category": "other",
+   "qty": {
+    "base": 1,
+    "perDay": 0,
+    "max": null
+   },
+   "unit": "adet"
   }
  ]
 }

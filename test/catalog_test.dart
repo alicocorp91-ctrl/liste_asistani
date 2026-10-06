@@ -143,10 +143,6 @@ void main() {
     expect(car, contains('car_registration'));
     expect(car, isNot(contains('boardingpass')));
 
-    final kids = ids({...base, 'kids': 'yes'});
-    expect(kids, contains('kids_headphones'));
-    expect(kids, contains('kid_id'));
-
     final ski = ids({...base, 'season': 'winter', 'purpose': 'ski'});
     expect(ski, contains('ski_jacket'));
     expect(ski, contains('thermal_top'));

@@ -28,22 +28,24 @@ seyahat artık yalnızca liste tiplerinden biridir; aynı motor tüm liste tiple
 ### Liste tipleri
 | Tip | Bölümler | Filtreler | Tarih | Kalem |
 |---|---|---|---|---|
-| ✈️ Seyahat | Valiz · Ev Kontrolleri · Hazırlıklar | kişi tipi, mevsim, ulaşım, seyahat tipi, amaç, çocuk | aralık (gidiş–dönüş) | 373 |
-| 🛒 Market | Alışveriş | – (soru yok) | – (tarih yok) | 149 |
+| ✈️ Seyahat | Valiz · Ev Kontrolleri · Hazırlıklar | kişi tipi, mevsim, ulaşım, seyahat tipi, amaç | aralık (gidiş–dönüş) | 358 |
+| 🛒 Market | Alışveriş | – (soru yok) | – (tarih yok) | 279 |
 | 🧺 Piknik | Piknik | grup, mangal, çocuk, konum | tek gün | 106 |
 | 🔥 Mangal | Mangal | – | – | 38 (sabit liste) |
 | ⛺ Kamp | Ekipman · Yiyecek ve Mutfak · Hazırlık | kamp tipi, mevsim, ulaşım, çocuk, su kaynağı | aralık | 158 |
 | 🏖️ Plaj | Plaj | kimler, çocuk, süre, aktivite, yemek | tek gün | 70 |
 | 📦 Taşınma | Görevler · Malzemeler · Adres ve Abonelikler | mesafe, konut, çocuk, nakliye | tek gün | 150 |
+| 📋 İş | İş | – | saatli görev | 9 |
+| 🏠 Gündelik | Gündelik | – | saatli görev | 9 |
 | ➕ Özel | kullanıcı tanımlı | – | isteğe bağlı | kullanıcı tanımlı |
 
 **Market, Piknik, Mangal ve Kamp** stok listesidir (aşağıya bakın); özel tiplerde stok takibi açılabilir.
-Bebek / evcil hayvan soruları ve kalemleri bilinçli olarak yoktur (kişisel kullanım).
+Bebek / evcil hayvan soruları ve kalemleri bilinçli olarak yoktur (kişisel kullanım). Çocuk sorusu ve çocuk kalemleri de seyahatten kaldırıldı.
 
-Toplam **1.064 hazır kalem**, her biri ikon/kategori/bölüm bilgisiyle.
+Toplam **1.177 hazır kalem**, her biri ikon/kategori/bölüm bilgisiyle.
 
 ### Akıllı liste oluşturma
-- **Filtreli öneri**: seçtiğiniz cevaplara göre (ör. "uçak + iş + kış + 5 gün + çocuklu") sadece ilgili kalemler önerilir.
+- **Filtreli öneri**: seçtiğiniz cevaplara göre (ör. "uçak + iş + kış + 5 gün") sadece ilgili kalemler önerilir.
 - **Miktar hesabı**: süreye bağlı kalemler (iç çamaşırı, çorap, ilaç, mama…) `base + perDay × gün` formülüyle, üst sınır dikkate alınarak hesaplanır.
 - **Zorunlu kalemler** ön seçili gelir; istediğinizi kaldırıp ekleyebilirsiniz. Öneri ekranında **adetleri − / + ile** değiştirebilirsiniz (2 pijama → 1).
 - **Market pratiktir**: soru ve tarih sorulmaz, öneriler görünür ama **hiçbiri seçili gelmez**; arayıp birkaçını işaretlersiniz (boş da oluşturabilirsiniz). Liste ekranının altında **hızlı ekleme çubuğu** vardır: "süt" yazınca katalogdan öneri çıkar, Enter ile eklenir; katalogda yoksa "Diğer" kategorisine serbest kalem olarak girer. Aynı adı tekrar yazmak kopya oluşturmaz.
