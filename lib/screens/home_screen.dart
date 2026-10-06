@@ -174,10 +174,37 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(width: 4),
           ],
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: catalog.isLoading ? null : () => _newList(context),
-          icon: const Icon(Icons.add_rounded),
-          label: const Text('Yeni Liste'),
+        floatingActionButton: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                if (Theme.of(context).brightness == Brightness.dark)
+                  Color.lerp(scheme.primary, Colors.black, .40)!
+                else
+                  scheme.primary,
+                if (Theme.of(context).brightness == Brightness.dark)
+                  Color.lerp(scheme.tertiary, Colors.black, .52)!
+                else
+                  Color.lerp(scheme.primary, scheme.tertiary, .55)!,
+              ],
+            ),
+            borderRadius: BorderRadius.circular(18),
+            boxShadow: [
+              BoxShadow(
+                  color: scheme.primary.withValues(alpha: .38),
+                  blurRadius: 18,
+                  offset: const Offset(0, 8)),
+            ],
+          ),
+          child: FloatingActionButton.extended(
+            elevation: 0,
+            highlightElevation: 0,
+            backgroundColor: Colors.transparent,
+            foregroundColor: Colors.white,
+            onPressed: catalog.isLoading ? null : () => _newList(context),
+            icon: const Icon(Icons.add_rounded),
+            label: const Text('Yeni Liste'),
+          ),
         ),
         body: body,
       ),
@@ -190,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-/// Selamlama + özet sayılar
+/// Selamlama (gradyanlı) + tarih rozeti + yumuşak özet kartı
 class _HomeHeader extends StatelessWidget {
   const _HomeHeader({required this.lists});
   final ListsProvider lists;
@@ -208,11 +235,15 @@ class _HomeHeader extends StatelessWidget {
                 ? 'İyi günler'
                 : 'İyi akşamlar';
     String dateText;
+    String monthShort;
     try {
       dateText = DateFormat('d MMMM EEEE', 'tr_TR').format(now);
+      monthShort = DateFormat('MMM', 'tr_TR').format(now);
     } catch (_) {
       dateText = '${now.day}.${now.month}.${now.year}';
+      monthShort = '${now.month}';
     }
+
     final active = lists.active;
     final missing = active.fold<int>(0, (a, l) => a + l.missingCount);
     final remaining = active
@@ -225,42 +256,102 @@ class _HomeHeader extends StatelessWidget {
             l.startDate!.difference(now).inDays <= 14)
         .length;
 
+    var total = 0;
+    var done = 0;
+    for (final l in active) {
+      total += l.totalCount;
+      done += l.isInventory ? l.inStockCount : l.checkedCount;
+    }
+    final prog = total == 0 ? 0.0 : (done / total).clamp(0.0, 1.0);
+
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 4, 20, 4),
+      padding: const EdgeInsets.fromLTRB(20, 6, 20, 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('$greet 👋', style: Theme.of(context).textTheme.headlineSmall),
-          const SizedBox(height: 2),
-          Text(dateText,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: scheme.onSurfaceVariant)),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ShaderMask(
+                      shaderCallback: (r) => LinearGradient(
+                        colors: [
+                          scheme.primary,
+                          Color.lerp(scheme.primary, scheme.tertiary, .65)!,
+                        ],
+                      ).createShader(r),
+                      child: Text(greet,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium
+                              ?.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.white,
+                                  letterSpacing: -.5,
+                                  height: 1.12)),
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      children: [
+                        Icon(Icons.calendar_month_rounded,
+                            size: 14, color: scheme.onSurfaceVariant),
+                        const SizedBox(width: 6),
+                        Flexible(
+                          child: Text(dateText,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                  letterSpacing: .2,
+                                  color: scheme.onSurfaceVariant)),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 10),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: scheme.primary.withValues(alpha: .10),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                      color: scheme.primary.withValues(alpha: .22)),
+                ),
+                child: Column(
+                  children: [
+                    Text('${now.day}',
+                        style: TextStyle(
+                            fontSize: 18,
+                            height: 1,
+                            fontWeight: FontWeight.w800,
+                            color: scheme.primary)),
+                    const SizedBox(height: 2),
+                    Text(monthShort.toLowerCase(),
+                        style: TextStyle(
+                            fontSize: 10.5,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: .3,
+                            color: scheme.primary.withValues(alpha: .8))),
+                  ],
+                ),
+              ),
+            ],
+          ),
           if (active.isNotEmpty) ...[
             const SizedBox(height: 14),
-            Row(
-              children: [
-                _Stat(
-                    icon: Icons.format_list_bulleted_rounded,
-                    value: '${active.length}',
-                    label: 'aktif liste',
-                    color: scheme.primary),
-                const SizedBox(width: 8),
-                _Stat(
-                    icon: Icons.shopping_cart_outlined,
-                    value: '$missing',
-                    label: 'eksik',
-                    color: missing > 0 ? scheme.error : Colors.green),
-                const SizedBox(width: 8),
-                _Stat(
-                    icon: upcoming > 0
-                        ? Icons.event_rounded
-                        : Icons.check_circle_outline_rounded,
-                    value: upcoming > 0 ? '$upcoming' : '$remaining',
-                    label: upcoming > 0 ? 'yaklaşan' : 'kalan iş',
-                    color: scheme.tertiary),
-              ],
+            _HeroSummary(
+              progress: prog,
+              activeCount: active.length,
+              missing: missing,
+              rightValue: upcoming > 0 ? '$upcoming' : '$remaining',
+              rightLabel: upcoming > 0 ? 'yaklaşan' : 'kalan iş',
             ),
           ],
         ],
@@ -269,50 +360,154 @@ class _HomeHeader extends StatelessWidget {
   }
 }
 
-class _Stat extends StatelessWidget {
-  const _Stat(
-      {required this.icon,
-      required this.value,
-      required this.label,
-      required this.color});
-  final IconData icon;
-  final String value;
-  final String label;
-  final Color color;
+/// Ana ekranın özet kartı: gradyan + tamamlanma halkası + cam istatistikler.
+class _HeroSummary extends StatelessWidget {
+  const _HeroSummary({
+    required this.progress,
+    required this.activeCount,
+    required this.missing,
+    required this.rightValue,
+    required this.rightLabel,
+  });
+  final double progress;
+  final int activeCount;
+  final int missing;
+  final String rightValue;
+  final String rightLabel;
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: isDark ? 0.18 : 0.10),
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Row(
+    var c1 = scheme.primary;
+    var c2 = Color.lerp(scheme.primary, scheme.tertiary, .6)!;
+    if (isDark) {
+      c1 = Color.lerp(c1, Colors.black, .42)!;
+      c2 = Color.lerp(c2, Colors.black, .55)!;
+    }
+    final pct = (progress * 100).round();
+
+    Widget chip(String value, String label) => Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: .14),
+              borderRadius: BorderRadius.circular(14),
+              border:
+                  Border.all(color: Colors.white.withValues(alpha: .18)),
+            ),
+            child: Column(
+              children: [
+                Text(value,
+                    style: const TextStyle(
+                        fontSize: 16.5,
+                        height: 1.1,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white)),
+                const SizedBox(height: 2),
+                Text(label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white.withValues(alpha: .85))),
+              ],
+            ),
+          ),
+        );
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(18, 18, 18, 16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [c1, c2]),
+        borderRadius: BorderRadius.circular(26),
+        boxShadow: [
+          BoxShadow(
+              color: c1.withValues(alpha: .35),
+              blurRadius: 26,
+              offset: const Offset(0, 10)),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Stack(
           children: [
-            Icon(icon, size: 18, color: color),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(value,
-                      style: TextStyle(
-                          fontSize: 17,
-                          height: 1.1,
-                          fontWeight: FontWeight.w800,
-                          color: color)),
-                  Text(label,
-                      style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                          color: color.withValues(alpha: 0.85)),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis),
-                ],
-              ),
+            Positioned(
+                top: -36,
+                right: -28,
+                child: Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withValues(alpha: .08)))),
+            Positioned(
+                bottom: -48,
+                left: -22,
+                child: Container(
+                    width: 110,
+                    height: 110,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withValues(alpha: .06)))),
+            Row(
+              children: [
+                SizedBox(
+                  width: 92,
+                  height: 92,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      CircularProgressIndicator(
+                        value: progress,
+                        strokeWidth: 8,
+                        strokeCap: StrokeCap.round,
+                        backgroundColor:
+                            Colors.white.withValues(alpha: .25),
+                        valueColor:
+                            const AlwaysStoppedAnimation(Colors.white),
+                      ),
+                      Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('$pct%',
+                                style: const TextStyle(
+                                    fontSize: 19,
+                                    height: 1,
+                                    fontWeight: FontWeight.w800,
+                                    color: Colors.white)),
+                            const SizedBox(height: 3),
+                            Text('tamam',
+                                style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white
+                                        .withValues(alpha: .85))),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Row(
+                    children: [
+                      chip('$activeCount', 'aktif liste'),
+                      const SizedBox(width: 8),
+                      chip('$missing', 'eksik'),
+                      const SizedBox(width: 8),
+                      chip(rightValue, rightLabel),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -502,6 +697,7 @@ class _ListCard extends StatelessWidget {
 
     return SoftCard(
       tint: list.isArchived ? null : c,
+      elevated: !list.isArchived,
       padding: const EdgeInsets.all(14),
       onTap: () => Navigator.push(context,
           MaterialPageRoute(builder: (_) => ListDetailScreen(listId: list.id))),
@@ -513,12 +709,23 @@ class _ListCard extends StatelessWidget {
           children: [
             Hero(
               tag: 'art-${list.id}',
-              child: TemplateArt(
-                  templateId: list.templateId,
-                  icon: list.icon,
-                  color: c,
-                  size: 62,
-                  radius: 18),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                        color: c.withValues(alpha: .32),
+                        blurRadius: 14,
+                        offset: const Offset(0, 6)),
+                  ],
+                ),
+                child: TemplateArt(
+                    templateId: list.templateId,
+                    icon: list.icon,
+                    color: c,
+                    size: 64,
+                    radius: 20),
+              ),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -529,7 +736,10 @@ class _ListCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(list.name,
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(fontWeight: FontWeight.w800),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis),
                       ),
@@ -569,12 +779,32 @@ class _ListCard extends StatelessWidget {
                             tween: Tween(begin: 0, end: progress),
                             duration: const Duration(milliseconds: 600),
                             curve: Curves.easeOutCubic,
-                            builder: (_, v, __) => LinearProgressIndicator(
-                              value: v,
-                              minHeight: 7,
-                              color: ringColor,
-                              backgroundColor:
-                                  ringColor.withValues(alpha: 0.15),
+                            builder: (_, v, __) => SizedBox(
+                              height: 8,
+                              child: Stack(
+                                children: [
+                                  Container(
+                                      decoration: BoxDecoration(
+                                          color: ringColor
+                                              .withValues(alpha: 0.14),
+                                          borderRadius:
+                                              BorderRadius.circular(6))),
+                                  FractionallySizedBox(
+                                    widthFactor: v,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(colors: [
+                                          ringColor,
+                                          Color.lerp(ringColor,
+                                              Colors.white, .4)!
+                                        ]),
+                                        borderRadius:
+                                            BorderRadius.circular(6),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

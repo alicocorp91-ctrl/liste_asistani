@@ -362,9 +362,21 @@ class SectionTitle extends StatelessWidget {
         padding: padding ?? const EdgeInsets.fromLTRB(20, 18, 20, 8),
         child: Row(
           children: [
+            Container(
+              width: 5,
+              height: 20,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+                borderRadius: BorderRadius.circular(3),
+              ),
+            ),
+            const SizedBox(width: 10),
             Expanded(
-                child:
-                    Text(text, style: Theme.of(context).textTheme.titleMedium)),
+                child: Text(text,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: FontWeight.w800))),
             if (trailing != null) trailing!,
           ],
         ),

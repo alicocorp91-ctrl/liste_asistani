@@ -123,8 +123,10 @@ class AppTheme {
         showDragHandle: true,
       ),
       popupMenuTheme: PopupMenuThemeData(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        elevation: 10,
+        color: isDark ? scheme.surfaceContainerHigh : Colors.white,
+        shadowColor: scheme.primary.withValues(alpha: .16),
         textStyle: text.bodyMedium,
       ),
       snackBarTheme: SnackBarThemeData(
