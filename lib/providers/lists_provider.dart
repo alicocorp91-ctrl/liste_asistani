@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
+import '../core/event_reminders.dart';
 import '../core/utils.dart';
 import '../data/storage.dart';
 import '../models/template.dart';
@@ -155,6 +156,7 @@ class ListsProvider extends ChangeNotifier {
     notifyListeners();
     await _save(list);
     await _saveIndex();
+    await _syncEventReminders(list);
     return list;
   }
 
@@ -162,6 +164,7 @@ class ListsProvider extends ChangeNotifier {
     final l = byId(id);
     if (l == null || name.trim().isEmpty) return;
     await _update(l.copyWith(name: name.trim()));
+    await _syncEventReminders(byId(id)!);
   }
 
   Future<void> updateMeta(String id,
@@ -178,6 +181,7 @@ class ListsProvider extends ChangeNotifier {
       clearStart: clearDates,
       clearEnd: clearDates,
     ));
+    await _syncEventReminders(byId(id)!);
   }
 
   Future<void> setArchived(String id, bool archived) async {
@@ -185,6 +189,7 @@ class ListsProvider extends ChangeNotifier {
     if (l == null) return;
     if (archived) await _cancelAllReminders(l);
     await _update(l.copyWith(isArchived: archived));
+    await _syncEventReminders(byId(id)!);
     if (!archived) await _rescheduleAll(byId(id)!);
   }
 
@@ -218,6 +223,7 @@ class ListsProvider extends ChangeNotifier {
     notifyListeners();
     await _save(copy);
     await _saveIndex();
+    await _syncEventReminders(copy);
     return copy;
   }
 
@@ -225,6 +231,7 @@ class ListsProvider extends ChangeNotifier {
     final l = byId(id);
     if (l == null) return;
     await _cancelAllReminders(l);
+    await _cancelEventReminders(l);
     _lists.removeWhere((x) => x.id == id);
     notifyListeners();
     await _storage.remove(Storage.keyList(id));
@@ -236,6 +243,7 @@ class ListsProvider extends ChangeNotifier {
     if (l == null) return;
     await _update(l.copyWith(
         items: l.items.map((i) => i.copyWith(isChecked: false)).toList()));
+    await _syncEventReminders(byId(id)!);
   }
 
   Future<void> setFavorite(String id, bool fav) async {
@@ -382,6 +390,7 @@ class ListsProvider extends ChangeNotifier {
       count++;
     }
     await _update(dst.copyWith(items: items, categories: categories));
+    await _syncEventReminders(byId(dst.id)!);
     return count;
   }
 
@@ -534,6 +543,7 @@ class ListsProvider extends ChangeNotifier {
         .toList();
     if (fresh.isEmpty) return 0;
     await _update(l.copyWith(items: [...l.items, ...fresh]));
+    await _syncEventReminders(byId(listId)!);
     return fresh.length;
   }
 
@@ -618,6 +628,29 @@ class ListsProvider extends ChangeNotifier {
     }
   }
 
+  /// Etkinlik (geri sayım) bildirim kimliklerini iptal et.
+  Future<void> _cancelEventReminders(UserList l) async {
+    for (final off in EventReminders.offsets) {
+      await _notifications.cancel(EventReminders.notificationId(l.id, off));
+    }
+  }
+
+  /// Etkinlik geri sayım bildirimlerini tazele: öncekilere iptal,
+  /// gelecekteki planlara yeniden çizim. Gövdedeki eksik sayısı plan
+  /// anındaki değeri taşır — yapısal değişikliklerde ve açılışta çağrılır.
+  Future<void> _syncEventReminders(UserList l) async {
+    await _cancelEventReminders(l);
+    for (final p in EventReminders.plan(l)) {
+      await _notifications.schedule(
+        id: EventReminders.notificationId(l.id, p.offsetDays),
+        title: l.name,
+        body: p.body,
+        at: p.at,
+        payload: l.id,
+      );
+    }
+  }
+
   Future<void> _rescheduleAll(UserList l) async {
     for (final i in l.items) {
       await _syncReminder(l.id, l.name, i);
@@ -628,6 +661,10 @@ class ListsProvider extends ChangeNotifier {
   Future<void> rescheduleEverything() async {
     for (final l in _lists.where((l) => !l.isArchived)) {
       await _rescheduleAll(l);
+    }
+    // Etkinlik geri sayım bildirimleri (arşivlilerde yalnız iptal).
+    for (final l in _lists) {
+      await _syncEventReminders(l);
     }
   }
 

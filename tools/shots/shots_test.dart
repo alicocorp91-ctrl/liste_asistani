@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:liste_asistani/data/storage.dart';
@@ -43,6 +44,11 @@ void main() {
   Future<(CatalogProvider, ListsProvider, SettingsProvider, Widget)> buildApp(
       ThemeMode mode) async {
     await initializeDateFormatting('tr_TR');
+    // Bildirim eklentisi kanalı: testlerde gerçek yanıt değişken gecikmeli.
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(
+            const MethodChannel('dexterous.com/flutter/local_notifications'),
+            (call) async => null);
     final storage = await Storage.open();
     final settings = SettingsProvider(storage);
     await settings.setThemeMode(mode);

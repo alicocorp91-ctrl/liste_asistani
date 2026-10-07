@@ -19,6 +19,7 @@ seyahat artık yalnızca liste tiplerinden biridir; aynı motor tüm liste tiple
 
 ## Özellikler
 
+- **Etkinlik geri sayım bildirimleri:** Tarihli listelerde etkinlikten 3 gün, 1 gün ve sabahı 09:00'da hatırlatır ("Yarın Antalya! — 12 eksik kalem"). Bildirime dokununca liste açılır; arşivleyince susar.
 - **Alışveriş modu:** ⋮ menüden "Alışveriş modu" — kalan kalemleri tek tek gösterir; büyük "Aldım" düğmesine dokunun ya da mikrofonu açık tutup "süt aldım" deyin, "hepsini aldım" dersek hepsi tamamlanır. Her adımda "Geri al" var.
 - **Sesle ekleme:** hızlı ekleme çubuğundaki mikrofon düğmesiyle "zeytin, iki ekmek, bir kilo domates" deyin; adet ve birimler algılanır.
 - **İş & Gündelik görev listeleri:** "İş" ve "Gündelik" şablonlarıyla gündelik ve iş hayatı ayrı tutulur; her göreve **tarih + saat** (saatli görev) eklenebilir.
@@ -154,8 +155,12 @@ dart run flutter_launcher_icons
 - `build-apk.yml` → Android APK (artifact: `liste-asistani-release-apk`)
 - `build-windows.yml` → Windows uygulaması klasörü (artifact: `liste-asistani-windows`)
 
-`.github/workflows/build-apk.yml` her `main`/`master` push'unda ve elle tetiklemede
-(Actions → *Android APK oluştur* → *Run workflow*) çalışır:
+Build'ler **her güncellemede otomatik çalışmaz** (kaynak push'ları sessizdir).
+APK/EXE en sonda tek seferde üretilir — iki yolla:
+- **Etiketle**: `git tag v2.7.0 && git push --tags` → her iki workflow da çalışır
+- **Elle**: Actions → *Android APK oluştur* / *Windows uygulaması oluştur* → *Run workflow*
+
+Süreç şu adımlardan oluşur:
 
 1. Flutter stable + Java 17 kurulur
 2. `flutter analyze` ve `flutter test`
