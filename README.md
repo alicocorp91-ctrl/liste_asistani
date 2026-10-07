@@ -20,6 +20,8 @@ seyahat artık yalnızca liste tiplerinden biridir; aynı motor tüm liste tiple
 ## Özellikler
 
 - **Etkinlik geri sayım bildirimleri:** Tarihli listelerde etkinlikten 3 gün, 1 gün ve sabahı 09:00'da hatırlatır ("Yarın Antalya! — 12 eksik kalem"). Bildirime dokununca liste açılır; arşivleyince susar.
+- **Gizli arşiv:** Arşivlenmiş listeler ana ekranda görünmez; en üstten aşağı çekerek ayrı arşiv sayfasını aç, tek tuşla geri yükle.
+- **Yanlış dokunuş koruması:** Malzeme listesindeki bir kalemi tamamlayıp gizlemeden önce onay sorulur; ardından 4 saniye "Geri al" kullanılabilir.
 - **Alışveriş modu:** ⋮ menüden "Alışveriş modu" — kalan kalemleri tek tek gösterir; büyük "Aldım" düğmesine dokunun ya da mikrofonu açık tutup "süt aldım" deyin, "hepsini aldım" dersek hepsi tamamlanır. Her adımda "Geri al" var.
 - **Sesle ekleme:** hızlı ekleme çubuğundaki mikrofon düğmesiyle "zeytin, iki ekmek, bir kilo domates" deyin; adet ve birimler algılanır.
 - **İş & Gündelik görev listeleri:** "İş" ve "Gündelik" şablonlarıyla gündelik ve iş hayatı ayrı tutulur; her göreve **tarih + saat** (saatli görev) eklenebilir.

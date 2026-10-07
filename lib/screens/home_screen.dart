@@ -19,8 +19,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool _showArchived = false;
   bool _precached = false;
+
+  Future<void> _openArchive() async {
+    if (!mounted) return;
+    await Navigator.of(context).push<void>(
+      MaterialPageRoute<void>(builder: (_) => const _ArchiveScreen()),
+    );
+  }
 
   @override
   void didChangeDependencies() {
@@ -77,24 +83,19 @@ class _HomeScreenState extends State<HomeScreen> {
       final others = active.where((l) => !l.isFavorite).toList();
       var idx = 0;
       body = CustomScrollView(
+        physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics()),
         slivers: [
           SliverToBoxAdapter(child: _HomeHeader(lists: lists)),
-          if (active.isEmpty && archived.isEmpty)
+          if (active.isEmpty)
             SliverFillRemaining(
               hasScrollBody: false,
-              child: _EmptyHome(onCreate: () => _newList(context)),
+              child: _EmptyHome(
+                onCreate: () => _newList(context),
+                hasArchivedLists: archived.isNotEmpty,
+              ),
             )
           else ...[
-            if (active.isEmpty)
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(32, 24, 32, 8),
-                  child: Text(
-                      'Aktif liste yok. Arşivden geri alabilir veya yeni liste oluşturabilirsin.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: scheme.onSurfaceVariant)),
-                ),
-              ),
             if (upcoming.isNotEmpty)
               SliverToBoxAdapter(
                   child: _UpcomingCard(upcoming: upcoming)),
@@ -112,46 +113,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 for (final l in others)
                   FadeSlideIn(index: idx++, child: _ListCard(list: l)),
               ]),
-            ],
-            if (archived.isNotEmpty) ...[
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 14, 16, 4),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(14),
-                    onTap: () => setState(() => _showArchived = !_showArchived),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 10),
-                      child: Row(
-                        children: [
-                          Icon(Icons.archive_outlined,
-                              size: 20, color: scheme.onSurfaceVariant),
-                          const SizedBox(width: 10),
-                          Text('Arşiv',
-                              style: Theme.of(context).textTheme.titleSmall),
-                          const SizedBox(width: 8),
-                          Pill(
-                              label: '${archived.length}',
-                              color: scheme.onSurfaceVariant),
-                          const Spacer(),
-                          AnimatedRotation(
-                            turns: _showArchived ? 0.5 : 0,
-                            duration: const Duration(milliseconds: 200),
-                            child: Icon(Icons.expand_more,
-                                color: scheme.onSurfaceVariant),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              if (_showArchived)
-                SliverList.list(children: [
-                  for (final l in archived)
-                    FadeSlideIn(index: idx++, child: _ListCard(list: l)),
-                ]),
             ],
             const SliverPadding(padding: EdgeInsets.only(bottom: 110)),
           ],
@@ -206,7 +167,16 @@ class _HomeScreenState extends State<HomeScreen> {
             label: const Text('Yeni Liste'),
           ),
         ),
-        body: body,
+        body: body is CustomScrollView
+            ? RefreshIndicator(
+                onRefresh: _openArchive,
+                edgeOffset: 0,
+                displacement: 56,
+                color: scheme.primary,
+                backgroundColor: scheme.surface,
+                child: body,
+              )
+            : body,
       ),
     );
   }
@@ -214,6 +184,45 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _newList(BuildContext context) async {
     await Navigator.push(context,
         MaterialPageRoute(builder: (_) => const TemplatePickerScreen()));
+  }
+}
+
+/// Ana ekrandaki aşağı çekme hareketiyle açılan arşiv sayfası.
+class _ArchiveScreen extends StatelessWidget {
+  const _ArchiveScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    final lists = context.watch<ListsProvider>();
+    final archived = lists.archived;
+    return AppBackground(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(title: const Text('Arşiv')),
+        body: archived.isEmpty
+            ? const EmptyView(
+                icon: Icons.archive_outlined,
+                title: 'Burada saklanan liste yok',
+              )
+            : ListView(
+                padding: const EdgeInsets.only(top: 8, bottom: 32),
+                children: [
+                  const SectionTitle('Arşivlenen listeler'),
+                  for (final list in archived)
+                    _ListCard(
+                      list: list,
+                      onRestore: () async {
+                        await lists.setArchived(list.id, false);
+                        if (context.mounted) {
+                          showSnack(
+                              context, '"${list.name}" ana ekrana taşındı');
+                        }
+                      },
+                    ),
+                ],
+              ),
+      ),
+    );
   }
 }
 
@@ -517,8 +526,9 @@ class _HeroSummary extends StatelessWidget {
 }
 
 class _EmptyHome extends StatelessWidget {
-  const _EmptyHome({required this.onCreate});
+  const _EmptyHome({required this.onCreate, this.hasArchivedLists = false});
   final VoidCallback onCreate;
+  final bool hasArchivedLists;
 
   @override
   Widget build(BuildContext context) {
@@ -541,11 +551,13 @@ class _EmptyHome extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            Text('Henüz liste yok',
+            Text(hasArchivedLists ? 'Aktif listen yok' : 'Henüz liste yok',
                 style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 8),
             Text(
-              'Seyahat, market, piknik, kamp… Bir şablon seç, sana özel listeni saniyeler içinde oluştur.',
+              hasArchivedLists
+                  ? 'Ana ekranda gösterilecek listen bulunmuyor. Yeni bir liste oluşturabilirsin.'
+                  : 'Seyahat, market, piknik, kamp… Bir şablon seç, sana özel listeni saniyeler içinde oluştur.',
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
@@ -556,7 +568,9 @@ class _EmptyHome extends StatelessWidget {
             FilledButton.icon(
               onPressed: onCreate,
               icon: const Icon(Icons.add_rounded),
-              label: const Text('İlk listeni oluştur'),
+              label: Text(hasArchivedLists
+                  ? 'Yeni liste oluştur'
+                  : 'İlk listeni oluştur'),
             ),
           ],
         ),
@@ -680,8 +694,9 @@ class _UpcomingRow extends StatelessWidget {
 }
 
 class _ListCard extends StatelessWidget {
-  const _ListCard({required this.list});
+  const _ListCard({required this.list, this.onRestore});
   final UserList list;
+  final VoidCallback? onRestore;
 
   @override
   Widget build(BuildContext context) {
@@ -751,6 +766,16 @@ class _ListCard extends StatelessWidget {
                         ),
                       if (list.isArchived)
                         Icon(Icons.archive, size: 16, color: scheme.outline),
+                      if (onRestore != null)
+                        IconButton(
+                          tooltip: 'Arşivden çıkar',
+                          visualDensity: VisualDensity.compact,
+                          constraints: const BoxConstraints.tightFor(
+                              width: 36, height: 36),
+                          padding: EdgeInsets.zero,
+                          onPressed: onRestore,
+                          icon: const Icon(Icons.unarchive_outlined, size: 20),
+                        ),
                     ],
                   ),
                   const SizedBox(height: 2),

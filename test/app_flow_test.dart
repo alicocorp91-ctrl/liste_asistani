@@ -138,11 +138,24 @@ void main() {
     await tester.pumpAndSettle();
     expect(lists.all.first.items.length, 4);
 
-    // İlk kalemi işaretle
+    // Tek dokunuşla kalem kaybolmasın: önce onay sorulsun.
     final firstName = list.items.first.name;
     await tester.tap(find.text(firstName).first);
     await tester.pumpAndSettle();
+    expect(find.text('Evet, aldım'), findsOneWidget);
+    expect(lists.all.first.checkedCount, 0);
+    await tester.tap(find.text('İptal'));
+    await tester.pumpAndSettle();
+    expect(lists.all.first.checkedCount, 0);
+    expect(find.text(firstName), findsOneWidget);
+
+    // Onay verince işaretlenir ve ekrandan gizlenir.
+    await tester.tap(find.text(firstName).first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Evet, aldım'));
+    await tester.pumpAndSettle();
     expect(lists.all.first.checkedCount, 1);
+    expect(find.text(firstName), findsNothing);
 
     // Alışveriş modu: menüden aç, "Aldım" + "Geri al"
     // Önceki "gizlendi" snackbar'ı alt düğmeleri örtmesin: hemen kaldır
@@ -181,6 +194,54 @@ void main() {
     expect(lists2.all.length, 1);
     expect(lists2.all.first.checkedCount, 1);
     expect(lists2.all.first.items.length, 4);
+  });
+
+  testWidgets('arşiv ana ekranda gizli, aşağı çekince açılır', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    tester.view.physicalSize = const Size(1080, 2280);
+    tester.view.devicePixelRatio = 2.5;
+    addTearDown(tester.view.reset);
+
+    final (catalog, lists, app) = await buildApp();
+    final market = catalog.templateById('market')!;
+    final hidden = await lists.createList(
+      template: market,
+      name: 'Gizli Market',
+      fields: const {},
+      answers: const {},
+      items: const [],
+    );
+    await lists.setArchived(hidden.id, true);
+
+    await tester.pumpWidget(app);
+    await tester.pumpAndSettle();
+    expect(find.text('Arşiv'), findsNothing);
+    expect(find.text('Gizli Market'), findsNothing);
+
+    final scroll = find.byType(CustomScrollView);
+    await tester.dragFrom(
+      tester.getTopLeft(scroll) + const Offset(180, 40),
+      const Offset(0, 600),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.text('Arşiv'), findsOneWidget);
+    expect(find.text('Gizli Market'), findsOneWidget);
+    expect(find.byTooltip('Arşivden çıkar'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Arşivden çıkar'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(lists.archived, isEmpty);
+    expect(lists.active.any((l) => l.id == hidden.id), isTrue);
+    expect(find.text('Gizli Market'), findsNothing);
+
+    await tester.tap(find.byType(BackButton));
+    await tester.pump();
+    await tester.pumpAndSettle();
+    expect(find.text('Gizli Market'), findsOneWidget);
+    expect(find.text('Arşiv'), findsNothing);
   });
 
   testWidgets('seyahat: tarih aralığı miktarları etkiler, bölümler sekme olur',

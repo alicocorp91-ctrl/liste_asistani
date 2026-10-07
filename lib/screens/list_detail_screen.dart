@@ -388,13 +388,30 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
           inventory: list.isInventory,
           onToggle: () async {
             final wasChecked = i.isChecked;
+            final marketList = list.templateId == 'market';
+            if (list.isInventory && !wasChecked) {
+              final accepted = await confirm(
+                context,
+                title: marketList
+                    ? '"${i.name}" aldın mı?'
+                    : '"${i.name}" tamamlandı mı?',
+                message: marketList
+                    ? 'Onaylarsan bu ürün alındı olarak işaretlenip market listesinden gizlenecek.'
+                    : 'Onaylarsan bu kalem tamamlandı olarak işaretlenip bu listeden gizlenecek.',
+                okLabel: marketList ? 'Evet, aldım' : 'Evet, gizle',
+                destructive: false,
+              );
+              if (!accepted || !mounted) return;
+            }
             await lists.toggleItem(list.id, i.id);
             if (!mounted || !list.isInventory || wasChecked) return;
             final messenger = ScaffoldMessenger.of(context);
             messenger.clearSnackBars();
             messenger.showSnackBar(SnackBar(
-              content: Text('"${i.name}" gizlendi'),
-              duration: const Duration(milliseconds: 2600),
+              content: Text(marketList
+                  ? '"${i.name}" market listesinden gizlendi'
+                  : '"${i.name}" listeden gizlendi'),
+              duration: const Duration(seconds: 4),
               behavior: SnackBarBehavior.floating,
               action: SnackBarAction(
                 label: 'Geri al',

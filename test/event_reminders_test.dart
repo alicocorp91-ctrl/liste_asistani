@@ -116,7 +116,7 @@ void main() {
       expect(hazir.first.body, contains('her şey hazır!'));
     });
 
-    test('köşeli ayraçla ayrışır ve kararlıdır ve kararlıdır', () {
+    test('bildirim kimlikleri kararlı ve benzersizdir', () {
       final a = EventReminders.notificationId('L1', 3);
       final b = EventReminders.notificationId('L1', 1);
       final c = EventReminders.notificationId('L2', 3);
