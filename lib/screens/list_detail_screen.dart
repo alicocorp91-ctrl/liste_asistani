@@ -30,6 +30,9 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
   /// Kontrol listesinde: sadece işaretlenmemişler. Stok listesinde: sadece eksikler.
   bool _onlyRemaining = false;
 
+  /// Market listesinde işaretli kalemlerin görünürlüğü (varsayılan: göster).
+  bool _hideCheckedMarket = false;
+
   /// Tamamlanma kutlaması
   bool? _wasDone;
   bool _confetti = false;
@@ -208,6 +211,18 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
                 : Icons.rule)),
         onPressed: () => setState(() => _onlyRemaining = !_onlyRemaining),
       ),
+      if (list.templateId == 'market')
+        IconButton(
+          tooltip: _hideCheckedMarket
+              ? 'Tamamlananları göster'
+              : 'Tamamlananları gizle',
+          color: Colors.white,
+          icon: Icon(_hideCheckedMarket
+              ? Icons.visibility_outlined
+              : Icons.visibility_off_outlined),
+          onPressed: () =>
+              setState(() => _hideCheckedMarket = !_hideCheckedMarket),
+        ),
       IconButton(
         tooltip: list.isFavorite ? 'Favoriden çıkar' : 'Favorilere ekle',
         icon: Icon(
@@ -338,6 +353,7 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
   Widget _sectionBody(UserList list, String sectionId) {
     final lists = context.read<ListsProvider>();
     final children = <Widget>[];
+    var hiddenByVisibility = false;
     for (final c in list.categoriesOf(sectionId)) {
       var items = list.itemsOfCategory(c.id);
       if (items.isEmpty) continue;
@@ -356,8 +372,15 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
           ...items.where((i) => i.inStock),
         ];
       }
-      // Stok listelerinde tamamlanan (üzeri çizilen) kalemler gizlenir
-      if (list.isInventory) {
+      // Market'te tamamlananlar varsayılan olarak üstü çizili görünür;
+      // göz düğmesi onları isteğe bağlı gizler. Diğer stok listeleri
+      // mevcut davranışıyla işaretlileri gizlemeye devam eder.
+      if (list.isInventory &&
+          (list.templateId != 'market' || _hideCheckedMarket)) {
+        if (list.templateId == 'market' &&
+            items.any((i) => i.isChecked)) {
+          hiddenByVisibility = true;
+        }
         items = items.where((i) => !i.isChecked).toList();
       }
       // Saatli görevler (dueAt) tamamlanmamış olarak zamana göre en üste
@@ -389,28 +412,25 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
           onToggle: () async {
             final wasChecked = i.isChecked;
             final marketList = list.templateId == 'market';
-            if (list.isInventory && !wasChecked) {
+            if (list.isInventory && !marketList && !wasChecked) {
               final accepted = await confirm(
                 context,
-                title: marketList
-                    ? '"${i.name}" aldın mı?'
-                    : '"${i.name}" tamamlandı mı?',
-                message: marketList
-                    ? 'Onaylarsan bu ürün alındı olarak işaretlenip market listesinden gizlenecek.'
-                    : 'Onaylarsan bu kalem tamamlandı olarak işaretlenip bu listeden gizlenecek.',
-                okLabel: marketList ? 'Evet, aldım' : 'Evet, gizle',
+                title: '"${i.name}" tamamlandı mı?',
+                message:
+                    'Onaylarsan bu kalem tamamlandı olarak işaretlenip bu listeden gizlenecek.',
+                okLabel: 'Evet, gizle',
                 destructive: false,
               );
               if (!accepted || !mounted) return;
             }
             await lists.toggleItem(list.id, i.id);
-            if (!mounted || !list.isInventory || wasChecked) return;
+            if (!mounted || !list.isInventory || marketList || wasChecked) {
+              return;
+            }
             final messenger = ScaffoldMessenger.of(context);
             messenger.clearSnackBars();
             messenger.showSnackBar(SnackBar(
-              content: Text(marketList
-                  ? '"${i.name}" market listesinden gizlendi'
-                  : '"${i.name}" listeden gizlendi'),
+              content: Text('"${i.name}" listeden gizlendi'),
               duration: const Duration(seconds: 4),
               behavior: SnackBarBehavior.floating,
               action: SnackBarAction(
@@ -432,15 +452,30 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
     }
     if (children.isEmpty) {
       return EmptyView(
-        icon: _onlyRemaining ? Icons.celebration_outlined : Icons.playlist_add,
-        title: _onlyRemaining
-            ? (list.isInventory
-                ? 'Bu bölümde eksik yok!'
-                : 'Bu bölümde her şey tamam!')
-            : 'Bu bölüm boş',
-        subtitle: _onlyRemaining
-            ? null
-            : 'Sağ alttaki + ile kalem ekle veya menüden "Katalogdan ekle".',
+        icon: hiddenByVisibility
+            ? Icons.visibility_off_outlined
+            : (_onlyRemaining
+                ? Icons.celebration_outlined
+                : Icons.playlist_add),
+        title: hiddenByVisibility
+            ? 'Tamamlanan kalemler gizli'
+            : (_onlyRemaining
+                ? (list.isInventory
+                    ? 'Bu bölümde eksik yok!'
+                    : 'Bu bölümde her şey tamam!')
+                : 'Bu bölüm boş'),
+        subtitle: hiddenByVisibility
+            ? 'Göz simgesinden tamamlananları tekrar gösterebilirsin.'
+            : (_onlyRemaining
+                ? null
+                : 'Sağ alttaki + ile kalem ekle veya menüden "Katalogdan ekle".'),
+        action: hiddenByVisibility
+            ? FilledButton.tonalIcon(
+                onPressed: () => setState(() => _hideCheckedMarket = false),
+                icon: const Icon(Icons.visibility_outlined),
+                label: const Text('Tamamlananları göster'),
+              )
+            : null,
       );
     }
     return ListView(
@@ -867,12 +902,16 @@ class _QuickAddBarState extends State<_QuickAddBar> {
     final t = widget.template;
     final q = normalizeTr(v.text.trim());
     if (t == null || q.length < 2) return const Iterable.empty();
-    final inList = widget.list.items.map((i) => normalizeTr(i.name)).toSet();
     final starts = <CatalogItem>[];
     final contains = <CatalogItem>[];
     for (final c in t.items) {
       final n = normalizeTr(c.name);
-      if (inList.contains(n)) continue;
+      final existing = widget.list.items.firstWhereOrNull(
+          (item) => normalizeTr(item.name) == n);
+      final canReactivate = existing != null &&
+          (existing.isChecked ||
+              (widget.list.isInventory && existing.inStock));
+      if (existing != null && !canReactivate) continue;
       if (n.startsWith(q)) {
         starts.add(c);
       } else if (n.contains(q)) {

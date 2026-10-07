@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:liste_asistani/core/utils.dart';
+import 'package:liste_asistani/core/voice_parser.dart';
 import 'package:liste_asistani/data/storage.dart';
 import 'package:liste_asistani/data/template_repository.dart';
 import 'package:liste_asistani/main.dart';
@@ -138,27 +139,70 @@ void main() {
     await tester.pumpAndSettle();
     expect(lists.all.first.items.length, 4);
 
-    // Tek dokunuşla kalem kaybolmasın: önce onay sorulsun.
+    // Market kalemleri dokununca üstü çizilir ama listede kalır.
     final firstName = list.items.first.name;
-    await tester.tap(find.text(firstName).first);
-    await tester.pumpAndSettle();
-    expect(find.text('Evet, aldım'), findsOneWidget);
-    expect(lists.all.first.checkedCount, 0);
-    await tester.tap(find.text('İptal'));
-    await tester.pumpAndSettle();
-    expect(lists.all.first.checkedCount, 0);
-    expect(find.text(firstName), findsOneWidget);
+    final marketId = list.id;
+    for (final item in lists.all.first.items.skip(1)) {
+      await lists.setStock(marketId, item.id, item.needQty);
+    }
+    expect(lists.all.first.inStockCount, 3);
+    expect(lists.all.first.missingCount, 1);
 
-    // Onay verince işaretlenir ve ekrandan gizlenir.
     await tester.tap(find.text(firstName).first);
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Evet, aldım'));
     await tester.pumpAndSettle();
     expect(lists.all.first.checkedCount, 1);
+    expect(find.text(firstName), findsOneWidget,
+        reason: 'işaretli ürün üstü çizili kalır, listeden düşmez');
+    expect(find.text('3 / 4 stokta'), findsOneWidget);
+
+    // "Sadece eksikler" filtresi işaretli olsa da eksik ürünü göstermeli.
+    await tester.tap(find.byTooltip('Sadece eksikler'));
+    await tester.pumpAndSettle();
+    expect(find.text(firstName), findsOneWidget);
+
+    // Kullanıcı isterse tamamlananları göz simgesinden gizleyip geri gösterebilir.
+    await tester.tap(find.byTooltip('Tamamlananları gizle'));
+    await tester.pumpAndSettle();
     expect(find.text(firstName), findsNothing);
+    expect(find.text('Tamamlanan kalemler gizli'), findsOneWidget);
+    await tester.tap(find.text('Tamamlananları göster'));
+    await tester.pumpAndSettle();
+    expect(find.text(firstName), findsOneWidget);
+    await tester.tap(find.byTooltip('Tümünü göster'));
+    await tester.pumpAndSettle();
+
+    // Aynı ürünü yeniden yazmak mevcut satırı tekrar açar; kopya oluşturmaz.
+    await tester.enterText(quick, firstName);
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pumpAndSettle();
+    expect(lists.all.first.items.length, 4);
+    expect(lists.all.first.checkedCount, 0);
+    expect(lists.all.first.items.firstWhere((i) => i.name == firstName).isChecked,
+        isFalse);
+
+    // Sesle ekleme de aynı quickAdd yolunu kullanır: aynı ad yeniden etkinleşir.
+    await tester.tap(find.text(firstName).first);
+    await tester.pumpAndSettle();
+    final spoken = VoiceParser.parse(firstName).single;
+    await lists.quickAdd(marketId, spoken.name,
+        template: catalog.templateById('market'),
+        quantity: spoken.quantity,
+        unit: spoken.unit);
+    await tester.pumpAndSettle();
+    expect(lists.all.first.items.length, 4);
+    expect(lists.all.first.checkedCount, 0);
+    await tester.tap(find.text(firstName).first);
+    await tester.pumpAndSettle();
+    expect(lists.all.first.checkedCount, 1);
+
+    // Sonraki alışveriş modu akışında ürünlerin tümü eksik olsun.
+    for (final item in lists.all.first.items.skip(1)) {
+      await lists.setStock(marketId, item.id, 0);
+    }
+    expect(lists.all.first.missingCount, 4);
 
     // Alışveriş modu: menüden aç, "Aldım" + "Geri al"
-    // Önceki "gizlendi" snackbar'ı alt düğmeleri örtmesin: hemen kaldır
+    // Önceki ekleme bildirimi alt düğmeleri örtmesin: hemen kaldır
     tester
         .state<ScaffoldMessengerState>(find.byType(ScaffoldMessenger))
         .removeCurrentSnackBar();
