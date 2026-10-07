@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:liste_asistani/core/utils.dart';
@@ -19,6 +20,12 @@ void main() {
 
   Future<(CatalogProvider, ListsProvider, Widget)> buildApp() async {
     await initializeDateFormatting('tr_TR');
+    // Bildirim eklentisi kanalını boşa düşür: testlerde gerçek kanal
+    // yanıtı değişken gecikmeli geliyor (paralel test yükünde).
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(
+            const MethodChannel('dexterous.com/flutter/local_notifications'),
+            (call) async => null);
     final storage = await Storage.open();
     final settings = SettingsProvider(storage);
     final catalog = CatalogProvider(storage, TemplateRepository());
@@ -136,6 +143,36 @@ void main() {
     await tester.tap(find.text(firstName).first);
     await tester.pumpAndSettle();
     expect(lists.all.first.checkedCount, 1);
+
+    // Alışveriş modu: menüden aç, "Aldım" + "Geri al"
+    // Önceki "gizlendi" snackbar'ı alt düğmeleri örtmesin: hemen kaldır
+    tester
+        .state<ScaffoldMessengerState>(find.byType(ScaffoldMessenger))
+        .removeCurrentSnackBar();
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(PopupMenuButton<String>));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Alışveriş modu'));
+    await tester.pumpAndSettle();
+    expect(find.text('Alışveriş modu'), findsWidgets);
+    expect(find.text('Aldım'), findsOneWidget);
+    expect(lists.all.first.missingCount, 4);
+    await tester.tap(find.text('Aldım'));
+    await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 150)));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(lists.all.first.missingCount, 3, reason: 'aldım → stok tamam');
+    await tester.tap(find.text('Geri al'));
+    // Bildirim kanalı yanıtları gerçek zamanlı gelir
+    await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 150)));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(lists.all.first.missingCount, 4, reason: 'geri al → eski stok');
+    await tester.tap(find.byTooltip('Kapat'));
+    await tester.pumpAndSettle();
+    expect(find.text('Aldım'), findsNothing);
 
     // Kalıcılık: yeniden yükle
     final lists2 =

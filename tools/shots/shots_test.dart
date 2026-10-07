@@ -201,6 +201,16 @@ void main() {
       await expectLater(find.byType(MaterialApp),
           matchesGoldenFile('out/07_detail_market_$tag.png'));
 
+      // Alışveriş modu (market)
+      await tester.tap(find.byType(PopupMenuButton<String>));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Alışveriş modu'));
+      await tester.pumpAndSettle();
+      await expectLater(find.byType(MaterialApp),
+          matchesGoldenFile('out/09_shopping_$tag.png'));
+      nav.pop();
+      await tester.pumpAndSettle();
+
       // Ayarlar
       nav.pop();
       await tester.pumpAndSettle();

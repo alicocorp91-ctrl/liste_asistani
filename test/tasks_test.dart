@@ -29,7 +29,8 @@ void main() {
 
   group('ListItem.dueAt', () {
     test('json tur + copyWith + temizleme', () {
-      final at = DateTime(2026, 10, 6, 14, 30);
+      // Gelecek tarih: zamandan bağımsız (eski sabit tarih geçince test kırılıyordu)
+      final at = DateTime(2099, 10, 6, 14, 30);
       final i = ListItem(
           id: 'x', name: 'Fatura öde', categoryId: 'bills', dueAt: at);
       final j = ListItem.fromJson(i.toJson());

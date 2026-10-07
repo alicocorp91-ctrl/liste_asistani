@@ -19,6 +19,7 @@ seyahat artık yalnızca liste tiplerinden biridir; aynı motor tüm liste tiple
 
 ## Özellikler
 
+- **Alışveriş modu:** ⋮ menüden "Alışveriş modu" — kalan kalemleri tek tek gösterir; büyük "Aldım" düğmesine dokunun ya da mikrofonu açık tutup "süt aldım" deyin, "hepsini aldım" dersek hepsi tamamlanır. Her adımda "Geri al" var.
 - **Sesle ekleme:** hızlı ekleme çubuğundaki mikrofon düğmesiyle "zeytin, iki ekmek, bir kilo domates" deyin; adet ve birimler algılanır.
 - **İş & Gündelik görev listeleri:** "İş" ve "Gündelik" şablonlarıyla gündelik ve iş hayatı ayrı tutulur; her göreve **tarih + saat** (saatli görev) eklenebilir.
 - **Yaklaşanlar kartı:** ana ekranda gecikmiş + önümüzdeki 7 günün saatli işleri zaman sırasıyla; İş (indigo) ve Gündelik (mor) renk/etiketle ayrılır, dokununca listeye gider.

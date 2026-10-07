@@ -15,6 +15,7 @@ import '../core/theme.dart';
 import '../widgets/common.dart';
 import '../widgets/ui.dart';
 import 'selection_screen.dart';
+import 'shopping_mode_screen.dart';
 import '../widgets/voice_sheet.dart';
 
 class ListDetailScreen extends StatefulWidget {
@@ -217,7 +218,24 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
       PopupMenuButton<String>(
         iconColor: Colors.white,
         onSelected: (v) => _menuAction(v, list),
-        itemBuilder: (menuCtx) => [
+        itemBuilder: (menuCtx) {
+          final canShop = list.isInventory
+              ? list.missingCount > 0
+              : list.totalCount - list.checkedCount > 0;
+          return [
+          PopupMenuItem(
+            value: 'shop',
+            enabled: canShop,
+            child: ListTile(
+              leading: const Icon(Icons.shopping_cart_checkout_rounded),
+              title: Text(list.isInventory
+                  ? 'Alışveriş modu'
+                  : 'Adım adım tamamla'),
+              subtitle: Text(canShop
+                  ? 'Sesle veya dokunarak işaretle'
+                  : 'Yapılacak bir şey kalmadı'),
+            ),
+          ),
           if (list.isInventory) ...[
             if (list.templateId != 'market')
               PopupMenuItem(
@@ -311,7 +329,8 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
                   style: TextStyle(color: Theme.of(context).colorScheme.error)),
             ),
           ),
-        ],
+          ];
+        },
       ),
     ];
   }
@@ -415,6 +434,11 @@ class _ListDetailScreenState extends State<ListDetailScreen> {
   Future<void> _menuAction(String v, UserList list) async {
     final lists = context.read<ListsProvider>();
     switch (v) {
+      case 'shop':
+        await Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => ShoppingModeScreen(listId: list.id)));
       case 'addCatalog':
         final template =
             context.read<CatalogProvider>().templateById(list.templateId);
